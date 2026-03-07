@@ -1,45 +1,77 @@
 .navContainer {
   position: fixed;
-  top: 40px;
+  top: 24px;
   left: 0;
   width: 100%;
   display: flex;
   justify-content: center;
   z-index: 1000;
-  transition: top 0.3s ease;
-  padding: 0 20px;
+  padding: 0 24px;
+  transition: top var(--transition-base);
 }
 
 .navContainer.scrolled {
-  top: 15px;
+  top: 12px;
 }
 
 .navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border-radius: var(--radius-pill);
   width: 100%;
-  max-width: 1100px;
+  max-width: 1200px;
+  box-shadow: var(--shadow-md);
 }
 
-.logoImg {
-  height: 32px;
-  width: auto;
-  display: block;
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logoMark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.logoIcon {
+  color: #fff;
+  width: 22px;
+  height: 22px;
+}
+
+.logoText {
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
 }
 
 .navLinks {
   display: flex;
-  gap: 24px;
+  gap: 32px;
 }
 
 .link {
   font-weight: 500;
+  font-size: 0.95rem;
   color: var(--text-secondary);
   position: relative;
-  transition: color 0.3s ease;
+  padding: 8px 0;
+  transition: color var(--transition-fast);
 }
 
 .link::after {
@@ -47,10 +79,12 @@
   position: absolute;
   width: 0;
   height: 2px;
-  bottom: -4px;
-  left: 0;
-  background-color: var(--color-accent-1);
-  transition: width 0.3s ease;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gradient-primary);
+  border-radius: 2px;
+  transition: width var(--transition-base);
 }
 
 .link:hover {
@@ -64,27 +98,93 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .textBtn {
   background: none;
   border: none;
-  font-family: var(--font-inter);
+  font-family: var(--font-inter), system-ui, sans-serif;
   font-weight: 500;
-  color: var(--text-primary);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
   cursor: pointer;
-  padding: 8px 12px;
-  transition: opacity 0.3s ease;
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition-fast);
 }
 
 .textBtn:hover {
-  opacity: 0.7;
+  color: var(--text-primary);
+  background: rgba(201, 111, 74, 0.05);
+}
+
+.donateBtn {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+}
+
+.mobileMenuBtn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-primary);
+  padding: 8px;
+}
+
+/* Mobile Menu */
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 320px;
+  height: 100vh;
+  background: var(--color-surface);
+  z-index: 999;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
+}
+
+.mobileMenuInner {
+  padding: 100px 24px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobileLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  transition: background var(--transition-fast);
+}
+
+.mobileLink:hover {
+  background: rgba(201, 111, 74, 0.05);
+}
+
+.mobileCta {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 @media (max-width: 1024px) {
   .navLinks {
     display: none;
   }
+  
+  .actions {
+    display: none;
+  }
+  
+  .mobileMenuBtn {
+    display: flex;
+  }
 }
-

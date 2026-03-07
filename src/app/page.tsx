@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import TrustIndicators from "@/components/TrustIndicators";
 import HowItWorks from "@/components/HowItWorks";
 import Transparency from "@/components/Transparency";
 import ImpactStats from "@/components/ImpactStats";
@@ -11,10 +10,9 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main>
+    <main data-testid="main-content">
       <Navbar />
       <Hero />
-      <TrustIndicators />
       <HowItWorks />
       <Transparency />
       <ImpactStats />

@@ -1,25 +1,201 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Heart, Users, ArrowRight, Play, CheckCircle } from "lucide-react";
 import styles from "./Hero.module.css";
+
+const trustBadges = [
+  { icon: CheckCircle, value: "120+", label: "सत्यापित NGOs" },
+  { icon: CheckCircle, value: "₹5M+", label: "दान ट्रैक किया" },
+  { icon: CheckCircle, value: "10K+", label: "स्वयंसेवक" },
+  { icon: CheckCircle, value: "500+", label: "जीवन प्रभावित" },
+];
 
 export default function Hero() {
   return (
-    <section className={styles.heroContainer} id="home">
-      {/* Decorative background shapes */}
-      <div className={styles.bgGlow1}></div>
-      <div className={styles.bgGlow2}></div>
+    <section className={styles.heroContainer} id="home" data-testid="hero-section">
+      {/* Animated background elements */}
+      <div className={styles.bgOrbs}>
+        <motion.div
+          className={styles.orb1}
+          animate={{
+            y: [0, 30, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className={styles.orb2}
+          animate={{
+            y: [0, -20, 0],
+            x: [0, 20, 0],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className={styles.orb3}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
 
       <div className={styles.heroContent}>
-        <div className={styles.leftSide}>
-          <h1 className={styles.headline}>
-            Donate, Volunteer & Track<br />Real Impact <span className={styles.highlight}>All in One</span><br />Transparent Platform
-          </h1>
-          <p className={styles.subtext}>
-            HelpSphere connects donors, volunteers, and verified NGOs.
-            Track every rupee you donate and see real-world impact with complete transparency.
-          </p>
+        {/* Left Content */}
+        <motion.div
+          className={styles.leftContent}
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <motion.div
+            className={styles.badge}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            data-testid="hero-badge"
+          >
+            <span className={styles.badgeDot} />
+            भारत का सबसे पारदर्शी दान मंच
+          </motion.div>
 
-        </div>
+          <motion.h1
+            className={styles.headline}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            data-testid="hero-headline"
+          >
+            दान करें, स्वयंसेवा करें और<br />
+            वास्तविक प्रभाव ट्रैक करें<br />
+            <span className={styles.highlight}>एक पारदर्शी मंच</span> पर
+          </motion.h1>
 
+          <motion.p
+            className={styles.subtext}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            data-testid="hero-subtext"
+          >
+            HelpSphere दानदाताओं, स्वयंसेवकों और सत्यापित NGOs को जोड़ता है।
+            हर रुपये को ट्रैक करें और पूर्ण पारदर्शिता के साथ वास्तविक प्रभाव देखें।
+          </motion.p>
 
+          <motion.div
+            className={styles.ctaGroup}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+          >
+            <motion.button
+              className={`btn btn-primary ${styles.primaryCta}`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              data-testid="hero-donate-btn"
+            >
+              <Heart size={20} />
+              अभी दान करें
+              <ArrowRight size={18} />
+            </motion.button>
+            <motion.button
+              className={`btn btn-secondary ${styles.secondaryCta}`}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              data-testid="hero-volunteer-btn"
+            >
+              <Users size={20} />
+              स्वयंसेवक बनें
+            </motion.button>
+          </motion.div>
+
+          {/* Trust Indicators */}
+          <motion.div
+            className={styles.trustBadges}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
+            data-testid="trust-badges"
+          >
+            {trustBadges.map((badge, index) => (
+              <motion.div
+                key={index}
+                className={styles.trustItem}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.9 + index * 0.1, duration: 0.4 }}
+                data-testid={`trust-badge-${index}`}
+              >
+                <badge.icon className={styles.trustIcon} size={18} />
+                <div className={styles.trustText}>
+                  <span className={styles.trustValue}>{badge.value}</span>
+                  <span className={styles.trustLabel}>{badge.label}</span>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+
+        {/* Right Content - Hero Image */}
+        <motion.div
+          className={styles.rightContent}
+          initial={{ opacity: 0, x: 50, scale: 0.95 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className={styles.imageWrapper}>
+            <div className={styles.imageGlow} />
+            <motion.img
+              src="https://images.unsplash.com/photo-1560220604-1985ebfe28b1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwxfHx2b2x1bnRlZXJzJTIwaGVscGluZyUyMGNvbW11bml0eSUyMGluZGlhJTIwY2hhcml0eXxlbnwwfHx8fDE3NzI5MTY0OTh8MA&ixlib=rb-4.1.0&q=85"
+              alt="स्वयंसेवक समुदाय की मदद करते हुए"
+              className={styles.heroImage}
+              data-testid="hero-image"
+            />
+            
+            {/* Floating cards */}
+            <motion.div
+              className={`${styles.floatingCard} ${styles.card1}`}
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              data-testid="floating-card-1"
+            >
+              <div className={styles.cardIcon}>
+                <Heart size={24} />
+              </div>
+              <div className={styles.cardContent}>
+                <span className={styles.cardValue}>₹2.5 लाख</span>
+                <span className={styles.cardLabel}>इस महीने दान</span>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className={`${styles.floatingCard} ${styles.card2}`}
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              data-testid="floating-card-2"
+            >
+              <div className={styles.cardIcon} style={{ background: "linear-gradient(135deg, #22C55E 0%, #16A34A 100%)" }}>
+                <CheckCircle size={24} />
+              </div>
+              <div className={styles.cardContent}>
+                <span className={styles.cardValue}>100% सत्यापित</span>
+                <span className={styles.cardLabel}>सभी NGOs जाँचे गए</span>
+              </div>
+            </motion.div>
+
+            {/* Video play button overlay */}
+            <motion.button
+              className={styles.playBtn}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              data-testid="hero-video-btn"
+            >
+              <Play size={32} fill="#fff" />
+            </motion.button>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

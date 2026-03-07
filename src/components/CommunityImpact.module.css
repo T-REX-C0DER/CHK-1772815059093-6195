@@ -1,6 +1,9 @@
 .container {
-  padding: 100px 20px;
+  padding: 120px 24px;
   background: var(--color-background);
+}
+
+.content {
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -10,45 +13,70 @@
   margin-bottom: 60px;
 }
 
+.sectionTag {
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(201, 111, 74, 0.08);
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  margin-bottom: 20px;
+  letter-spacing: 0.02em;
+}
+
 .title {
-  font-size: 2.5rem;
-  margin-bottom: 16px;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin-bottom: 20px;
+  color: var(--text-primary);
 }
 
 .subtitle {
   color: var(--text-secondary);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  max-width: 450px;
+  margin: 0 auto;
+  line-height: 1.7;
 }
 
+/* Masonry Grid */
 .masonryGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 250px);
+  grid-template-rows: repeat(2, 280px);
   gap: 20px;
 }
 
 .gridItem {
   position: relative;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  background-color: var(--color-secondary);
-  background-size: cover;
-  background-position: center;
-  box-shadow: var(--shadow-soft);
   cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.gridItem:hover {
-  transform: translateY(-5px);
+  transition: all var(--transition-base);
 }
 
 .gridItem::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%);
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 60%);
   z-index: 1;
+  transition: background var(--transition-base);
+}
+
+.gridItem:hover::before {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 60%);
+}
+
+.itemImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.gridItem:hover .itemImage {
+  transform: scale(1.08);
 }
 
 .imageOverlay {
@@ -56,69 +84,64 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 24px;
+  padding: 28px;
   z-index: 2;
   color: #FFFFFF;
 }
 
 .imageOverlay h4 {
-  font-size: 1.2rem;
-  margin-bottom: 4px;
+  font-size: 1.25rem;
+  margin-bottom: 6px;
   color: #FFFFFF;
+  font-weight: 700;
 }
 
 .imageOverlay p {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   opacity: 0.9;
+  font-weight: 500;
 }
 
-/* Specific Grid Item Placement */
-.item1 {
+/* Grid Item Sizes */
+.large {
   grid-column: span 2;
   grid-row: span 2;
-  background: linear-gradient(45deg, var(--color-primary), var(--color-accent-2));
 }
 
-.item2 {
+.wide {
   grid-column: span 2;
-  background: linear-gradient(45deg, var(--color-accent-1), var(--color-secondary));
 }
 
-.item3 {
+.normal {
   grid-column: span 1;
-  background: linear-gradient(45deg, var(--color-secondary), var(--color-primary));
 }
 
-.item4 {
-  grid-column: span 1;
-  background: linear-gradient(45deg, var(--color-accent-2), var(--color-accent-1));
-}
-
-.item5 {
-  display: none; /* Fallback visually */
-}
-
-@media (max-width: 968px) {
+/* Responsive */
+@media (max-width: 1024px) {
   .masonryGrid {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
-    auto-rows: 250px;
+    auto-rows: 280px;
   }
-  
-  .item1 {
+
+  .large {
     grid-column: span 2;
     grid-row: span 1;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
+  .container {
+    padding: 80px 16px;
+  }
+
   .masonryGrid {
     grid-template-columns: 1fr;
+    grid-auto-rows: 250px;
   }
-  
-  .item1, .item2, .item3, .item4 {
+
+  .large, .wide, .normal {
     grid-column: span 1;
     grid-row: span 1;
-    height: 250px;
   }
 }
