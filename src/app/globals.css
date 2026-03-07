@@ -1,0 +1,136 @@
+:root {
+  /* Warm Skin-Tone / Startup Theme Refined */
+  --color-primary: #D67252; /* More vibrant terracotta */
+  --color-secondary: #F4E3DC; /* Softer peach for delicate contrasts */
+  --color-background: #FDFBFA; /* Extremely clean, barely warm white */
+  --color-surface: #FFFFFF;
+  --color-accent-1: #D67252;
+  --color-accent-2: #EEAFA0; /* Intermediate warm tone for gradients */
+  
+  /* Buttons */
+  --btn-primary: #D67252;
+  --btn-primary-hover: #BF5E3E;
+  
+  /* Text */
+  --text-primary: #181615; /* Subtly warmer off-black */
+  --text-secondary: #706763; /* Warmer gray */
+  
+  /* Shadows & Effects */
+  --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 20px 50px rgba(201, 124, 93, 0.1);
+  --shadow-nav: 0 4px 30px rgba(0, 0, 0, 0.05);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+  --glass-blur: blur(12px);
+
+  /* Measurements */
+  --radius-xl: 24px;
+  --radius-lg: 16px;
+  --radius-pill: 9999px;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--text-primary);
+  background: var(--color-background);
+  font-family: var(--font-inter), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-outfit), sans-serif; /* Geometric sans */
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Base button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-inter);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: var(--btn-primary);
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(201, 124, 93, 0.2);
+}
+
+.btn-primary:hover {
+  background-color: var(--btn-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(181, 103, 78, 0.3);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--color-secondary);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(201, 124, 93, 0.05);
+  border-color: var(--color-primary);
+}
+
+.btn-link {
+  background-color: transparent;
+  color: var(--color-primary);
+  padding: 12px 16px;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  box-shadow: var(--shadow-nav);
+}
+
+/* Card utility */
+.card-soft {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+  padding: 40px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.02);
+}
+
+.card-soft:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}

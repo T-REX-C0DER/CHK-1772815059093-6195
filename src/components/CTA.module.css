@@ -1,0 +1,125 @@
+.container {
+  position: relative;
+  padding: 120px 20px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent-1));
+  text-align: center;
+  color: #FFFFFF;
+  overflow: hidden;
+}
+
+.glowEffect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, var(--color-accent-2) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.contentWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1300px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  gap: 40px;
+}
+
+.imageCol {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.ctaImage1, .ctaImage2 {
+  width: 100%;
+  max-width: 350px;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  object-fit: cover;
+  aspect-ratio: 4/5;
+}
+
+.ctaImage1 {
+  transform: rotate(-3deg);
+}
+
+.ctaImage2 {
+  transform: rotate(3deg);
+}
+
+.content {
+  flex: 1.5;
+  text-align: center;
+}
+
+.title {
+  font-size: 3.5rem;
+  margin-bottom: 24px;
+  font-family: var(--font-outfit);
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 40px;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.glowBtn {
+  background: #FFFFFF;
+  color: var(--color-accent-1);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.glowBtn:hover {
+  background: var(--color-background);
+  color: var(--color-accent-1);
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+}
+
+.volunteerBtn {
+  background: transparent;
+  color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+}
+
+.volunteerBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 1024px) {
+  .contentWrapper {
+    flex-direction: column;
+  }
+  
+  .imageCol {
+    display: none; /* Hide images on smaller screens to keep focus on CTA */
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+  
+  .buttonGroup {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .glowBtn, .volunteerBtn {
+    width: 100%;
+    max-width: 300px;
+  }
+}

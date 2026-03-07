@@ -1,0 +1,118 @@
+.container {
+  padding: 100px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  gap: 20px;
+}
+
+/* The connecting line behind all items */
+.grid::before {
+  content: '';
+  position: absolute;
+  top: 60px; /* center of the icon */
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background: rgba(201, 124, 93, 0.2);
+  z-index: 0;
+}
+
+.stepCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 30px 20px;
+  flex: 1;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  z-index: 1;
+}
+
+.stepCard:hover {
+  transform: translateY(-5px);
+  box-shadow: none;
+}
+
+.iconWrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  font-size: 2rem;
+  box-shadow: var(--shadow-soft);
+  border: 4px solid var(--color-background);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 2;
+}
+
+.stepCard:hover .iconWrapper {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--color-accent-2);
+}
+
+.stepNum {
+  font-family: var(--font-outfit);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-accent-1);
+  margin-bottom: 8px;
+}
+
+.stepTitle {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.stepDesc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 968px) {
+  .grid {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .grid::before {
+    display: none;
+  }
+  .stepCard {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+  }
+}
+
