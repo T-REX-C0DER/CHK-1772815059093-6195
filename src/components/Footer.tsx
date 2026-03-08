@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Heart, Linkedin, Twitter, Facebook, Instagram, Send, MapPin, Mail, Phone } from "lucide-react";
+import { Linkedin, Twitter, Facebook, Instagram, Send, MapPin, Mail, Phone } from "lucide-react";
+import Image from "next/image";
 import styles from "./Footer.module.css";
 
 const footerLinks = {
@@ -48,7 +49,13 @@ export default function Footer() {
           >
             <div className={styles.logo} data-testid="footer-logo">
               <div className={styles.logoMark}>
-                <Heart size={22} />
+                <Image 
+                  src="/logo.png" 
+                  alt="HelpSphere Logo" 
+                  width={60} 
+                  height={60} 
+                  className={styles.logoImage}
+                />
               </div>
               <span className={styles.logoText}>HelpSphere</span>
             </div>

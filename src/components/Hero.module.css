@@ -112,17 +112,6 @@
   background-clip: text;
 }
 
-.highlight::after {
-  content: '';
-  position: absolute;
-  bottom: 4px;
-  left: 0;
-  width: 100%;
-  height: 12px;
-  background: linear-gradient(90deg, rgba(201, 111, 74, 0.2) 0%, rgba(232, 182, 107, 0.2) 100%);
-  z-index: -1;
-  border-radius: 4px;
-}
 
 .subtext {
   font-size: 1.2rem;

@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Heart, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronRight } from "lucide-react";
+import Image from "next/image";
 import styles from "./Navbar.module.css";
 
 const navLinks = [
@@ -34,7 +35,14 @@ export default function Navbar() {
         <nav className={`${styles.navbar} glass`} data-testid="main-navbar">
           <Link href="/" className={styles.logo} data-testid="logo-link">
             <div className={styles.logoMark}>
-              <Heart className={styles.logoIcon} />
+              <Image 
+                src="/logo.png" 
+                alt="HelpSphere Logo" 
+                width={48} 
+                height={48} 
+                className={styles.logoImage}
+                priority
+              />
             </div>
             <span className={styles.logoText}>HelpSphere</span>
           </Link>

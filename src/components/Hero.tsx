@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Heart, Users, ArrowRight, Play, CheckCircle } from "lucide-react";
 import styles from "./Hero.module.css";
 
@@ -90,25 +91,29 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
           >
-            <motion.button
-              className={`btn btn-primary ${styles.primaryCta}`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              data-testid="hero-donate-btn"
-            >
-              <Heart size={20} />
-              Donate Now
-              <ArrowRight size={18} />
-            </motion.button>
-            <motion.button
-              className={`btn btn-secondary ${styles.secondaryCta}`}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              data-testid="hero-volunteer-btn"
-            >
-              <Users size={20} />
-              Become a Volunteer
-            </motion.button>
+            <Link href="/signup" style={{ textDecoration: 'none' }}>
+              <motion.button
+                className={`btn btn-primary ${styles.primaryCta}`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                data-testid="hero-donate-btn"
+              >
+                <Heart size={20} />
+                Donate Now
+                <ArrowRight size={18} />
+              </motion.button>
+            </Link>
+            <Link href="/signup" style={{ textDecoration: 'none' }}>
+              <motion.button
+                className={`btn btn-secondary ${styles.secondaryCta}`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                data-testid="hero-volunteer-btn"
+              >
+                <Users size={20} />
+                Become a Volunteer
+              </motion.button>
+            </Link>
           </motion.div>
 
           {/* Trust Indicators */}

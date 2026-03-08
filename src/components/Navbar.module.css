@@ -33,25 +33,22 @@
 }
 
 .logoMark {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: var(--gradient-primary);
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-sm);
+  overflow: hidden;
 }
 
-.logoIcon {
-  color: #fff;
-  width: 22px;
-  height: 22px;
+.logoImage {
+  object-fit: contain;
+  padding: 4px;
 }
 
 .logoText {
   font-family: var(--font-outfit), system-ui, sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
   background: var(--gradient-primary);
   -webkit-background-clip: text;
