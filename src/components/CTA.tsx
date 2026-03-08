@@ -28,7 +28,7 @@ export default function CTA() {
         >
           <img 
             src="https://images.unsplash.com/photo-1708417148451-addac93f0b67?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHw0fHx2b2x1bnRlZXJzJTIwaGVscGluZyUyMGNvbW11bml0eSUyMGluZGlhJTIwY2hhcml0eXxlbnwwfHx8fDE3NzI5MTY0OTh8MA&ixlib=rb-4.1.0&q=85" 
-            alt="स्वयंसेवक कार्रवाई में" 
+            alt="Volunteers in action" 
             className={styles.ctaImage}
             data-testid="cta-image-1"
           />
@@ -51,33 +51,33 @@ export default function CTA() {
           </motion.div>
           
           <h2 className={styles.title} data-testid="cta-title">
-            आज किसी की मुस्कान का<br />कारण बनें
+            Become the Reason<br />Someone Smiles Today
           </h2>
           
           <p className={styles.subtitle} data-testid="cta-subtitle">
-            हज़ारों दानदाताओं और स्वयंसेवकों से जुड़ें जो दुनिया भर में पारदर्शी और सार्थक प्रभाव बना रहे हैं।
+            Join thousands of donors and volunteers making a transparent and meaningful impact worldwide.
           </p>
           
           <div className={styles.buttonGroup}>
             <motion.button
-              className={`btn btn-white ${styles.primaryBtn}`}
+              className={`btn btn-primary ${styles.primaryBtn}`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               data-testid="cta-donate-btn"
             >
               <Heart size={20} />
-              अभी दान करें
+              Donate Now
               <ArrowRight size={18} />
             </motion.button>
             
             <motion.button
-              className={`btn btn-outline-white ${styles.secondaryBtn}`}
+              className={`btn btn-secondary ${styles.secondaryBtn}`}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               data-testid="cta-volunteer-btn"
             >
               <Users size={20} />
-              स्वयंसेवक बनें
+              Become a Volunteer
             </motion.button>
           </div>
         </motion.div>
@@ -92,7 +92,7 @@ export default function CTA() {
         >
           <img 
             src="https://images.unsplash.com/photo-1740065592719-052d3e5ec6fb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTJ8MHwxfHNlYXJjaHwzfHxkaXZlcnNlJTIwcGVvcGxlJTIwdGVhbXdvcmslMjBoYW5kcyUyMHRvZ2V0aGVyfGVufDB8fHx8MTc3MjkxNjQ5OXww&ixlib=rb-4.1.0&q=85" 
-            alt="मदद के हाथ" 
+            alt="Helping hands" 
             className={styles.ctaImage}
             data-testid="cta-image-2"
           />

@@ -5,26 +5,26 @@ import styles from "./CommunityImpact.module.css";
 
 const impactItems = [
   {
-    title: "खाद्य वितरण",
-    stat: "1,200 भोजन परोसे",
+    title: "Food Distribution",
+    stat: "1,200 Meals Served",
     image: "https://images.unsplash.com/photo-1708670295755-dd2dd643af85?crop=entropy&cs=srgb&fm=jpg&w=600&q=80",
     span: "large"
   },
   {
-    title: "शिक्षा सहायता",
-    stat: "नई लाइब्रेरी बनाई",
+    title: "Education Support",
+    stat: "New Library Built",
     image: "https://images.unsplash.com/photo-1567057419565-4349c49d8a04?crop=entropy&cs=srgb&fm=jpg&w=600&q=80",
     span: "wide"
   },
   {
-    title: "चिकित्सा शिविर",
-    stat: "500+ जाँचें",
+    title: "Medical Camp",
+    stat: "500+ Checkups",
     image: "https://images.unsplash.com/photo-1589104759909-e355f8999f7e?crop=entropy&cs=srgb&fm=jpg&w=600&q=80",
     span: "normal"
   },
   {
-    title: "कौशल प्रशिक्षण",
-    stat: "युवाओं को सशक्त बनाना",
+    title: "Skill Training",
+    stat: "Empowering Youth",
     image: "https://images.unsplash.com/photo-1616680214429-d79397e56688?crop=entropy&cs=srgb&fm=jpg&w=600&q=80",
     span: "normal"
   }
@@ -41,10 +41,10 @@ export default function CommunityImpact() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <span className={styles.sectionTag} data-testid="community-tag">समुदाय</span>
-          <h2 className={styles.title} data-testid="community-title">कार्रवाई में समुदाय</h2>
+          <span className={styles.sectionTag} data-testid="community-tag">Community</span>
+          <h2 className={styles.title} data-testid="community-title">Community in Action</h2>
           <p className={styles.subtitle}>
-            जमीनी स्तर पर हो रहे वास्तविक कार्य को देखें।
+            See the real work happening on the ground.
           </p>
         </motion.div>
 

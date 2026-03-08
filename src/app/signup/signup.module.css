@@ -1,0 +1,657 @@
+/* ============================================
+   SIGNUP PAGE — Premium Auth Styling
+   ============================================ */
+
+.authContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  background: var(--color-background);
+}
+
+/* ─── LEFT SIDE: FORM ─── */
+.formSide {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px 40px;
+  background: var(--gradient-warm-bg);
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.formSide::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(212, 163, 115, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.formWrapper {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px 0;
+}
+
+/* Logo */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.logoMark {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.logoText {
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--text-primary);
+}
+
+/* Header */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.highlight {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ─── ROLE SELECTION CARDS ─── */
+.roleCards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.roleCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px;
+  background: var(--color-surface);
+  border: 2px solid rgba(197, 131, 113, 0.1);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-align: left;
+  position: relative;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+.roleCard:hover {
+  border-color: rgba(197, 131, 113, 0.25);
+  box-shadow: var(--shadow-md);
+}
+
+.roleCard.roleActive {
+  border-color: var(--color-primary);
+  background: rgba(197, 131, 113, 0.04);
+  box-shadow: 0 0 0 4px rgba(197, 131, 113, 0.08), var(--shadow-sm);
+}
+
+.roleIconWrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: rgba(197, 131, 113, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+}
+
+.roleActive .roleIconWrapper {
+  background: var(--gradient-primary);
+}
+
+.roleIcon {
+  color: var(--color-primary);
+  transition: color var(--transition-base);
+}
+
+.roleActive .roleIcon {
+  color: #fff;
+}
+
+.roleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.roleName {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.roleDesc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.roleCheck {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  color: var(--color-primary);
+}
+
+/* ─── FORM ─── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow: hidden;
+}
+
+.fieldsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inputRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.87rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+}
+
+.optional {
+  font-weight: 400;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: color var(--transition-base);
+}
+
+.input {
+  width: 100%;
+  padding: 13px 14px 13px 44px;
+  border: 1.5px solid rgba(197, 131, 113, 0.15);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 0.93rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: all var(--transition-base);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(197, 131, 113, 0.1), var(--shadow-xs);
+}
+
+.inputWrapper:focus-within .inputIcon {
+  color: var(--color-primary);
+}
+
+.eyeBtn {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  transition: color var(--transition-base);
+}
+
+.eyeBtn:hover {
+  color: var(--color-primary);
+}
+
+/* ─── TERMS CHECKBOX ─── */
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox {
+  display: none;
+}
+
+.checkboxCustom {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 6px;
+  border: 1.5px solid rgba(197, 131, 113, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  background: var(--color-surface);
+  transition: all var(--transition-base);
+  margin-top: 2px;
+}
+
+.checkbox:checked + .checkboxCustom {
+  background: rgba(197, 131, 113, 0.1);
+  border-color: var(--color-primary);
+}
+
+.termsText {
+  font-size: 0.87rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.termsLink {
+  color: var(--color-primary);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.termsLink:hover {
+  opacity: 0.75;
+}
+
+/* ─── SUBMIT BUTTON ─── */
+.submitBtn {
+  width: 100%;
+  padding: 16px 28px;
+  background: var(--gradient-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 20px rgba(197, 131, 113, 0.25);
+  transition: box-shadow var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.submitBtn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  transition: left 0.5s ease;
+}
+
+.submitBtn:hover::before {
+  left: 100%;
+}
+
+.submitBtn:hover {
+  box-shadow: 0 8px 32px rgba(197, 131, 113, 0.35), 0 0 20px rgba(197, 131, 113, 0.15);
+}
+
+/* ─── DIVIDER ─── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background: rgba(197, 131, 113, 0.12);
+}
+
+.dividerText {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ─── SOCIAL BUTTONS ─── */
+.socialBtns {
+  display: flex;
+  gap: 12px;
+}
+
+.socialBtn {
+  flex: 1;
+  padding: 13px 16px;
+  background: var(--color-surface);
+  border: 1.5px solid rgba(197, 131, 113, 0.12);
+  border-radius: var(--radius-md);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all var(--transition-base);
+}
+
+.socialBtn:hover {
+  border-color: rgba(197, 131, 113, 0.3);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ─── TRUST INDICATORS ─── */
+.trustSection {
+  padding-top: 4px;
+}
+
+.trustItems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.trustItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.trustIcon {
+  color: #22C55E;
+  flex-shrink: 0;
+}
+
+/* ─── FOOTER ─── */
+.footerText {
+  text-align: center;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.footerLink {
+  color: var(--color-primary);
+  font-weight: 600;
+  transition: opacity var(--transition-base);
+}
+
+.footerLink:hover {
+  opacity: 0.75;
+}
+
+/* ─── RIGHT SIDE: IMAGE ─── */
+.imageSide {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(197, 131, 113, 0.15) 0%,
+    rgba(166, 110, 88, 0.35) 60%,
+    rgba(140, 90, 70, 0.75) 100%
+  );
+  z-index: 1;
+}
+
+/* Floating Stat Cards */
+.floatingCard {
+  position: absolute;
+  z-index: 2;
+}
+
+.floatingCardInner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.floatCard1 {
+  top: 16%;
+  left: 8%;
+}
+
+.floatCard2 {
+  top: 42%;
+  right: 8%;
+}
+
+.floatCard3 {
+  bottom: 20%;
+  left: 12%;
+}
+
+.floatIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--gradient-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.floatInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.floatValue {
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.floatLabel {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* Image Bottom Content */
+.imageBottomContent {
+  position: absolute;
+  bottom: 48px;
+  left: 40px;
+  right: 40px;
+  z-index: 2;
+}
+
+.imageTitle {
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.3;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.imageSubtitle {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .authContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .imageSide {
+    order: -1;
+    max-height: 280px;
+  }
+
+  .imageContainer {
+    min-height: 280px;
+  }
+
+  .floatingCard {
+    display: none;
+  }
+
+  .imageBottomContent {
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+  }
+
+  .imageTitle {
+    font-size: 1.3rem;
+  }
+
+  .formSide {
+    padding: 32px 24px 48px;
+  }
+
+  .formWrapper {
+    padding: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .formWrapper {
+    gap: 20px;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .roleCards {
+    grid-template-columns: 1fr;
+  }
+
+  .inputRow {
+    grid-template-columns: 1fr;
+  }
+
+  .socialBtns {
+    flex-direction: column;
+  }
+
+  .trustItems {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .imageSide {
+    max-height: 200px;
+  }
+
+  .imageContainer {
+    min-height: 200px;
+  }
+}

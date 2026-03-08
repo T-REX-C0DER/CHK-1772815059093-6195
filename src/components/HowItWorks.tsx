@@ -7,29 +7,29 @@ import styles from "./HowItWorks.module.css";
 const steps = [
   {
     number: "01",
-    title: "कारण खोजें",
-    desc: "सत्यापित NGOs और सार्थक कारणों को ब्राउज़ करें।",
+    title: "Find a Cause",
+    desc: "Browse through verified NGOs and meaningful causes.",
     icon: Search,
     color: "#C96F4A"
   },
   {
     number: "02",
-    title: "दान या स्वयंसेवा",
-    desc: "पैसे, समय या कौशल से सहायता करें।",
+    title: "Donate or Volunteer",
+    desc: "Help with your money, time, or skills.",
     icon: HandHeart,
     color: "#E38B6C"
   },
   {
     number: "03",
-    title: "प्रभाव ट्रैक करें",
-    desc: "देखें आपका योगदान कैसे उपयोग होता है।",
+    title: "Track Impact",
+    desc: "See how your contribution is making a difference.",
     icon: BarChart3,
     color: "#E8B66B"
   },
   {
     number: "04",
-    title: "प्रभाव साझा करें",
-    desc: "अपनी प्रभाव प्रोफ़ाइल बनाएं और दूसरों को प्रेरित करें।",
+    title: "Share Impact",
+    desc: "Build your impact profile and inspire others.",
     icon: Share2,
     color: "#F08A6B"
   }
@@ -48,10 +48,10 @@ export default function HowItWorks() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <span className={styles.sectionTag} data-testid="how-it-works-tag">कैसे काम करता है</span>
-          <h2 className={styles.title} data-testid="how-it-works-title">HelpSphere कैसे काम करता है</h2>
+          <span className={styles.sectionTag} data-testid="how-it-works-tag">How It Works</span>
+          <h2 className={styles.title} data-testid="how-it-works-title">How HelpSphere Works</h2>
           <p className={styles.subtitle}>
-            सामाजिक प्रभाव को सरल, पारदर्शी और विश्वसनीय बनाना।
+            Making social impact simple, transparent, and trustworthy.
           </p>
         </motion.div>
 

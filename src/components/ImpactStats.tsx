@@ -6,10 +6,10 @@ import { IndianRupee, Building2, Users, Heart } from "lucide-react";
 import styles from "./ImpactStats.module.css";
 
 const stats = [
-  { value: 5000000, prefix: "₹", suffix: "+", label: "दान जुटाया", icon: IndianRupee, color: "#C96F4A" },
-  { value: 120, prefix: "", suffix: "+", label: "सत्यापित NGOs", icon: Building2, color: "#E38B6C" },
-  { value: 10000, prefix: "", suffix: "+", label: "स्वयंसेवक", icon: Users, color: "#E8B66B" },
-  { value: 500, prefix: "", suffix: "+", label: "जीवन प्रभावित", icon: Heart, color: "#F08A6B" },
+  { value: 5000000, prefix: "₹", suffix: "+", label: "Donations Raised", icon: IndianRupee, color: "#C58371" },
+  { value: 120, prefix: "", suffix: "+", label: "Verified NGOs", icon: Building2, color: "#D4A373" },
+  { value: 10000, prefix: "", suffix: "+", label: "Volunteers", icon: Users, color: "#A66E58" },
+  { value: 500, prefix: "", suffix: "+", label: "Lives Impacted", icon: Heart, color: "#E2B49A" },
 ];
 
 function AnimatedCounter({ value, prefix, suffix }: { value: number; prefix: string; suffix: string }) {
@@ -51,10 +51,10 @@ export default function ImpactStats() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <span className={styles.sectionTag} data-testid="stats-tag">हमारा प्रभाव</span>
-          <h2 className={styles.title} data-testid="stats-title">हमारे आंकड़े खुद बोलते हैं</h2>
+          <span className={styles.sectionTag} data-testid="stats-tag">Our Impact</span>
+          <h2 className={styles.title} data-testid="stats-title">Our Numbers Speak for Themselves</h2>
           <p className={styles.subtitle}>
-            मिलकर, हम हर दिन एक मापने योग्य अंतर बना रहे हैं।
+            Together, we are making a measurable difference every single day.
           </p>
         </motion.div>
 

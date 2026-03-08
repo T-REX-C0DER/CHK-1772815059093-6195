@@ -6,22 +6,22 @@ import styles from "./Footer.module.css";
 
 const footerLinks = {
   platform: [
-    { label: "हमारे बारे में", href: "#about" },
-    { label: "कहानियाँ", href: "#stories" },
-    { label: "पारदर्शिता", href: "#transparency" },
-    { label: "NGO सूची", href: "#" },
+    { label: "About Us", href: "#about" },
+    { label: "Stories", href: "#stories" },
+    { label: "Transparency", href: "#transparency" },
+    { label: "NGO List", href: "#" },
   ],
   community: [
-    { label: "स्वयंसेवक बनें", href: "#volunteer" },
-    { label: "अभियान", href: "#" },
-    { label: "करियर", href: "#" },
-    { label: "साझेदारी", href: "#" },
+    { label: "Become a Volunteer", href: "#volunteer" },
+    { label: "Campaigns", href: "#" },
+    { label: "Careers", href: "#" },
+    { label: "Partnerships", href: "#" },
   ],
   legal: [
-    { label: "गोपनीयता नीति", href: "#" },
-    { label: "सेवा की शर्तें", href: "#" },
-    { label: "NGO दिशानिर्देश", href: "#" },
-    { label: "रिफंड नीति", href: "#" },
+    { label: "Privacy Policy", href: "#" },
+    { label: "Terms of Service", href: "#" },
+    { label: "NGO Guidelines", href: "#" },
+    { label: "Refund Policy", href: "#" },
   ],
 };
 
@@ -54,16 +54,16 @@ export default function Footer() {
             </div>
             
             <p className={styles.desc}>
-              पारदर्शिता के माध्यम से वास्तविक प्रभाव बनाना। हम लोगों को सत्यापित NGOs से जोड़ते हैं एक बेहतर कल के लिए।
+              Making a real impact through transparency. We connect people with verified NGOs for a better tomorrow.
             </p>
 
             {/* Newsletter */}
             <div className={styles.newsletter}>
-              <p className={styles.newsletterLabel}>अपडेट प्राप्त करें</p>
+              <p className={styles.newsletterLabel}>Get Updates</p>
               <div className={styles.inputGroup}>
                 <input 
                   type="email" 
-                  placeholder="आपका ईमेल" 
+                  placeholder="Your Email" 
                   className={styles.input}
                   data-testid="newsletter-input"
                 />
@@ -99,7 +99,7 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            <h4>समुदाय</h4>
+            <h4>Community</h4>
             <ul>
               {footerLinks.community.map((link, i) => (
                 <li key={i}>
@@ -116,7 +116,7 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            <h4>कानूनी</h4>
+            <h4>Legal</h4>
             <ul>
               {footerLinks.legal.map((link, i) => (
                 <li key={i}>
@@ -133,7 +133,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className={styles.bottomBar}>
           <p className={styles.copyright} data-testid="copyright">
-            © {new Date().getFullYear()} HelpSphere. सभी अधिकार सुरक्षित।
+            © {new Date().getFullYear()} HelpSphere. All rights reserved.
           </p>
           
           <div className={styles.socials}>

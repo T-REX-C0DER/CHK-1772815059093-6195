@@ -1,18 +1,18 @@
 :root {
-  /* Premium HelpSphere Color System */
-  --color-primary: #C96F4A;
-  --color-primary-light: #E38B6C;
-  --color-secondary: #F08A6B;
-  --color-accent: #E8B66B;
+  /* Aesthetic Skin Tone Color System */
+  --color-primary: #C58371; /* Blush/Terracotta */
+  --color-primary-light: #D4A373; /* Warm Sand */
+  --color-secondary: #A66E58; /* Deep Rose/Brown */
+  --color-accent: #E2B49A; /* Light Peach */
   
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #C96F4A 0%, #E38B6C 100%);
-  --gradient-warm-bg: linear-gradient(180deg, #FFF8F3 0%, #F7EFEA 100%);
-  --gradient-hero: linear-gradient(135deg, rgba(255, 248, 243, 0.95) 0%, rgba(247, 239, 234, 0.85) 100%);
-  --gradient-section-alt: linear-gradient(180deg, #F6EEE8 0%, #FFF8F3 100%);
+  --gradient-primary: linear-gradient(135deg, #C58371 0%, #D4A373 100%);
+  --gradient-warm-bg: linear-gradient(180deg, #FDF8F5 0%, #FAEEE7 100%);
+  --gradient-hero: linear-gradient(135deg, rgba(253, 248, 245, 0.95) 0%, rgba(250, 238, 231, 0.85) 100%);
+  --gradient-section-alt: linear-gradient(180deg, #FAEEE7 0%, #FDF8F5 100%);
   
   /* Surfaces */
-  --color-background: #FFF8F3;
+  --color-background: #FDF8F5;
   --color-surface: #FFFFFF;
   --color-surface-elevated: rgba(255, 255, 255, 0.95);
   
@@ -22,12 +22,12 @@
   --text-muted: #9B9B9B;
   
   /* Shadows */
-  --shadow-xs: 0 2px 8px rgba(201, 111, 74, 0.06);
-  --shadow-sm: 0 4px 16px rgba(201, 111, 74, 0.08);
-  --shadow-md: 0 8px 32px rgba(201, 111, 74, 0.10);
-  --shadow-lg: 0 16px 48px rgba(201, 111, 74, 0.12);
-  --shadow-xl: 0 24px 64px rgba(201, 111, 74, 0.15);
-  --shadow-glow: 0 0 40px rgba(201, 111, 74, 0.25);
+  --shadow-xs: 0 2px 8px rgba(197, 131, 113, 0.06);
+  --shadow-sm: 0 4px 16px rgba(197, 131, 113, 0.08);
+  --shadow-md: 0 8px 32px rgba(197, 131, 113, 0.10);
+  --shadow-lg: 0 16px 48px rgba(197, 131, 113, 0.12);
+  --shadow-xl: 0 24px 64px rgba(197, 131, 113, 0.15);
+  --shadow-glow: 0 0 40px rgba(197, 131, 113, 0.25);
   
   /* Glassmorphism */
   --glass-bg: rgba(255, 255, 255, 0.8);
@@ -116,22 +116,22 @@ a {
 .btn-primary {
   background: var(--gradient-primary);
   color: #ffffff;
-  box-shadow: var(--shadow-sm), 0 0 20px rgba(201, 111, 74, 0.2);
+  box-shadow: var(--shadow-sm), 0 0 20px rgba(197, 131, 113, 0.2);
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
-  box-shadow: var(--shadow-lg), 0 0 40px rgba(201, 111, 74, 0.3);
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(197, 131, 113, 0.3);
 }
 
 .btn-secondary {
   background: transparent;
   color: var(--text-primary);
-  border: 2px solid rgba(201, 111, 74, 0.3);
+  border: 2px solid rgba(197, 131, 113, 0.4);
 }
 
 .btn-secondary:hover {
-  background: rgba(201, 111, 74, 0.05);
+  background: rgba(197, 131, 113, 0.08);
   border-color: var(--color-primary);
   transform: translateY(-2px);
 }
@@ -173,7 +173,7 @@ a {
   box-shadow: var(--shadow-sm);
   padding: 32px;
   transition: all var(--transition-base);
-  border: 1px solid rgba(201, 111, 74, 0.05);
+  border: 1px solid rgba(197, 131, 113, 0.08);
 }
 
 .card-premium:hover {

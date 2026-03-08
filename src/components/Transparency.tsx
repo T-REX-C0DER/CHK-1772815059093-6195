@@ -5,18 +5,18 @@ import { User, CreditCard, Building2, Hammer, Sparkles, CheckCircle, Shield, Ima
 import styles from "./Transparency.module.css";
 
 const flowSteps = [
-  { icon: User, title: "दानदाता", subtitle: "आप एक कारण चुनें", color: "#C96F4A" },
-  { icon: CreditCard, title: "सुरक्षित भुगतान", subtitle: "सीधा और शुल्क-मुक्त", color: "#E38B6C" },
-  { icon: Building2, title: "सत्यापित NGO", subtitle: "पूर्णतः जाँचा गया", color: "#E8B66B" },
-  { icon: Hammer, title: "प्रोजेक्ट निष्पादन", subtitle: "लाइव प्रगति अपडेट", color: "#F08A6B" },
-  { icon: Sparkles, title: "वास्तविक प्रभाव प्रमाण", subtitle: "फोटो और वीडियो सत्यापन", color: "#C96F4A" },
+  { icon: User, title: "Donor", subtitle: "You choose a cause", color: "#C96F4A" },
+  { icon: CreditCard, title: "Secure Payment", subtitle: "Direct and fee-free", color: "#E38B6C" },
+  { icon: Building2, title: "Verified NGO", subtitle: "Fully vetted", color: "#E8B66B" },
+  { icon: Hammer, title: "Project Execution", subtitle: "Live progress updates", color: "#F08A6B" },
+  { icon: Sparkles, title: "Real Impact Proof", subtitle: "Photo and video verification", color: "#C96F4A" },
 ];
 
 const trustFeatures = [
-  { icon: Shield, text: "कड़ी NGO सत्यापन प्रक्रिया" },
-  { icon: CreditCard, text: "सीधा पारदर्शी फंड ट्रांसफर" },
-  { icon: Image, text: "फोटो और वीडियो कार्य प्रमाण" },
-  { icon: Target, text: "माइलस्टोन-आधारित फंड रिलीज" },
+  { icon: Shield, text: "Strict NGO verification process" },
+  { icon: CreditCard, text: "Direct transparent fund transfer" },
+  { icon: Image, text: "Photo and video proof of work" },
+  { icon: Target, text: "Milestone-based fund release" },
 ];
 
 export default function Transparency() {
@@ -32,10 +32,10 @@ export default function Transparency() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
         >
-          <span className={styles.sectionTag} data-testid="transparency-tag">पारदर्शिता</span>
-          <h2 className={styles.title} data-testid="transparency-title">देखें हर योगदान कहाँ जाता है</h2>
+          <span className={styles.sectionTag} data-testid="transparency-tag">Transparency</span>
+          <h2 className={styles.title} data-testid="transparency-title">See Where Every Contribution Goes</h2>
           <p className={styles.subtitle}>
-            हम 100% पारदर्शिता में विश्वास करते हैं। हमारी ट्रैकिंग प्रणाली सुनिश्चित करती है कि आपका दान और प्रयास वास्तविक प्रभाव में बदले।
+            We believe in 100% transparency. Our tracking system ensures that your donation and effort turn into real impact.
           </p>
         </motion.div>
 

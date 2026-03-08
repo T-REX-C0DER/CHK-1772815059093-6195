@@ -15,8 +15,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "HelpSphere - दान करें, स्वयंसेवा करें और वास्तविक प्रभाव देखें",
-  description: "HelpSphere दानदाताओं, स्वयंसेवकों और सत्यापित NGOs को जोड़ता है। हर रुपये को ट्रैक करें और पूर्ण पारदर्शिता के साथ वास्तविक प्रभाव देखें।",
+  title: "HelpSphere - Donate, Volunteer, and See Real Impact",
+  description: "HelpSphere connects donors, volunteers, and verified NGOs. Track every rupee and see real impact with complete transparency.",
 };
 
 export default function RootLayout({
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="hi">
+    <html lang="en">
       <body className={`${inter.variable} ${outfit.variable}`}>
         {children}
       </body>

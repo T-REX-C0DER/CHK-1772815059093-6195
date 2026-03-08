@@ -5,10 +5,10 @@ import { Heart, Users, ArrowRight, Play, CheckCircle } from "lucide-react";
 import styles from "./Hero.module.css";
 
 const trustBadges = [
-  { icon: CheckCircle, value: "120+", label: "सत्यापित NGOs" },
-  { icon: CheckCircle, value: "₹5M+", label: "दान ट्रैक किया" },
-  { icon: CheckCircle, value: "10K+", label: "स्वयंसेवक" },
-  { icon: CheckCircle, value: "500+", label: "जीवन प्रभावित" },
+  { icon: CheckCircle, value: "120+", label: "Verified NGOs" },
+  { icon: CheckCircle, value: "₹5M+", label: "Donations Tracked" },
+  { icon: CheckCircle, value: "10K+", label: "Volunteers" },
+  { icon: CheckCircle, value: "500+", label: "Lives Impacted" },
 ];
 
 export default function Hero() {
@@ -58,7 +58,7 @@ export default function Hero() {
             data-testid="hero-badge"
           >
             <span className={styles.badgeDot} />
-            भारत का सबसे पारदर्शी दान मंच
+            India's Most Transparent Donation Platform
           </motion.div>
 
           <motion.h1
@@ -68,9 +68,9 @@ export default function Hero() {
             transition={{ delay: 0.3, duration: 0.6 }}
             data-testid="hero-headline"
           >
-            दान करें, स्वयंसेवा करें और<br />
-            वास्तविक प्रभाव ट्रैक करें<br />
-            <span className={styles.highlight}>एक पारदर्शी मंच</span> पर
+            Donate, Volunteer, and<br />
+            Track Real Impact<br />
+            <span className={styles.highlight}>on a Transparent Platform</span>
           </motion.h1>
 
           <motion.p
@@ -80,8 +80,8 @@ export default function Hero() {
             transition={{ delay: 0.5, duration: 0.6 }}
             data-testid="hero-subtext"
           >
-            HelpSphere दानदाताओं, स्वयंसेवकों और सत्यापित NGOs को जोड़ता है।
-            हर रुपये को ट्रैक करें और पूर्ण पारदर्शिता के साथ वास्तविक प्रभाव देखें।
+            HelpSphere connects donors, volunteers, and verified NGOs.
+            Track every rupee and see real impact with complete transparency.
           </motion.p>
 
           <motion.div
@@ -97,7 +97,7 @@ export default function Hero() {
               data-testid="hero-donate-btn"
             >
               <Heart size={20} />
-              अभी दान करें
+              Donate Now
               <ArrowRight size={18} />
             </motion.button>
             <motion.button
@@ -107,7 +107,7 @@ export default function Hero() {
               data-testid="hero-volunteer-btn"
             >
               <Users size={20} />
-              स्वयंसेवक बनें
+              Become a Volunteer
             </motion.button>
           </motion.div>
 
@@ -149,7 +149,7 @@ export default function Hero() {
             <div className={styles.imageGlow} />
             <motion.img
               src="https://images.unsplash.com/photo-1560220604-1985ebfe28b1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwxfHx2b2x1bnRlZXJzJTIwaGVscGluZyUyMGNvbW11bml0eSUyMGluZGlhJTIwY2hhcml0eXxlbnwwfHx8fDE3NzI5MTY0OTh8MA&ixlib=rb-4.1.0&q=85"
-              alt="स्वयंसेवक समुदाय की मदद करते हुए"
+              alt="Volunteers helping community"
               className={styles.heroImage}
               data-testid="hero-image"
             />
@@ -165,8 +165,8 @@ export default function Hero() {
                 <Heart size={24} />
               </div>
               <div className={styles.cardContent}>
-                <span className={styles.cardValue}>₹2.5 लाख</span>
-                <span className={styles.cardLabel}>इस महीने दान</span>
+                <span className={styles.cardValue}>₹2.5 Lakh</span>
+                <span className={styles.cardLabel}>Donated This Month</span>
               </div>
             </motion.div>
 
@@ -180,8 +180,8 @@ export default function Hero() {
                 <CheckCircle size={24} />
               </div>
               <div className={styles.cardContent}>
-                <span className={styles.cardValue}>100% सत्यापित</span>
-                <span className={styles.cardLabel}>सभी NGOs जाँचे गए</span>
+                <span className={styles.cardValue}>100% Verified</span>
+                <span className={styles.cardLabel}>All NGOs Checked</span>
               </div>
             </motion.div>
 

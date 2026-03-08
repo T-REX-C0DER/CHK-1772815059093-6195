@@ -7,13 +7,12 @@ import { Menu, X, Heart, ChevronRight } from "lucide-react";
 import styles from "./Navbar.module.css";
 
 const navLinks = [
-  { href: "#home", label: "होम", labelEn: "Home" },
-  { href: "#about", label: "हमारे बारे में", labelEn: "About" },
-  { href: "#stories", label: "कहानियाँ", labelEn: "Stories" },
-  { href: "#transparency", label: "पारदर्शिता", labelEn: "Transparency" },
-  { href: "#volunteer", label: "स्वयंसेवक", labelEn: "Volunteer" },
+  { href: "#home", label: "Home", labelEn: "Home" },
+  { href: "#about", label: "About", labelEn: "About" },
+  { href: "#stories", label: "Stories", labelEn: "Stories" },
+  { href: "#transparency", label: "Transparency", labelEn: "Transparency" },
+  { href: "#volunteer", label: "Volunteer", labelEn: "Volunteer" },
 ];
-
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -56,17 +55,8 @@ export default function Navbar() {
           </div>
 
           <div className={styles.actions}>
-            <button className={styles.textBtn} data-testid="login-btn">लॉगिन</button>
-            <button className={styles.textBtn} data-testid="signup-btn">साइन अप</button>
-            <motion.button
-              className={`btn btn-primary ${styles.donateBtn}`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              data-testid="donate-now-btn"
-            >
-              <Heart size={18} />
-              अभी दान करें
-            </motion.button>
+            <Link href="/login" className={styles.textBtn} data-testid="login-btn">Login</Link>
+            <Link href="/signup" className={`btn btn-primary ${styles.textBtn}`} data-testid="signup-btn">Sign Up</Link>
           </div>
 
           <button
@@ -111,9 +101,8 @@ export default function Navbar() {
                 </motion.div>
               ))}
               <div className={styles.mobileCta}>
-                <button className="btn btn-primary" style={{ width: "100%" }} data-testid="mobile-donate-btn">
-                  <Heart size={18} />
-                  अभी दान करें
+                <button className="btn btn-primary" style={{ width: "100%" }} data-testid="mobile-signup-btn">
+                  Sign Up
                 </button>
               </div>
             </div>

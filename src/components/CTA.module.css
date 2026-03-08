@@ -1,9 +1,9 @@
 .container {
   position: relative;
   padding: 120px 24px;
-  background: var(--gradient-primary);
+  background: transparent;
   text-align: center;
-  color: #FFFFFF;
+  color: var(--text-primary);
   overflow: hidden;
 }
 
@@ -13,7 +13,7 @@
   left: 50%;
   width: 900px;
   height: 900px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--color-background) 0%, transparent 70%);
   transform: translate(-50%, -50%);
   pointer-events: none;
 }
@@ -22,8 +22,8 @@
   position: absolute;
   inset: 0;
   background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(197, 131, 113, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(197, 131, 113, 0.05) 1px, transparent 1px);
   background-size: 60px 60px;
   pointer-events: none;
 }
@@ -68,26 +68,26 @@
   justify-content: center;
   width: 72px;
   height: 72px;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--color-surface);
   border-radius: var(--radius-lg);
   margin-bottom: 28px;
-  color: #fff;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(197, 131, 113, 0.1);
 }
 
 .title {
   font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: 20px;
   font-family: var(--font-outfit), system-ui, sans-serif;
-  color: #fff;
+  color: var(--text-primary);
   line-height: 1.2;
 }
 
 .subtitle {
   font-size: 1.15rem;
   margin-bottom: 36px;
-  opacity: 0.9;
+  color: var(--text-secondary);
   line-height: 1.7;
   max-width: 480px;
   margin-left: auto;
