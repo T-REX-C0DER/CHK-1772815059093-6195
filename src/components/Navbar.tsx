@@ -13,7 +13,6 @@ const navLinks = [
   { href: "#stories", label: "Stories", labelEn: "Stories" },
   { href: "#transparency", label: "Transparency", labelEn: "Transparency" },
   { href: "#volunteer", label: "Volunteer", labelEn: "Volunteer" },
-  { href: "/organization/dashboard", label: "Organizations", labelEn: "Organizations" },
 ];
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);

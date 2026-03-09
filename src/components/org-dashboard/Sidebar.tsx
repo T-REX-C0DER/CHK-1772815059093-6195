@@ -14,13 +14,12 @@ import {
   LogOut
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { useDashboard } from '@/app/organization/dashboard/DashboardContext';
 
-interface SidebarProps {
-  activeMenu: string;
-  setActiveMenu: (menu: string) => void;
-}
-
-const Sidebar = ({ activeMenu, setActiveMenu }: SidebarProps) => {
+const Sidebar = () => {
+  const { activeMenu, setActiveMenu } = useDashboard();
+  
   const menuItems = [
     { name: 'Overview', icon: LayoutDashboard },
     { name: 'Profile', icon: UserCircle },
@@ -37,6 +36,13 @@ const Sidebar = ({ activeMenu, setActiveMenu }: SidebarProps) => {
   return (
     <aside className="org-sidebar">
       <div className="org-logo-container">
+        <Image 
+          src="/logo.png" 
+          alt="HelpSphere Logo" 
+          width={32} 
+          height={32} 
+          style={{ marginRight: '10px' }}
+        />
         <div className="org-logo-text">HelpSphere</div>
       </div>
 

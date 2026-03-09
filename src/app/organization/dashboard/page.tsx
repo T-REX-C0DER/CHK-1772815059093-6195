@@ -1,18 +1,17 @@
 'use client';
 
-import React, { useState } from 'react';
-import Sidebar from '@/components/org-dashboard/Sidebar';
-import Header from '@/components/org-dashboard/Header';
+import React from 'react';
 import Overview from '@/components/org-dashboard/Overview';
 import Campaigns from '@/components/org-dashboard/Campaigns';
 import Donations from '@/components/org-dashboard/Donations';
 import Volunteers from '@/components/org-dashboard/Volunteers';
 import ShelterRequests from '@/components/org-dashboard/ShelterRequests';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useDashboard } from './DashboardContext';
 import './org-dashboard.css';
 
 export default function OrganizationDashboard() {
-  const [activeMenu, setActiveMenu] = useState('Overview');
+  const { activeMenu } = useDashboard();
 
   const renderContent = () => {
     switch (activeMenu) {
@@ -39,26 +38,18 @@ export default function OrganizationDashboard() {
   };
 
   return (
-    <div className="org-dashboard-container">
-      <Sidebar activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
-      
-      <div className="org-main-wrapper">
-        <Header />
-        
-        <main className="org-dashboard-main">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeMenu}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-            >
-              {renderContent()}
-            </motion.div>
-          </AnimatePresence>
-        </main>
-      </div>
-    </div>
+    <main className="org-dashboard-main">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeMenu}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -15 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        >
+          {renderContent()}
+        </motion.div>
+      </AnimatePresence>
+    </main>
   );
 }
