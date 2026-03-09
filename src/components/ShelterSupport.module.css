@@ -1,0 +1,237 @@
+.container {
+  padding: 120px 24px;
+/*   background: var(--color-background); */
+  background: white; /* To distinguish from the beige section before it if needed, or keep same */
+  position: relative;
+  overflow: hidden;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* Header */
+.header {
+  margin-bottom: 48px;
+}
+
+.sectionTag {
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(197, 131, 113, 0.08);
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  margin-bottom: 24px;
+  line-height: 1.2;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1.15rem;
+  line-height: 1.7;
+  max-width: 500px;
+}
+
+/* Left Side - Image */
+.imageSection {
+  position: relative;
+}
+
+.imageWrapper {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.mainImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.floatingCard {
+  position: absolute;
+  bottom: 30px;
+  right: -20px;
+  background: white;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  width: 260px;
+  border-left: 4px solid var(--color-primary);
+  z-index: 2;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.pinIcon {
+  color: var(--color-primary);
+}
+
+.cardTitle {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.cardInfo {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.status {
+  display: inline-block;
+  margin-top: 8px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+/* Right Side - Steps */
+.stepsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.stepCard {
+  display: flex;
+  gap: 20px;
+  padding: 24px;
+  background: var(--color-background);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+  border: 1px solid rgba(197, 131, 113, 0.05);
+  position: relative;
+}
+
+.stepCard:hover {
+  background: white;
+  transform: translateX(10px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(197, 131, 113, 0.15);
+}
+
+.iconWrapper {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-md);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.stepIcon {
+  color: var(--color-primary);
+}
+
+.stepContent h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.stepContent p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Connector Line */
+.stepCard:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 48px;
+  top: 80px;
+  width: 2px;
+  height: 30px;
+  background: linear-gradient(to bottom, var(--color-accent), transparent);
+  opacity: 0.4;
+}
+
+/* CTA */
+.ctaGroup {
+  margin-top: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.trustBadge {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.badgeItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.checkIcon {
+  color: #22C55E;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .grid {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .imageSection {
+    order: 2;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .floatingCard {
+    right: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 80px 20px;
+  }
+  
+  .ctaGroup {
+    flex-direction: column;
+  }
+  
+  .ctaGroup button {
+    width: 100%;
+  }
+}

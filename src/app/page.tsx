@@ -5,6 +5,7 @@ import Transparency from "@/components/Transparency";
 import ImpactStats from "@/components/ImpactStats";
 import SuccessStories from "@/components/SuccessStories";
 import CommunityImpact from "@/components/CommunityImpact";
+import ShelterSupport from "@/components/ShelterSupport";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
 
@@ -18,6 +19,7 @@ export default function Home() {
       <ImpactStats />
       <SuccessStories />
       <CommunityImpact />
+      <ShelterSupport />
       <CTA />
       <Footer />
     </main>
