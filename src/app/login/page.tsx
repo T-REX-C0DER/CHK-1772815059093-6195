@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -29,6 +30,16 @@ export default function LoginPage() {
   const [accountType, setAccountType] = useState<AccountType>("warrior");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const router = useRouter();
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (accountType === "organization") {
+      router.push("/organization/dashboard");
+    } else {
+      router.push("/dashboard");
+    }
+  };
 
   return (
     <div className={styles.authContainer}>
@@ -99,7 +110,7 @@ export default function LoginPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleLogin}
           >
             <AnimatePresence mode="wait">
               <motion.div

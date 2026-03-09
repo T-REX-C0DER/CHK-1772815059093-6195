@@ -2,9 +2,9 @@
 :root {
   --sidebar-width: 280px;
   --right-panel-width: 380px;
-  --dashboard-bg: #F8F5F3;
+  --dashboard-bg: #FDF8F5;
   --card-bg: #FFFFFF;
-  --primary-brand: #D88A6F;
+  --primary-brand: #C58371; /* Matching HelpSphere Primary */
   --accent-soft: #EFAF97;
   --neutral-dark: #2F2F2F;
   --text-main: #2F2F2F;

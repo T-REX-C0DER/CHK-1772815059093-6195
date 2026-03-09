@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -35,6 +36,16 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreed, setAgreed] = useState(false);
+  const router = useRouter();
+
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (accountType === "organization") {
+      router.push("/organization/dashboard");
+    } else {
+      router.push("/dashboard");
+    }
+  };
 
   return (
     <div className={styles.authContainer}>
@@ -152,7 +163,7 @@ export default function SignupPage() {
                 animate={{ opacity: 1, y: 0, height: "auto" }}
                 exit={{ opacity: 0, y: -10, height: 0 }}
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={handleSignup}
               >
                 <div className={styles.fieldsGroup}>
                   {accountType === "warrior" ? (
