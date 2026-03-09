@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@import "./organization/dashboard/org-dashboard.css";
+
 :root {
   /* Aesthetic Skin Tone Color System */
   --color-primary: #C58371; /* Blush/Terracotta */

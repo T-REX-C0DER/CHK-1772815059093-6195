@@ -22,6 +22,7 @@ import {
   IndianRupee,
 } from "lucide-react";
 import styles from "./signup.module.css";
+import { useAuth } from "@/context/AuthContext";
 
 type AccountType = "warrior" | "organization";
 
@@ -37,13 +38,59 @@ export default function SignupPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const router = useRouter();
+  const { login } = useAuth();
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    location: "",
+    website: "",
+    registrationId: "",
+  });
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (accountType === "organization") {
-      router.push("/organization/dashboard");
-    } else {
-      router.push("/dashboard");
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    if (!agreed) {
+      setError("You must agree to the terms");
+      return;
+    }
+
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          role: accountType?.toUpperCase() === 'WARRIOR' ? 'USER' : 'ORGANIZATION'
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        login(data.user);
+        router.push("/dashboard");
+      } else {
+        setError(data.error || "Signup failed");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -175,8 +222,12 @@ export default function SignupPage() {
                           <User className={styles.inputIcon} size={18} />
                           <input
                             type="text"
+                            name="name"
                             placeholder="Enter your full name"
                             className={styles.input}
+                            value={formData.name}
+                            onChange={handleInputChange}
+                            required
                           />
                         </div>
                       </div>
@@ -187,8 +238,12 @@ export default function SignupPage() {
                           <Mail className={styles.inputIcon} size={18} />
                           <input
                             type="email"
+                            name="email"
                             placeholder="you@example.com"
                             className={styles.input}
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            required
                           />
                         </div>
                       </div>
@@ -200,8 +255,12 @@ export default function SignupPage() {
                             <Lock className={styles.inputIcon} size={18} />
                             <input
                               type={showPassword ? "text" : "password"}
+                              name="password"
                               placeholder="Create password"
                               className={styles.input}
+                              value={formData.password}
+                              onChange={handleInputChange}
+                              required
                             />
                             <button
                               type="button"
@@ -219,8 +278,12 @@ export default function SignupPage() {
                             <Lock className={styles.inputIcon} size={18} />
                             <input
                               type={showConfirmPassword ? "text" : "password"}
+                              name="confirmPassword"
                               placeholder="Confirm password"
                               className={styles.input}
+                              value={formData.confirmPassword}
+                              onChange={handleInputChange}
+                              required
                             />
                             <button
                               type="button"
@@ -243,8 +306,12 @@ export default function SignupPage() {
                           <MapPin className={styles.inputIcon} size={18} />
                           <input
                             type="text"
+                            name="location"
                             placeholder="Enter your city"
                             className={styles.input}
+                            value={formData.location}
+                            onChange={handleInputChange}
+                            required
                           />
                         </div>
                       </div>
@@ -252,14 +319,19 @@ export default function SignupPage() {
                   ) : (
                     <>
                       {/* Organization Fields */}
+                       {/* Organization Name is same as name in schema */}
                       <div className={styles.inputGroup}>
                         <label className={styles.label}>Organization Name</label>
                         <div className={styles.inputWrapper}>
                           <Building2 className={styles.inputIcon} size={18} />
                           <input
                             type="text"
+                            name="name"
                             placeholder="Enter organization name"
                             className={styles.input}
+                            value={formData.name}
+                            onChange={handleInputChange}
+                            required
                           />
                         </div>
                       </div>
@@ -270,8 +342,12 @@ export default function SignupPage() {
                           <Mail className={styles.inputIcon} size={18} />
                           <input
                             type="email"
+                            name="email"
                             placeholder="contact@organization.org"
                             className={styles.input}
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            required
                           />
                         </div>
                       </div>
@@ -283,8 +359,12 @@ export default function SignupPage() {
                             <Lock className={styles.inputIcon} size={18} />
                             <input
                               type={showPassword ? "text" : "password"}
+                              name="password"
                               placeholder="Create password"
                               className={styles.input}
+                              value={formData.password}
+                              onChange={handleInputChange}
+                              required
                             />
                             <button
                               type="button"
@@ -302,8 +382,12 @@ export default function SignupPage() {
                             <Lock className={styles.inputIcon} size={18} />
                             <input
                               type={showConfirmPassword ? "text" : "password"}
+                              name="confirmPassword"
                               placeholder="Confirm password"
                               className={styles.input}
+                              value={formData.confirmPassword}
+                              onChange={handleInputChange}
+                              required
                             />
                             <button
                               type="button"
@@ -330,8 +414,11 @@ export default function SignupPage() {
                             <Globe className={styles.inputIcon} size={18} />
                             <input
                               type="url"
+                              name="website"
                               placeholder="https://your-ngo.org"
                               className={styles.input}
+                              value={formData.website}
+                              onChange={handleInputChange}
                             />
                           </div>
                         </div>
@@ -344,8 +431,12 @@ export default function SignupPage() {
                             <FileText className={styles.inputIcon} size={18} />
                             <input
                               type="text"
+                              name="registrationId"
                               placeholder="REG-XXXXX"
                               className={styles.input}
+                              value={formData.registrationId}
+                              onChange={handleInputChange}
+                              required
                             />
                           </div>
                         </div>
@@ -377,15 +468,18 @@ export default function SignupPage() {
                   </span>
                 </label>
 
+                {error && <p className="text-red-500 text-xs mt-2 font-bold mb-4">{error}</p>}
+
                 {/* Submit */}
                 <motion.button
                   type="submit"
                   className={styles.submitBtn}
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
+                  disabled={isLoading}
                   data-testid="signup-submit"
                 >
-                  {accountType === "warrior"
+                  {isLoading ? "Creating Account..." : accountType === "warrior"
                     ? "Create Warrior Account"
                     : "Create Organization Account"}
                   <ArrowRight size={18} />

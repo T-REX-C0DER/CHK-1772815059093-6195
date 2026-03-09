@@ -27,7 +27,6 @@ Backend
 AI
 - AI impact insights
 - Recommendation engine
-
 cd helpsphere-platform
 npm install
 npm run dev

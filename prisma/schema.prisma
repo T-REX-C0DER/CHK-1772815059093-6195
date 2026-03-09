@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ORGANIZATION
+  ADMIN
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id              String           @id @default(cuid())
+  name            String
+  email           String           @unique
+  phone           String?
+  passwordHash    String
+  city            String?
+  profilePhoto    String?
+  role            Role             @default(USER)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  donations       Donation[]
+  volunteerActs   Volunteer[]
+  shelterRequests ShelterRequest[]
+}
+
+model Organization {
+  id                 String      @id @default(cuid())
+  organizationName   String
+  organizationType   String
+  registrationNumber String      @unique
+  email              String      @unique
+  passwordHash       String
+  phone              String?
+  address            String?
+  city               String?
+  logo               String?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  campaigns          Campaign[]
+  donations          Donation[]
+  volunteers         Volunteer[]
+}
+
+model Donation {
+  id             String       @id @default(cuid())
+  amount         Float
+  paymentStatus  String       @default("PENDING")
+  createdAt      DateTime     @default(now())
+  userId         String
+  user           User         @relation(fields: [userId], references: [id])
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+}
+
+model Volunteer {
+  id             String       @id @default(cuid())
+  status         RequestStatus @default(PENDING)
+  appliedDate    DateTime     @default(now())
+  userId         String
+  user           User         @relation(fields: [userId], references: [id])
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+}
+
+model Campaign {
+  id              String       @id @default(cuid())
+  title           String
+  description     String
+  targetAmount    Float
+  collectedAmount Float        @default(0)
+  image           String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id])
+}
+
+model ShelterRequest {
+  id          String        @id @default(cuid())
+  personName  String
+  age         Int
+  location    String
+  description String
+  photo       String?
+  status      RequestStatus @default(PENDING)
+  createdAt   DateTime      @default(now())
+  userId      String
+  user        User          @relation(fields: [userId], references: [id])
+}

@@ -17,6 +17,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import styles from "./login.module.css";
+import { useAuth } from "@/context/AuthContext";
 
 type AccountType = "warrior" | "organization";
 
@@ -31,13 +32,36 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
+  const { login } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (accountType === "organization") {
-      router.push("/organization/dashboard");
-    } else {
-      router.push("/dashboard");
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, role: accountType.toUpperCase() === 'WARRIOR' ? 'USER' : 'ORGANIZATION' }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        login(data.user);
+        router.push("/dashboard");
+      } else {
+        setError(data.error || "Login failed");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -136,6 +160,9 @@ export default function LoginPage() {
                       }
                       className={styles.input}
                       data-testid="email-input"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
                     />
                   </div>
                 </div>
@@ -149,6 +176,9 @@ export default function LoginPage() {
                       placeholder="Enter your password"
                       className={styles.input}
                       data-testid="password-input"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
                     />
                     <button
                       type="button"
@@ -160,6 +190,7 @@ export default function LoginPage() {
                     </button>
                   </div>
                 </div>
+                {error && <p className="text-red-500 text-xs mt-2 font-bold">{error}</p>}
               </motion.div>
             </AnimatePresence>
 
@@ -188,9 +219,10 @@ export default function LoginPage() {
               className={styles.submitBtn}
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
+              disabled={isLoading}
               data-testid="login-submit"
             >
-              Login to HelpSphere
+              {isLoading ? "Logging in..." : "Login to HelpSphere"}
               <ArrowRight size={18} />
             </motion.button>
 
