@@ -8,8 +8,9 @@
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(circle at 10% 30%, rgba(201, 111, 74, 0.04) 0%, transparent 50%),
-    radial-gradient(circle at 90% 70%, rgba(232, 182, 107, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 10% 30%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 90% 70%, rgba(245, 158, 11, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.02) 0%, transparent 60%),
     var(--color-background);
   z-index: 0;
 }
@@ -29,13 +30,14 @@
 .sectionTag {
   display: inline-block;
   padding: 8px 20px;
-  background: rgba(201, 111, 74, 0.08);
+  background: linear-gradient(135deg, rgba(201, 111, 74, 0.08), rgba(245, 158, 11, 0.06));
   color: var(--color-primary);
   font-size: 0.9rem;
   font-weight: 600;
   border-radius: var(--radius-pill);
   margin-bottom: 20px;
   letter-spacing: 0.02em;
+  border: 1px solid rgba(201, 111, 74, 0.1);
 }
 
 .title {
@@ -59,7 +61,7 @@
   position: relative;
 }
 
-/* Connector Line */
+/* Connector Line with glow */
 .connectorLine {
   position: absolute;
   top: 60px;
@@ -74,8 +76,11 @@
 
 .lineProgress {
   height: 100%;
-  background: var(--gradient-primary);
+  background: linear-gradient(90deg, var(--color-primary), var(--accent-amber), var(--accent-rose));
+  background-size: 200% 100%;
   border-radius: var(--radius-pill);
+  animation: gradient-shift 3s ease infinite;
+  box-shadow: 0 0 12px rgba(197, 131, 113, 0.4);
 }
 
 /* Step Card */
@@ -92,17 +97,42 @@
   border: 1px solid rgba(201, 111, 74, 0.06);
   transition: all var(--transition-base);
   z-index: 1;
+  overflow: hidden;
+}
+
+/* Gradient accent bottom border on hover */
+.stepCard::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary), var(--accent-amber));
+  opacity: 0;
+  transition: opacity var(--transition-base);
 }
 
 .stepCard:hover {
-  box-shadow: var(--shadow-xl);
+  box-shadow: var(--shadow-xl), 0 0 30px rgba(197, 131, 113, 0.08);
+  border-color: rgba(197, 131, 113, 0.15);
 }
+
+.stepCard:hover::after {
+  opacity: 1;
+}
+
+/* Individual step accent colors */
+.stepCard:nth-child(2)::after { background: linear-gradient(90deg, #C96F4A, #E38B6C); }
+.stepCard:nth-child(3)::after { background: linear-gradient(90deg, #E38B6C, #E8B66B); }
+.stepCard:nth-child(4)::after { background: linear-gradient(90deg, #E8B66B, #F59E0B); }
+.stepCard:nth-child(5)::after { background: linear-gradient(90deg, #F08A6B, #F43F5E); }
 
 .iconWrapper {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: var(--color-surface);
+  background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(253,248,245,0.9));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,6 +140,11 @@
   border: 3px solid var(--color-background);
   transition: all var(--transition-base);
   cursor: pointer;
+}
+
+.stepCard:hover .iconWrapper {
+  border-color: rgba(197, 131, 113, 0.2);
+  transform: scale(1.08);
 }
 
 .stepNum {

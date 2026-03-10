@@ -26,13 +26,14 @@
 .sectionTag {
   display: inline-block;
   padding: 8px 20px;
-  background: rgba(201, 111, 74, 0.08);
-  color: var(--color-primary);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(6, 182, 212, 0.06));
+  color: var(--accent-emerald);
   font-size: 0.9rem;
   font-weight: 600;
   border-radius: var(--radius-pill);
   margin-bottom: 20px;
   letter-spacing: 0.02em;
+  border: 1px solid rgba(16, 185, 129, 0.12);
 }
 
 .title {
@@ -67,6 +68,7 @@
   overflow: hidden;
 }
 
+/* Gradient accent bottom border = unique per card */
 .statCard::before {
   content: '';
   position: absolute;
@@ -79,8 +81,15 @@
   transition: opacity var(--transition-base);
 }
 
+.statCard:nth-child(1)::before { background: linear-gradient(90deg, #C58371, #D4A373); }
+.statCard:nth-child(2)::before { background: linear-gradient(90deg, #10B981, #06B6D4); }
+.statCard:nth-child(3)::before { background: linear-gradient(90deg, #3B82F6, #8B5CF6); }
+.statCard:nth-child(4)::before { background: linear-gradient(90deg, #F59E0B, #F43F5E); }
+
 .statCard:hover {
-  box-shadow: var(--shadow-xl);
+  box-shadow: var(--shadow-xl), 0 0 30px rgba(197, 131, 113, 0.08);
+  border-color: rgba(197, 131, 113, 0.12);
+  transform: translateY(-6px);
 }
 
 .statCard:hover::before {
@@ -99,12 +108,42 @@
   transition: all var(--transition-base);
 }
 
+.statCard:hover .iconBadge {
+  transform: scale(1.1) rotate(5deg);
+}
+
 .value {
   font-size: 3rem;
   font-weight: 800;
   margin-bottom: 8px;
   font-family: var(--font-outfit), system-ui, sans-serif;
   letter-spacing: -0.02em;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Individual stat card value colors */
+.statCard:nth-child(2) .value {
+  background: linear-gradient(135deg, #10B981, #06B6D4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.statCard:nth-child(3) .value {
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.statCard:nth-child(4) .value {
+  background: linear-gradient(135deg, #F59E0B, #F43F5E);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .label {
@@ -115,7 +154,7 @@
 }
 
 .progressBar {
-  height: 4px;
+  height: 6px;
   background: rgba(201, 111, 74, 0.1);
   border-radius: var(--radius-pill);
   overflow: hidden;
@@ -124,6 +163,8 @@
 .progressFill {
   height: 100%;
   border-radius: var(--radius-pill);
+  box-shadow: 0 0 8px rgba(197, 131, 113, 0.3);
+  animation: progress-glow 3s ease-in-out infinite;
 }
 
 /* Responsive */

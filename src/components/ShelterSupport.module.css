@@ -10,9 +10,9 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(197, 131, 113, 0.05) 0%, transparent 70%);
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.04) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -21,9 +21,9 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(197, 131, 113, 0.03) 0%, transparent 70%);
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.03) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -49,7 +49,7 @@
 .sectionTag {
   display: inline-block;
   padding: 8px 20px;
-  background: linear-gradient(135deg, rgba(197, 131, 113, 0.12) 0%, rgba(197, 131, 113, 0.06) 100%);
+  background: linear-gradient(135deg, rgba(197, 131, 113, 0.12) 0%, rgba(139, 92, 246, 0.06) 100%);
   color: var(--color-primary);
   font-size: 0.9rem;
   font-weight: 600;
@@ -91,7 +91,7 @@
 }
 
 .imageWrapper:hover {
-  box-shadow: 0 30px 60px rgba(197, 131, 113, 0.2);
+  box-shadow: 0 30px 60px rgba(197, 131, 113, 0.2), 0 0 40px rgba(139, 92, 246, 0.08);
   transform: translateY(-8px);
 }
 
@@ -110,16 +110,22 @@
   position: absolute;
   bottom: 30px;
   right: -20px;
-  background: white;
   padding: 24px;
   border-radius: var(--radius-lg);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
   width: 260px;
   border-left: 4px solid var(--color-primary);
   z-index: 2;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12), 0 0 20px rgba(197, 131, 113, 0.1);
   transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.floatingCard:hover {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), 0 0 30px rgba(197, 131, 113, 0.2);
+  transform: translateY(-4px);
 }
 
 .cardHeader {
@@ -148,7 +154,7 @@
   display: inline-block;
   margin-top: 8px;
   font-weight: 600;
-  color: var(--color-primary);
+  color: var(--accent-emerald);
 }
 
 /* Right Side - Steps */
@@ -172,7 +178,7 @@
 .stepCard:hover {
   background: linear-gradient(135deg, #FFFFFF 0%, #FAFAF8 100%);
   transform: translateX(12px);
-  box-shadow: 0 12px 30px rgba(197, 131, 113, 0.12);
+  box-shadow: 0 12px 30px rgba(197, 131, 113, 0.12), 0 0 20px rgba(197, 131, 113, 0.06);
   border-color: rgba(197, 131, 113, 0.2);
 }
 
@@ -186,6 +192,11 @@
   justify-content: center;
   flex-shrink: 0;
   box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.stepCard:hover .iconWrapper {
+  box-shadow: var(--shadow-md), 0 0 12px rgba(197, 131, 113, 0.15);
 }
 
 .stepIcon {
@@ -211,8 +222,8 @@
   top: 80px;
   width: 2px;
   height: 30px;
-  background: linear-gradient(to bottom, var(--color-accent), transparent);
-  opacity: 0.4;
+  background: linear-gradient(to bottom, var(--color-primary), rgba(139, 92, 246, 0.3), transparent);
+  opacity: 0.5;
 }
 
 /* CTA */
@@ -240,7 +251,8 @@
 }
 
 .checkIcon {
-  color: #22C55E;
+  color: var(--accent-emerald);
+  filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.3));
 }
 
 /* Responsive */

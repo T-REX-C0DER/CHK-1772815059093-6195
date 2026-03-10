@@ -1,5 +1,5 @@
 /* ============================================
-   LOGIN PAGE — Premium Auth Styling
+   LOGIN PAGE — Premium Auth Styling v2
    ============================================ */
 
 .authContainer {
@@ -27,9 +27,23 @@
   right: -200px;
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(212, 163, 115, 0.12) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
+  animation: color-rotate 10s linear infinite;
+}
+
+.formSide::after {
+  content: '';
+  position: absolute;
+  bottom: -150px;
+  left: -100px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: color-rotate 12s linear infinite reverse;
 }
 
 .formWrapper {
@@ -38,6 +52,8 @@
   display: flex;
   flex-direction: column;
   gap: 28px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Logo */
@@ -58,6 +74,7 @@
   align-items: center;
   justify-content: center;
   color: #fff;
+  box-shadow: 0 4px 12px rgba(197, 131, 113, 0.3);
 }
 
 .logoText {
@@ -84,10 +101,12 @@
 }
 
 .highlight {
-  background: var(--gradient-primary);
+  background: linear-gradient(135deg, #C58371, #D4A373, #F59E0B);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradient-shift 4s ease infinite;
 }
 
 .subtitle {
@@ -119,7 +138,7 @@
   height: calc(100% - 8px);
   background: var(--color-surface);
   border-radius: var(--radius-pill);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-sm), 0 0 12px rgba(197, 131, 113, 0.1);
   z-index: 0;
 }
 
@@ -207,7 +226,7 @@
 
 .input:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px rgba(197, 131, 113, 0.1), var(--shadow-xs);
+  box-shadow: 0 0 0 4px rgba(197, 131, 113, 0.12), 0 0 20px rgba(197, 131, 113, 0.08), var(--shadow-xs);
 }
 
 .input:focus ~ .inputIcon,
@@ -270,13 +289,14 @@
 .checkbox:checked + .checkboxCustom {
   background: rgba(197, 131, 113, 0.1);
   border-color: var(--color-primary);
+  box-shadow: 0 0 8px rgba(197, 131, 113, 0.2);
 }
 
 .forgotLink {
   font-size: 0.88rem;
   color: var(--color-primary);
   font-weight: 500;
-  transition: opacity var(--transition-base);
+  transition: all var(--transition-base);
 }
 
 .forgotLink:hover {
@@ -300,7 +320,7 @@
   justify-content: center;
   gap: 10px;
   box-shadow: 0 4px 20px rgba(197, 131, 113, 0.25);
-  transition: box-shadow var(--transition-base);
+  transition: all var(--transition-base);
   position: relative;
   overflow: hidden;
 }
@@ -312,16 +332,17 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-  transition: left 0.5s ease;
-}
-
-.submitBtn:hover::before {
-  left: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  animation: shimmer-sweep 3s ease-in-out infinite;
 }
 
 .submitBtn:hover {
-  box-shadow: 0 8px 32px rgba(197, 131, 113, 0.35), 0 0 20px rgba(197, 131, 113, 0.15);
+  box-shadow: 0 8px 32px rgba(197, 131, 113, 0.35), 0 0 40px rgba(197, 131, 113, 0.15);
+  transform: translateY(-2px);
+}
+
+.submitBtn:active {
+  transform: translateY(0);
 }
 
 /* ─── DIVIDER ─── */
@@ -334,7 +355,7 @@
 .dividerLine {
   flex: 1;
   height: 1px;
-  background: rgba(197, 131, 113, 0.12);
+  background: linear-gradient(90deg, transparent, rgba(197, 131, 113, 0.15), transparent);
 }
 
 .dividerText {
@@ -372,7 +393,8 @@
 
 .socialBtn:hover {
   border-color: rgba(197, 131, 113, 0.3);
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-sm), 0 0 16px rgba(197, 131, 113, 0.08);
+  transform: translateY(-1px);
 }
 
 /* ─── FOOTER ─── */
@@ -385,7 +407,7 @@
 .footerLink {
   color: var(--color-primary);
   font-weight: 600;
-  transition: opacity var(--transition-base);
+  transition: all var(--transition-base);
 }
 
 .footerLink:hover {
@@ -419,9 +441,10 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(197, 131, 113, 0.15) 0%,
-    rgba(166, 110, 88, 0.35) 60%,
-    rgba(140, 90, 70, 0.75) 100%
+    rgba(139, 92, 246, 0.1) 0%,
+    rgba(197, 131, 113, 0.2) 40%,
+    rgba(166, 110, 88, 0.5) 70%,
+    rgba(140, 90, 70, 0.8) 100%
   );
   z-index: 1;
 }
@@ -442,7 +465,13 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: var(--radius-lg);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 0 20px rgba(197, 131, 113, 0.08);
+  transition: all var(--transition-base);
+}
+
+.floatingCardInner:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 0 30px rgba(197, 131, 113, 0.15);
+  transform: translateY(-2px);
 }
 
 .floatCard1 {
@@ -464,12 +493,27 @@
   width: 40px;
   height: 40px;
   border-radius: var(--radius-sm);
-  background: var(--gradient-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   flex-shrink: 0;
+}
+
+/* Color-coded float icons */
+.floatCard1 .floatIcon {
+  background: var(--gradient-primary);
+  box-shadow: 0 4px 12px rgba(197, 131, 113, 0.3);
+}
+
+.floatCard2 .floatIcon {
+  background: linear-gradient(135deg, var(--accent-emerald), #06B6D4);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.floatCard3 .floatIcon {
+  background: linear-gradient(135deg, var(--accent-sapphire), var(--accent-violet));
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .floatInfo {
@@ -506,14 +550,14 @@
   color: #ffffff;
   line-height: 1.3;
   margin-bottom: 8px;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .imageSubtitle {
   font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.85);
   line-height: 1.5;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
 }
 
 /* ─── RESPONSIVE ─── */

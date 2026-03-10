@@ -26,13 +26,14 @@
 .sectionTag {
   display: inline-block;
   padding: 8px 20px;
-  background: rgba(201, 111, 74, 0.08);
-  color: var(--color-primary);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(139, 92, 246, 0.06));
+  color: var(--accent-sapphire);
   font-size: 0.9rem;
   font-weight: 600;
   border-radius: var(--radius-pill);
   margin-bottom: 20px;
   letter-spacing: 0.02em;
+  border: 1px solid rgba(59, 130, 246, 0.12);
 }
 
 .title {
@@ -62,7 +63,7 @@
   left: 10%;
   right: 10%;
   height: 4px;
-  background: rgba(201, 111, 74, 0.15);
+  background: rgba(59, 130, 246, 0.1);
   z-index: 1;
   border-radius: var(--radius-pill);
   overflow: hidden;
@@ -70,8 +71,11 @@
 
 .flowLineProgress {
   height: 100%;
-  background: var(--gradient-primary);
+  background: linear-gradient(90deg, var(--accent-sapphire), var(--accent-violet), var(--accent-rose));
+  background-size: 200% 100%;
   border-radius: var(--radius-pill);
+  animation: gradient-shift 4s ease infinite;
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.4);
 }
 
 .flowNodes {
@@ -102,10 +106,13 @@
   border: 3px solid var(--color-background);
   transition: all var(--transition-base);
   cursor: pointer;
+  box-shadow: var(--shadow-sm);
 }
 
 .iconCircle:hover {
-  border-color: rgba(201, 111, 74, 0.3);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: var(--shadow-md), 0 0 20px rgba(59, 130, 246, 0.15);
+  transform: scale(1.08);
 }
 
 .nodeTitle {
@@ -146,20 +153,22 @@
 }
 
 .featureItem:hover {
-  box-shadow: var(--shadow-md);
-  border-color: rgba(201, 111, 74, 0.15);
+  box-shadow: var(--shadow-md), 0 0 16px rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.2);
+  transform: translateY(-2px);
 }
 
 .checkIcon {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: var(--gradient-primary);
+  background: linear-gradient(135deg, var(--accent-emerald), #06B6D4);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 /* Responsive */

@@ -23,6 +23,23 @@
   width: 100%;
   max-width: 1200px;
   box-shadow: var(--shadow-md);
+  position: relative;
+  transition: all var(--transition-base);
+}
+
+/* Animated gradient bottom border on scroll */
+.navContainer.scrolled .navbar::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), var(--accent-amber), var(--accent-rose), transparent);
+  background-size: 200% 100%;
+  animation: gradient-shift 3s ease infinite;
+  border-radius: var(--radius-pill);
+  opacity: 0.7;
 }
 
 .logo {
@@ -55,6 +72,16 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: -0.02em;
+  transition: all var(--transition-base);
+}
+
+.logo:hover .logoText {
+  background: linear-gradient(135deg, #C58371, #D4A373, #F59E0B, #C58371);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 2s ease infinite;
 }
 
 .navLinks {
@@ -76,13 +103,14 @@
   content: '';
   position: absolute;
   width: 0;
-  height: 2px;
+  height: 2.5px;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--gradient-primary);
+  background: linear-gradient(90deg, var(--color-primary), var(--accent-amber));
   border-radius: 2px;
   transition: width var(--transition-base);
+  box-shadow: 0 0 8px rgba(197, 131, 113, 0);
 }
 
 .link:hover {
@@ -91,6 +119,7 @@
 
 .link:hover::after {
   width: 100%;
+  box-shadow: 0 0 12px rgba(197, 131, 113, 0.4);
 }
 
 .actions {
@@ -161,11 +190,12 @@
   font-weight: 500;
   color: var(--text-primary);
   border-radius: var(--radius-md);
-  transition: background var(--transition-fast);
+  transition: all var(--transition-fast);
 }
 
 .mobileLink:hover {
   background: rgba(201, 111, 74, 0.05);
+  transform: translateX(4px);
 }
 
 .mobileCta {
