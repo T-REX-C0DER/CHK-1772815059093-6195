@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import {
@@ -16,49 +16,45 @@ import {
   UserCircle,
   Bell,
   Menu,
-  X
+  X,
+  Bookmark,
+  ChevronLeft,
+  ChevronRight,
+  Search,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import NotificationPopover from '@/components/dashboard/NotificationPopover';
 import SearchBar from '@/components/dashboard/SearchBar';
 import ProtectedRoute from '@/components/ProtectedRoute';
-import DonationHoverPreview from '@/components/dashboard/DonationHoverPreview';
+import './dashboard.css';
 
-const navigationGroups = [
-  {
-    title: 'Menu',
-    items: [
-      { name: 'Home', icon: Home, href: '/dashboard/user', roles: ['USER'] },
-      { name: 'Categories', icon: LayoutDashboard, href: '/dashboard/categories', roles: ['USER', 'ORGANIZATION', 'ADMIN'] },
-      { name: 'My Donations', icon: HandHeart, href: '/dashboard/user/donations', roles: ['USER'], hasPreview: true },
-      { name: 'Volunteer Activities', icon: Users, href: '/dashboard/user/volunteer', roles: ['USER'] },
-      { name: 'Campaigns', icon: Megaphone, href: '/dashboard/user/campaigns', roles: ['USER'] },
-      { name: 'Messages', icon: MessageSquare, href: '/dashboard/messages', roles: ['USER', 'ORGANIZATION', 'ADMIN'] },
-      { name: 'Saved Posts', icon: Bell, href: '/dashboard/saved', roles: ['USER'] },
-      { name: 'Notifications', icon: Bell, href: '/dashboard/notifications', roles: ['USER', 'ORGANIZATION', 'ADMIN'] },
-      { name: 'My Profile', icon: UserCircle, href: '/dashboard/profile', roles: ['USER', 'ORGANIZATION', 'ADMIN'] },
-      { name: 'Settings', icon: Settings, href: '/dashboard/settings', roles: ['USER', 'ORGANIZATION', 'ADMIN'] },
-    ]
-  },
-  {
-    title: 'Organization',
-    items: [
-      { name: 'Campaigns', icon: Megaphone, href: '/dashboard/org/campaigns', roles: ['ORGANIZATION'] },
-      { name: 'Volunteer Requests', icon: Users, href: '/dashboard/org/volunteers', roles: ['ORGANIZATION'] },
-      { name: 'Shelter Requests', icon: Home, href: '/dashboard/org/shelter', roles: ['ORGANIZATION'] },
-    ]
-  },
-  {
-    title: 'Management',
-    items: [
-      { name: 'All Users', icon: Users, href: '/dashboard/admin/users', roles: ['ADMIN'] },
-      { name: 'All Organizations', icon: Home, href: '/dashboard/admin/orgs', roles: ['ADMIN'] },
-    ]
-  }
+const userNavItems = [
+  { name: 'Feed', icon: Home, href: '/dashboard/user' },
+  { name: 'My Donations', icon: HandHeart, href: '/dashboard/user/donations' },
+  { name: 'Volunteering', icon: Users, href: '/dashboard/user/volunteer' },
+  { name: 'Campaigns', icon: Megaphone, href: '/dashboard/user/campaigns' },
+  { name: 'Saved Posts', icon: Bookmark, href: '/dashboard/saved' },
+  { name: 'Messages', icon: MessageSquare, href: '/dashboard/messages' },
+];
+
+const secondaryNavItems = [
+  { name: 'Notifications', icon: Bell, href: '/dashboard/notifications' },
+  { name: 'My Profile', icon: UserCircle, href: '/dashboard/profile' },
+  { name: 'Settings', icon: Settings, href: '/dashboard/settings' },
+];
+
+const orgNavItems = [
+  { name: 'Campaigns', icon: Megaphone, href: '/dashboard/org/campaigns' },
+  { name: 'Volunteer Requests', icon: Users, href: '/dashboard/org/volunteers' },
+  { name: 'Shelter Requests', icon: Home, href: '/dashboard/org/shelter' },
+];
+
+const adminNavItems = [
+  { name: 'All Users', icon: Users, href: '/dashboard/admin/users' },
+  { name: 'All Organizations', icon: Home, href: '/dashboard/admin/orgs' },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -66,14 +62,62 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-
-  if (!user) return null; // Or show loading/redirect
-
-  const [isDonationHovered, setIsDonationHovered] = useState(false);
   const pathname = usePathname();
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  if (!user) return null;
+
+  const sidebarWidth = isSidebarOpen ? 280 : 80;
+
+  const renderNavSection = (
+    label: string,
+    items: typeof userNavItems,
+    delay = 0
+  ) => (
+    <div className="pb-2">
+      {isSidebarOpen && (
+        <div className="nav-group-label">{label}</div>
+      )}
+      <div className="space-y-1">
+        {items.map((item, idx) => {
+          const isActive = pathname === item.href;
+          return (
+            <motion.div
+              key={item.name}
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: delay + idx * 0.04, duration: 0.3 }}
+            >
+              <Link href={item.href}>
+                <div
+                  className={cn(
+                    "nav-item",
+                    isActive && "active"
+                  )}
+                  title={!isSidebarOpen ? item.name : undefined}
+                >
+                  <item.icon
+                    size={20}
+                    strokeWidth={isActive ? 2.5 : 1.8}
+                  />
+                  {isSidebarOpen && (
+                    <span className="truncate">{item.name}</span>
+                  )}
+                </div>
+              </Link>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
   return (
-    <div className="flex h-screen overflow-hidden bg-[#FDFCFB]">
+    <div className="flex h-screen overflow-hidden" style={{ background: 'var(--dashboard-bg)' }}>
       {/* Mobile Sidebar Backdrop */}
       <AnimatePresence>
         {isMobileMenuOpen && (
@@ -82,7 +126,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden"
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 lg:hidden"
           />
         )}
       </AnimatePresence>
@@ -90,19 +134,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Sidebar */}
       <motion.aside
         initial={false}
-        animate={{
-          width: isSidebarOpen ? 280 : 80,
-          x: typeof window !== 'undefined' && window.innerWidth < 1024 ? (isMobileMenuOpen ? 0 : -280) : 0
-        }}
+        animate={{ width: sidebarWidth }}
+        transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
         className={cn(
-          "bg-white border-r border-slate-100/60 flex flex-col z-50 shadow-sm transition-all duration-300 ease-in-out",
-          "fixed inset-y-0 left-0 lg:relative lg:translate-x-0"
+          "sidebar custom-scrollbar",
+          "fixed inset-y-0 left-0 lg:relative",
+          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
+        style={{ width: sidebarWidth }}
       >
-        <div className="p-8 flex items-center gap-3">
+        {/* Logo */}
+        <div className="logo-container">
           <Link href="/" className="flex items-center gap-3">
             <motion.div
-              className="w-10 h-10 relative"
+              className="w-9 h-9 relative flex-shrink-0"
               whileHover={{ scale: 1.05 }}
             >
               <Image
@@ -113,150 +158,148 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 priority
               />
             </motion.div>
-            {isSidebarOpen && (
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="font-black text-2xl tracking-tighter text-neutral-800"
-              >
-                HelpSphere
-              </motion.span>
-            )}
+            <AnimatePresence>
+              {isSidebarOpen && (
+                <motion.span
+                  initial={{ opacity: 0, width: 0 }}
+                  animate={{ opacity: 1, width: 'auto' }}
+                  exit={{ opacity: 0, width: 0 }}
+                  className="font-bold text-xl tracking-tight text-neutral-800 whitespace-nowrap overflow-hidden"
+                  style={{ fontFamily: 'var(--font-outfit), system-ui, sans-serif' }}
+                >
+                  HelpSphere
+                </motion.span>
+              )}
+            </AnimatePresence>
           </Link>
         </div>
 
-        <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto custom-scrollbar">
-          {navigationGroups.map((group, groupIdx) => {
-            const filteredGroupItems = group.items.filter(item => item.roles.includes(user.role));
-            if (filteredGroupItems.length === 0) return null;
+        {/* Toggle Button */}
+        <button
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="hidden lg:flex items-center justify-center w-7 h-7 rounded-full bg-white border border-slate-100 shadow-sm absolute -right-3.5 top-20 z-50 hover:bg-primary-light hover:border-primary/20 transition-all text-slate-400 hover:text-primary"
+          style={{ borderColor: 'var(--border-soft)' }}
+        >
+          {isSidebarOpen ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
+        </button>
 
-            return (
-              <div key={group.title} className="pb-6">
-                <div className="space-y-1">
-                  {filteredGroupItems.map((item, idx) => {
-                    const isActive = pathname === item.href;
-                    return (
-                      <motion.div
-                        key={item.name}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: (groupIdx * 0.1) + (idx * 0.05) }}
-                      >
-                        <Link href={item.href}>
-                          <div
-                            className={cn(
-                              "flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group cursor-pointer relative mx-2",
-                              isActive
-                                ? 'bg-primary text-white shadow-lg shadow-primary/25'
-                                : 'text-slate-500 hover:bg-primary/5 hover:text-primary'
-                            )}
-                          >
-                            <div className="flex-shrink-0">
-                              <item.icon
-                                size={22}
-                                strokeWidth={isActive ? 2.5 : 2}
-                                className={cn(
-                                  "transition-all duration-300",
-                                  isActive ? 'text-white' : 'text-slate-400 group-hover:text-primary'
-                                )}
-                              />
-                            </div>
-                            {isSidebarOpen && (
-                              <span className={cn(
-                                "font-bold truncate text-[15px] tracking-tight",
-                                isActive ? 'text-white' : 'text-slate-600 group-hover:text-primary'
-                              )}>
-                                {item.name}
-                              </span>
-                            )}
-                          </div>
-                        </Link>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
+        {/* Navigation */}
+        <nav className="flex-1 overflow-y-auto custom-scrollbar py-2">
+          {renderNavSection('Menu', userNavItems, 0)}
+          {renderNavSection('Account', secondaryNavItems, 0.2)}
+
+          {user.role === 'ORGANIZATION' && renderNavSection('Organization', orgNavItems, 0.3)}
+          {user.role === 'ADMIN' && renderNavSection('Management', adminNavItems, 0.3)}
         </nav>
 
-        <div className="p-6">
+        {/* Sidebar Profile Card + Logout */}
+        <div className="mt-auto pt-4 space-y-3">
+          {isSidebarOpen && (
+            <div className="sidebar-profile-card">
+              <img
+                src={user.profilePhoto || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`}
+                alt={user.name}
+              />
+              <div className="sidebar-profile-info">
+                <div className="name">{user.name}</div>
+                <div className="role">{user.role}</div>
+              </div>
+            </div>
+          )}
           <motion.button
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.98 }}
             onClick={logout}
-            className="w-full flex items-center gap-3 px-6 py-4 text-slate-500 hover:text-red-500 hover:bg-red-50 rounded-2xl transition-all duration-200 font-bold text-sm"
+            className={cn(
+              "w-full flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-red-500 hover:bg-red-50/80 rounded-xl transition-all duration-200 font-medium text-sm",
+              !isSidebarOpen && "justify-center"
+            )}
           >
-            <LogOut size={20} />
+            <LogOut size={18} />
             {isSidebarOpen && <span>Logout</span>}
           </motion.button>
         </div>
       </motion.aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Header - 64px production spec */}
-        <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-xl border-b border-slate-100/50 flex items-center justify-between px-8" style={{ height: '80px' }}>
-          <div className="flex items-center gap-4 lg:hidden">
+      <div className="flex-1 flex flex-col overflow-hidden min-w-0">
+        {/* Header */}
+        <header className="header">
+          {/* Mobile menu toggle */}
+          <div className="flex items-center gap-3 lg:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="p-2 text-slate-500 hover:bg-slate-100 rounded-xl transition-colors"
+              className="icon-btn"
             >
-              <Menu size={24} />
+              <Menu size={22} />
             </button>
-            <div className="w-8 h-8 relative">
+            <div className="w-7 h-7 relative">
               <Image src="/logo.png" alt="Logo" fill className="object-contain" />
             </div>
           </div>
 
-          <div className="flex-1 max-w-2xl px-4">
+          {/* Search */}
+          <div className="flex-1 max-w-xl hidden md:block">
             <SearchBar />
           </div>
 
-          <div className="flex items-center gap-4">
+          {/* Header Actions */}
+          <div className="header-actions">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
-              className="p-3 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-2xl transition-all relative"
+              className="icon-btn hidden sm:flex"
             >
-              <Bell size={22} />
-              <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-red-500 border-2 border-white rounded-full"></span>
+              <Search size={20} />
             </motion.button>
 
             <Link href="/dashboard/messages">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="p-3 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-2xl transition-all"
+                className="icon-btn"
               >
-                <MessageSquare size={22} />
+                <MessageSquare size={20} />
               </motion.button>
             </Link>
 
-            <div className="h-8 w-[1px] bg-slate-100 mx-2 hidden sm:block"></div>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+              className="icon-btn"
+            >
+              <Bell size={20} />
+              <span className="notification-dot"></span>
+            </motion.button>
 
-            <div className="flex items-center gap-3 pl-2 group cursor-pointer">
-              <div className="text-right hidden sm:block">
-                <p className="text-sm font-bold text-slate-800 leading-none">{user.name}</p>
-                <p className="text-[11px] font-medium text-slate-400 mt-1 uppercase tracking-wider">{user.role}</p>
+            <div className="hidden sm:block w-px h-8 mx-1" style={{ background: 'var(--border-soft)' }}></div>
+
+            {/* Profile */}
+            <Link href="/dashboard/profile">
+              <div className="flex items-center gap-3 pl-1 group cursor-pointer">
+                <div className="text-right hidden md:block">
+                  <p className="text-sm font-semibold leading-none" style={{ color: 'var(--text-main)' }}>{user.name}</p>
+                  <p className="text-[11px] font-medium mt-1 uppercase tracking-wider" style={{ color: 'var(--text-faint)' }}>{user.role}</p>
+                </div>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className="w-10 h-10 rounded-xl overflow-hidden group-hover:ring-2 ring-offset-1 transition-all"
+                  style={{ borderColor: 'var(--border-soft)', border: '2px solid var(--border-soft)' }}
+                >
+                  <img
+                    src={user.profilePhoto || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`}
+                    alt={user.name}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
               </div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="w-11 h-11 rounded-2xl border-2 border-slate-100 overflow-hidden group-hover:border-primary transition-colors"
-              >
-                <img
-                  src={user.profilePhoto || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`}
-                  alt={user.name}
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-            </div>
+            </Link>
           </div>
         </header>
 
-        {/* main content */}
-        <main className="flex-1 overflow-y-auto">
+        {/* Main content area */}
+        <main className="flex-1 overflow-y-auto custom-scrollbar">
           <ProtectedRoute>
             {children}
           </ProtectedRoute>

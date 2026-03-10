@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from '@/components/org-dashboard/Sidebar';
 import Header from '@/components/org-dashboard/Header';
 import { DashboardProvider } from './DashboardContext';
@@ -11,12 +11,26 @@ export default function OrgDashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
     <DashboardProvider>
       <div className="org-dashboard-container">
-        <Sidebar />
+        {/* Mobile Sidebar Backdrop */}
+        <div
+          className={`org-sidebar-backdrop ${isSidebarOpen ? 'open' : ''}`}
+          onClick={() => setIsSidebarOpen(false)}
+        />
+
+        {/* Sidebar */}
+        <Sidebar
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+        />
+
+        {/* Main */}
         <div className="org-main-wrapper">
-          <Header />
+          <Header onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
           <main className="org-content">
             {children}
           </main>
