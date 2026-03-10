@@ -57,19 +57,19 @@ export default function SearchBar() {
     <div ref={containerRef} className="relative w-full" style={{ maxWidth: '520px' }}>
       <div
         className={cn(
-          "flex items-center bg-slate-50 border transition-all duration-300 px-4 py-2.5",
-          show ? "border-primary bg-white ring-4 ring-primary/5 shadow-md" : "border-slate-200 hover:border-slate-300 shadow-sm"
+          "flex items-center bg-white border transition-all duration-300 px-5 py-3.5",
+          show ? "border-primary/50 ring-4 ring-primary/10 shadow-md" : "border-slate-100 hover:border-slate-200 shadow-sm"
         )}
-        style={{ borderRadius: '14px' }}
+        style={{ borderRadius: '9999px' }}
       >
-        <Search size={18} className={cn("transition-colors duration-300", show ? "text-primary" : "text-slate-400")} />
+        <Search size={20} className={cn("transition-colors duration-300", show ? "text-primary" : "text-slate-400")} />
         <input
           type="text"
           value={query}
           onChange={e => setQuery(e.target.value)}
           onFocus={() => setShow(true)}
           placeholder="Search organizations, campaigns, shelters, volunteers..."
-          className="ml-3 w-full outline-none text-sm font-medium bg-transparent text-slate-700 placeholder:text-slate-400"
+          className="ml-3 w-full outline-none text-[15px] font-medium bg-transparent text-slate-700 placeholder:text-slate-400"
         />
       </div>
       {show && suggestions.length > 0 && (

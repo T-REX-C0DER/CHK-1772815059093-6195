@@ -11,34 +11,34 @@ export default function DashboardGrid({ sidebar, feed, rightPanel }: DashboardGr
   const hasSidebar = true;
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#F8F6F4' }}>
+    <div className="min-h-screen bg-gradient-to-b from-[#F7F3EF] to-white">
       {/* Main container with max-width and centering */}
-      <div className="mx-auto px-8" style={{ maxWidth: '1440px', paddingTop: '0', paddingBottom: '64px' }}>
-        {/* 3-column grid layout: 240px | 32px | 640px | 32px | 320px */}
+      <div className="mx-auto px-4 md:px-8 max-w-[1600px] pt-8 pb-20">
+        {/* 3-column grid layout: fluid and responsive */}
         <div
-          className="grid"
+          className="grid gap-8 items-start"
           style={{
             gridTemplateColumns: hasSidebar
-              ? '240px 48px 800px 48px 320px'
-              : '0px 0px 800px 48px 320px',
-            gap: '0',
-            alignItems: 'start',
+              ? 'minmax(260px, 300px) 1fr minmax(320px, 380px)'
+              : '1fr minmax(320px, 380px)',
           }}
         >
-          {/* Left Sidebar - 240px */}
-          {hasSidebar && <aside className="hidden lg:block">{sidebar}</aside>}
+          {/* Left Sidebar - handled by layout.tsx usually, but this component supports local placement too */}
+          {hasSidebar && (
+            <aside className="hidden lg:block sticky top-24">
+              {sidebar}
+            </aside>
+          )}
 
-          {/* Spacer - 48px */}
-          {hasSidebar && <div></div>}
+          {/* Main Feed */}
+          <main className="min-w-0">
+            {feed}
+          </main>
 
-          {/* Main Feed - 640px */}
-          <main>{feed}</main>
-
-          {/* Spacer - 48px */}
-          <div></div>
-
-          {/* Right Panel - 320px */}
-          <aside className="hidden xl:block">{rightPanel}</aside>
+          {/* Right Panel */}
+          <aside className="hidden xl:block sticky top-24 h-fit">
+            {rightPanel}
+          </aside>
         </div>
       </div>
 

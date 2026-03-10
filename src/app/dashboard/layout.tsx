@@ -30,12 +30,18 @@ import DonationHoverPreview from '@/components/dashboard/DonationHoverPreview';
 
 const navigationGroups = [
   {
-    title: 'Overview',
+    title: 'Menu',
     items: [
-      { name: 'Dashboard', icon: LayoutDashboard, href: '/dashboard', roles: ['USER', 'ORGANIZATION', 'ADMIN'] },
+      { name: 'Home', icon: Home, href: '/dashboard/user', roles: ['USER'] },
+      { name: 'Categories', icon: LayoutDashboard, href: '/dashboard/categories', roles: ['USER', 'ORGANIZATION', 'ADMIN'] },
       { name: 'My Donations', icon: HandHeart, href: '/dashboard/user/donations', roles: ['USER'], hasPreview: true },
       { name: 'Volunteer Activities', icon: Users, href: '/dashboard/user/volunteer', roles: ['USER'] },
-      { name: 'Shelter Requests', icon: Home, href: '/dashboard/user/shelter', roles: ['USER'] },
+      { name: 'Campaigns', icon: Megaphone, href: '/dashboard/user/campaigns', roles: ['USER'] },
+      { name: 'Messages', icon: MessageSquare, href: '/dashboard/messages', roles: ['USER', 'ORGANIZATION', 'ADMIN'] },
+      { name: 'Saved Posts', icon: Bell, href: '/dashboard/saved', roles: ['USER'] },
+      { name: 'Notifications', icon: Bell, href: '/dashboard/notifications', roles: ['USER', 'ORGANIZATION', 'ADMIN'] },
+      { name: 'My Profile', icon: UserCircle, href: '/dashboard/profile', roles: ['USER', 'ORGANIZATION', 'ADMIN'] },
+      { name: 'Settings', icon: Settings, href: '/dashboard/settings', roles: ['USER', 'ORGANIZATION', 'ADMIN'] },
     ]
   },
   {
@@ -51,13 +57,6 @@ const navigationGroups = [
     items: [
       { name: 'All Users', icon: Users, href: '/dashboard/admin/users', roles: ['ADMIN'] },
       { name: 'All Organizations', icon: Home, href: '/dashboard/admin/orgs', roles: ['ADMIN'] },
-    ]
-  },
-  {
-    title: 'General',
-    items: [
-      { name: 'Messages', icon: MessageSquare, href: '/dashboard/messages', roles: ['USER', 'ORGANIZATION', 'ADMIN'] },
-      { name: 'Settings', icon: Settings, href: '/dashboard/settings', roles: ['USER', 'ORGANIZATION', 'ADMIN'] },
     ]
   }
 ];
@@ -100,7 +99,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           "fixed inset-y-0 left-0 lg:relative lg:translate-x-0"
         )}
       >
-        <div className="p-6 flex items-center justify-between border-b border-slate-100/40">
+        <div className="p-8 flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3">
             <motion.div
               className="w-10 h-10 relative"
@@ -118,32 +117,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="font-bold text-xl tracking-tight text-neutral-800"
+                className="font-black text-2xl tracking-tighter text-neutral-800"
               >
                 HelpSphere
               </motion.span>
             )}
           </Link>
-          <button
-            className="lg:hidden p-2 text-slate-400 hover:text-slate-600"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            <X size={20} />
-          </button>
         </div>
 
-        <nav className="flex-1 px-4 py-8 space-y-8 overflow-y-auto custom-scrollbar">
+        <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto custom-scrollbar">
           {navigationGroups.map((group, groupIdx) => {
             const filteredGroupItems = group.items.filter(item => item.roles.includes(user.role));
             if (filteredGroupItems.length === 0) return null;
 
             return (
-              <div key={group.title} className="space-y-2">
-                {isSidebarOpen && (
-                  <h4 className="px-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">
-                    {group.title}
-                  </h4>
-                )}
+              <div key={group.title} className="pb-6">
                 <div className="space-y-1">
                   {filteredGroupItems.map((item, idx) => {
                     const isActive = pathname === item.href;
@@ -157,49 +145,29 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         <Link href={item.href}>
                           <div
                             className={cn(
-                              "flex items-center gap-3.5 px-4 py-3 rounded-xl transition-all duration-300 group cursor-pointer relative",
+                              "flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-300 group cursor-pointer relative mx-2",
                               isActive
-                                ? 'bg-primary/5 text-primary shadow-[inset_0_0_0_1px_rgba(197,131,113,0.1)]'
-                                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                                ? 'bg-primary text-white shadow-lg shadow-primary/25'
+                                : 'text-slate-500 hover:bg-primary/5 hover:text-primary'
                             )}
-                            onMouseEnter={() => item.hasPreview && setIsDonationHovered(true)}
-                            onMouseLeave={() => item.hasPreview && setIsDonationHovered(false)}
                           >
-                            {isActive && (
-                              <motion.div
-                                layoutId="activeNav"
-                                className="absolute left-0 w-1 h-6 bg-primary rounded-r-full"
-                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                              />
-                            )}
                             <div className="flex-shrink-0">
                               <item.icon
-                                size={20}
+                                size={22}
                                 strokeWidth={isActive ? 2.5 : 2}
                                 className={cn(
                                   "transition-all duration-300",
-                                  isActive ? 'text-primary scale-110' : 'text-slate-400 group-hover:text-slate-600 group-hover:scale-110'
+                                  isActive ? 'text-white' : 'text-slate-400 group-hover:text-primary'
                                 )}
                               />
                             </div>
                             {isSidebarOpen && (
                               <span className={cn(
-                                "font-bold truncate text-sm tracking-tight",
-                                isActive ? 'text-primary' : 'text-slate-600 group-hover:text-slate-900'
+                                "font-bold truncate text-[15px] tracking-tight",
+                                isActive ? 'text-white' : 'text-slate-600 group-hover:text-primary'
                               )}>
                                 {item.name}
                               </span>
-                            )}
-
-                            {item.hasPreview && (
-                              <DonationHoverPreview
-                                isVisible={isDonationHovered}
-                                data={{
-                                  totalDonations: 12500,
-                                  campaignsSupported: 8,
-                                  itemsDonated: 15
-                                }}
-                              />
                             )}
                           </div>
                         </Link>
@@ -212,12 +180,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           })}
         </nav>
 
-        <div className="p-4 border-t border-slate-100/40">
+        <div className="p-6">
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={logout}
-            className="w-full flex items-center gap-3 px-3.5 py-2.5 text-red-500 hover:text-red-600 hover:bg-red-50/80 rounded-xl transition-all duration-200 font-semibold text-sm"
+            className="w-full flex items-center gap-3 px-6 py-4 text-slate-500 hover:text-red-500 hover:bg-red-50 rounded-2xl transition-all duration-200 font-bold text-sm"
           >
             <LogOut size={20} />
             {isSidebarOpen && <span>Logout</span>}
@@ -228,179 +196,61 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header - 64px production spec */}
-        <header style={{
-          height: '72px',
-          backgroundColor: 'rgba(255, 255, 255, 0.8)',
-          backdropFilter: 'blur(12px)',
-          borderBottom: '1px solid rgba(229, 231, 235, 0.5)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          paddingLeft: 'max(16px, env(safe-area-inset-left))',
-          paddingRight: 'max(16px, env(safe-area-inset-right))',
-          zIndex: 40,
-        }}>
-          {/* Left: Logo and Menu Button */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                if (typeof window !== 'undefined' && window.innerWidth < 1024) {
-                  setIsMobileMenuOpen(true);
-                } else {
-                  setIsSidebarOpen(!isSidebarOpen);
-                }
-              }}
-              style={{
-                padding: '8px',
-                marginLeft: '-8px',
-                borderRadius: '10px',
-                backgroundColor: 'transparent',
-                color: '#6B7280',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(197, 131, 113, 0.08)';
-                e.currentTarget.style.color = 'var(--color-primary)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent';
-                e.currentTarget.style.color = '#6B7280';
-              }}
+        <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-xl border-b border-slate-100/50 flex items-center justify-between px-8" style={{ height: '80px' }}>
+          <div className="flex items-center gap-4 lg:hidden">
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="p-2 text-slate-500 hover:bg-slate-100 rounded-xl transition-colors"
             >
-              <Menu size={20} />
-            </motion.button>
-
-            <Link href="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
-              <div className="w-10 h-10 relative">
-                <Image
-                  src="/logo.png"
-                  alt="HelpSphere Logo"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <span className="font-extrabold text-2xl tracking-tighter text-slate-800 hidden md:block">
-                HelpSphere
-              </span>
-            </Link>
+              <Menu size={24} />
+            </button>
+            <div className="w-8 h-8 relative">
+              <Image src="/logo.png" alt="Logo" fill className="object-contain" />
+            </div>
           </div>
 
-          {/* Center: Search bar (Hidden on mobile) */}
-          <div className="hidden lg:flex flex-1 justify-center mx-10">
+          <div className="flex-1 max-w-2xl px-4">
             <SearchBar />
           </div>
 
-          {/* Right: User controls */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            {/* Notifications */}
-            <div style={{ position: 'relative' }}>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
-                style={{
-                  padding: '8px',
-                  borderRadius: '8px',
-                  backgroundColor: 'transparent',
-                  color: '#6B7280',
-                  border: 'none',
-                  cursor: 'pointer',
-                  position: 'relative',
-                  transition: 'all 0.2s',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#F3F4F6';
-                  e.currentTarget.style.color = '#1F2937';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.color = '#6B7280';
-                }}
-              >
-                <Bell size={22} />
-                <span style={{
-                  position: 'absolute',
-                  top: '10px',
-                  right: '10px',
-                  width: '10px',
-                  height: '10px',
-                  backgroundColor: '#EF4444',
-                  borderRadius: '50%',
-                  border: '2px solid white',
-                }}></span>
-              </motion.button>
-              <NotificationPopover
-                isOpen={isNotificationsOpen}
-                onClose={() => setIsNotificationsOpen(false)}
-              />
-            </div>
+          <div className="flex items-center gap-4">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+              className="p-3 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-2xl transition-all relative"
+            >
+              <Bell size={22} />
+              <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-red-500 border-2 border-white rounded-full"></span>
+            </motion.button>
 
-            {/* Messages */}
             <Link href="/dashboard/messages">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                style={{
-                  padding: '8px',
-                  borderRadius: '8px',
-                  backgroundColor: 'transparent',
-                  color: '#6B7280',
-                  border: 'none',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#F3F4F6';
-                  e.currentTarget.style.color = '#1F2937';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.color = '#6B7280';
-                }}
+                className="p-3 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-2xl transition-all"
               >
                 <MessageSquare size={22} />
               </motion.button>
             </Link>
 
-            {/* User avatar dropdown */}
-            <div style={{ position: 'relative' }}>
-              <motion.button
+            <div className="h-8 w-[1px] bg-slate-100 mx-2 hidden sm:block"></div>
+
+            <div className="flex items-center gap-3 pl-2 group cursor-pointer">
+              <div className="text-right hidden sm:block">
+                <p className="text-sm font-bold text-slate-800 leading-none">{user.name}</p>
+                <p className="text-[11px] font-medium text-slate-400 mt-1 uppercase tracking-wider">{user.role}</p>
+              </div>
+              <motion.div
                 whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                style={{
-                  padding: '2px',
-                  borderRadius: '12px',
-                  backgroundColor: 'transparent',
-                  border: '2px solid #F3F4F6',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--color-primary)';
-                  e.currentTarget.style.backgroundColor = 'var(--color-background)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = '#F3F4F6';
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                }}
+                className="w-11 h-11 rounded-2xl border-2 border-slate-100 overflow-hidden group-hover:border-primary transition-colors"
               >
                 <img
                   src={user.profilePhoto || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`}
                   alt={user.name}
-                  style={{
-                    width: '36px',
-                    height: '36px',
-                    borderRadius: '10px',
-                    objectFit: 'cover',
-                  }}
+                  className="w-full h-full object-cover"
                 />
-              </motion.button>
+              </motion.div>
             </div>
           </div>
         </header>

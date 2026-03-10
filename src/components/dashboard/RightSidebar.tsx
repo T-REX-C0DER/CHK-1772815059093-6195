@@ -1,21 +1,6 @@
 import React from 'react';
-import { TrendingUp, Calendar, Users, Heart, DollarSign, MapPin } from 'lucide-react';
+import { TrendingUp, Users, Heart, DollarSign, ShieldCheck, MapPin, Calendar, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Post, OrganizationInfo } from '@/types';
-
-interface TrendingCampaign {
-  id: string;
-  name: string;
-  percentage: number;
-}
-
-interface Event {
-  id: string;
-  title: string;
-  date: string;
-  location: string;
-  time?: string;
-}
 
 interface Props {
   impact?: {
@@ -24,285 +9,120 @@ interface Props {
     ongoingCampaigns: number;
     totalDonations: number;
   };
-  trending?: TrendingCampaign[];
-  suggestions?: OrganizationInfo[];
-  events?: Event[];
+  trending?: any[];
+  suggestions?: any[];
+  events?: any[];
 }
 
 export default function RightSidebar({ impact, trending, suggestions, events }: Props) {
-  const renderCard = (title: string, children: React.ReactNode, icon?: string) => (
-    <div
-      style={{
-        backgroundColor: 'var(--color-surface)',
-        borderRadius: '20px',
-        padding: '28px',
-        marginBottom: '24px',
-        boxShadow: 'var(--shadow-sm)',
-        border: '1px solid rgba(197, 131, 113, 0.08)',
-        transition: 'all 0.3s ease'
-      }}
-      className="hover:shadow-md transition-shadow"
-    >
-      <h3 style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-        {icon} {title}
-      </h3>
-      {children}
-    </div>
-  );
-
-  const renderStatWidget = (icon: React.ReactNode, value: string, label: string, color: string = '#D88A6F') => (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '16px',
-        padding: '16px',
-        backgroundColor: 'var(--color-background)',
-        borderRadius: '16px',
-        marginBottom: '12px',
-        border: '1px solid rgba(197, 131, 113, 0.04)',
-      }}
-    >
-      <div
-        style={{
-          width: '48px',
-          height: '48px',
-          borderRadius: '12px',
-          backgroundColor: `${color}15`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: color,
-        }}
-      >
-        {icon}
-      </div>
-      <div>
-        <p style={{ fontSize: '22px', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0px' }}>
-          {value}
-        </p>
-        <p style={{ fontSize: '11px', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>
-          {label}
-        </p>
-      </div>
-    </div>
-  );
-
   return (
-    <div>
-      {/* impact summary */}
-      {impact &&
-        renderCard('Your Impact Network', (
-          <div className="grid grid-cols-1 gap-4">
-            {renderStatWidget(
-              <Users size={24} strokeWidth={2.5} />,
-              impact.livesImpacted.toLocaleString(),
-              'Total Lives Impacted',
-              '#22C55E'
-            )}
-            {renderStatWidget(
-              <Heart size={24} strokeWidth={2.5} />,
-              impact.activeVolunteers.toString(),
-              'Volunteer Activities',
-              '#EF4444'
-            )}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-5 bg-slate-50 rounded-2xl border border-slate-100/50">
-                <TrendingUp size={20} className="text-primary mb-3" strokeWidth={2.5} />
-                <p className="text-2xl font-black text-slate-800 tracking-tighter">{impact.ongoingCampaigns}</p>
-                <p className="text-[10px] font-bold text-slate-400 tracking-widest uppercase">Ongoing</p>
+    <div className="space-y-6 pb-20">
+      {/* Impact Summary Card */}
+      <div className="bg-white rounded-[20px] p-6 lg:p-7 border border-slate-100/60 shadow-[0_4px_24px_rgba(0,0,0,0.03)]">
+        <h3 className="text-[17px] font-black text-slate-800 mb-6 flex items-center gap-2.5 tracking-tight">
+          Your Impact Network
+        </h3>
+        <div className="grid grid-cols-2 gap-3.5">
+          <div className="bg-slate-50/50 p-4 rounded-[16px] border border-slate-100/50 transition-all hover:bg-white hover:border-[#D88A6F]/30 hover:shadow-md hover:-translate-y-0.5 cursor-default group">
+            <p className="text-[22px] font-black text-[#D88A6F] tracking-tighter leading-none group-hover:scale-105 transition-transform origin-left">24.5k</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2">{`Lives Impacted`}</p>
+          </div>
+          <div className="bg-slate-50/50 p-4 rounded-[16px] border border-slate-100/50 transition-all hover:bg-white hover:border-[#D88A6F]/30 hover:shadow-md hover:-translate-y-0.5 cursor-default group">
+            <p className="text-[22px] font-black text-slate-800 tracking-tighter leading-none group-hover:scale-105 transition-transform origin-left">1,240</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2">Volunteers</p>
+          </div>
+          <div className="bg-slate-50/50 p-4 rounded-[16px] border border-slate-100/50 transition-all hover:bg-white hover:border-[#D88A6F]/30 hover:shadow-md hover:-translate-y-0.5 cursor-default group">
+            <p className="text-[22px] font-black text-slate-800 tracking-tighter leading-none group-hover:scale-105 transition-transform origin-left">85</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2">Campaigns</p>
+          </div>
+          <div className="bg-slate-50/50 p-4 rounded-[16px] border border-slate-100/50 transition-all hover:bg-white hover:border-[#D88A6F]/30 hover:shadow-md hover:-translate-y-0.5 cursor-default group">
+            <p className="text-[22px] font-black text-[#D88A6F] tracking-tighter leading-none group-hover:scale-105 transition-transform origin-left">₹12.5L</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2">Raised</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Trending Campaigns */}
+      <div className="bg-white rounded-[20px] p-6 lg:p-7 border border-slate-100/60 shadow-[0_4px_24px_rgba(0,0,0,0.03)]">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-[17px] font-black text-slate-800 tracking-tight">Trending Now</h3>
+          <ArrowRight size={18} className="text-slate-300 cursor-pointer hover:text-primary transition-colors" />
+        </div>
+        <div className="space-y-6">
+          {[
+            { name: 'Clean Water for Rural Villages', percent: 85, org: 'Water.org' },
+            { name: 'Winter Blankets Distribution', percent: 40, org: 'Red Cross' },
+            { name: 'School Meals Program', percent: 92, org: 'Save the Children' }
+          ].map((campaign, idx) => (
+            <div key={idx} className="space-y-2.5">
+              <div className="flex justify-between items-center">
+                <p className="text-sm font-bold text-slate-700 truncate leading-tight">{campaign.name}</p>
               </div>
-              <div className="p-5 bg-slate-50 rounded-2xl border border-slate-100/50">
-                <DollarSign size={20} className="text-primary mb-3" strokeWidth={2.5} />
-                <p className="text-2xl font-black text-slate-800 tracking-tighter">₹{impact.totalDonations.toLocaleString()}</p>
-                <p className="text-[10px] font-bold text-slate-400 tracking-widest uppercase">Donated</p>
+              <div className="h-1.5 bg-slate-50 border border-slate-100/50 rounded-full overflow-hidden relative">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${campaign.percent}%` }}
+                  transition={{ duration: 1.5, delay: idx * 0.2 }}
+                  className="h-full bg-primary rounded-full shadow-[0_0_8px_rgba(216,138,111,0.2)]"
+                />
+              </div>
+              <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest">
+                <span className="text-primary">{campaign.percent}% funded</span>
+                <span className="text-slate-400 tracking-tight">{campaign.org}</span>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+      </div>
 
-      {/* trending campaigns */}
-      {trending && trending.length > 0 &&
-        renderCard('🔥 Trending Campaigns', (
-          <div className="grid gap-5">
-            {trending.map((c) => (
-              <motion.div
-                key={c.id}
-                whileHover={{ y: -4, scale: 1.02 }}
-                className="group cursor-pointer"
-                style={{
-                  padding: '16px',
-                  backgroundColor: 'var(--color-background)',
-                  borderRadius: '20px',
-                  border: '1px solid rgba(197,131,113,0.06)',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                }}
-              >
-                <div className="flex gap-4 items-center mb-4">
-                  <div className="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-slate-100 border border-slate-200/50">
-                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center text-primary font-bold text-xl">
-                      {c.name.charAt(0)}
-                    </div>
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-extrabold text-slate-800 leading-tight mb-1 truncate group-hover:text-primary transition-colors">
-                      {c.name}
-                    </p>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-black text-primary bg-primary/10 px-2 py-0.5 rounded-md">
-                        {c.percentage.toFixed(0)}%
-                      </span>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">completed</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full h-1.5 bg-white/80 rounded-full overflow-hidden border border-slate-100/50 relative">
-                  <motion.div
-                    style={{ background: 'var(--gradient-primary)', height: '100%' }}
-                    initial={{ width: 0 }}
-                    animate={{ width: `${c.percentage}%` }}
-                    transition={{ duration: 1.5, ease: "easeOut" }}
-                  />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        ))}
-
-      {/* suggestions */}
-      {suggestions && suggestions.length > 0 &&
-        renderCard('Suggested NGOs', (
-          <div style={{ display: 'grid', gap: '12px' }}>
-            {suggestions.map((org) => (
-              <div
-                key={org.id}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '16px',
-                  backgroundColor: '#F8F6F4',
-                  borderRadius: '12px',
-                  border: '1px solid #E5E7EB',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(197, 131, 113, 0.06)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--color-background)';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: 0 }}>
-                  <img
-                    src={org.logo || '/placeholder-logo.png'}
-                    alt={org.organizationName}
-                    style={{
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '50%',
-                      objectFit: 'cover',
-                      flexShrink: 0,
-                    }}
-                  />
-                  <div style={{ minWidth: 0 }}>
-                    <p style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {org.organizationName}
-                    </p>
-                    <p style={{ fontSize: '11px', color: 'var(--text-secondary)', marginTop: '2px', fontWeight: 600 }}>
-                      {org.organizationType || 'Organization'}
-                    </p>
-                  </div>
-                </div>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  style={{
-                    fontSize: '11px',
-                    fontWeight: 800,
-                    color: 'var(--color-primary)',
-                    backgroundColor: '#FFFFFF',
-                    border: '1.5px solid var(--color-primary)',
-                    borderRadius: '8px',
-                    padding: '6px 14px',
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap',
-                    marginLeft: '8px',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'var(--color-primary)';
-                    e.currentTarget.style.color = '#FFFFFF';
-                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(197, 131, 113, 0.2)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '#FFFFFF';
-                    e.currentTarget.style.color = 'var(--color-primary)';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  Follow
-                </motion.button>
-              </div>
-            ))}
-          </div>
-        ))}
-
-      {/* upcoming events */}
-      {events && events.length > 0 &&
-        renderCard('📅 Upcoming Events', (
-          <div style={{ display: 'grid', gap: '12px' }}>
-            {events.map((ev, idx) => (
-              <div
-                key={ev.id}
-                style={{
-                  display: 'flex',
-                  gap: '12px',
-                  paddingBottom: idx < events.length - 1 ? '12px' : '0',
-                  borderBottom: idx < events.length - 1 ? '1px solid #E5E7EB' : 'none',
-                }}
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '44px',
-                    height: '44px',
-                    backgroundColor: '#D88A6F',
-                    color: '#FFFFFF',
-                    borderRadius: '8px',
-                    flexShrink: 0,
-                  }}
-                >
-                  <span style={{ fontSize: '14px', fontWeight: 700 }}>
-                    {new Date(ev.date).getDate()}
+      {/* Suggested NGOs */}
+      <div className="bg-white rounded-[20px] p-6 lg:p-7 border border-slate-100/60 shadow-[0_4px_24px_rgba(0,0,0,0.03)]">
+        <h3 className="text-[17px] font-black text-slate-800 mb-6 tracking-tight">NGOs to Follow</h3>
+        <div className="space-y-4">
+          {[
+            { name: 'World Wildlife Fund', cat: 'Wildlife', logo: 'https://api.dicebear.com/7.x/initials/svg?seed=WWF' },
+            { name: 'Doctors Without Borders', cat: 'Health', logo: 'https://api.dicebear.com/7.x/initials/svg?seed=DWB' }
+          ].map((ngo, idx) => (
+            <div key={idx} className="flex items-center gap-3.5 group cursor-pointer p-0.5">
+              <img src={ngo.logo} alt={ngo.name} className="w-10 h-10 rounded-xl object-cover bg-slate-50 border border-slate-100 group-hover:border-primary/30 transition-all" />
+              <div className="flex-1 min-w-0">
+                <p className="text-[13px] font-bold text-slate-800 truncate leading-none mb-1.5 group-hover:text-primary transition-colors">{ngo.name}</p>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <span className="w-1 h-1 rounded-full bg-green-500"></span>
                   </span>
-                  <span style={{ fontSize: '10px', opacity: 0.8 }}>
-                    {new Date(ev.date).toLocaleString('default', { month: 'short' })}
-                  </span>
-                </div>
-                <div>
-                  <p style={{ fontSize: '14px', fontWeight: 600, color: '#1F2937' }}>
-                    {ev.title}
-                  </p>
-                  <p style={{ fontSize: '12px', color: '#6B7280', marginTop: '4px' }}>
-                    📍 {ev.location}
-                  </p>
+                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{ngo.cat}</p>
                 </div>
               </div>
-            ))}
-          </div>
-        ))}
+              <button className="px-3.5 py-2 bg-white border border-slate-100 text-slate-600 text-[10px] font-black rounded-lg hover:bg-primary hover:text-white hover:border-primary transition-all shadow-sm">
+                Follow
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Upcoming Volunteer Events */}
+      <div className="bg-white rounded-[20px] p-6 lg:p-7 border border-slate-100/60 shadow-[0_4px_24px_rgba(0,0,0,0.03)]">
+        <h3 className="text-[17px] font-black text-slate-800 mb-6 tracking-tight">Active Events</h3>
+        <div className="space-y-3.5">
+          {[
+            { date: 'OCT 14', title: 'Beach Cleanup Drive', loc: 'Santa Monica' },
+            { date: 'OCT 18', title: 'Food Bank Sorting', loc: 'Downtown Center' }
+          ].map((event, idx) => (
+            <div key={idx} className="flex gap-4 p-3.5 bg-[#FAF9F8] rounded-[24px] border border-slate-100/50 group hover:border-primary/20 hover:bg-white hover:shadow-md transition-all cursor-pointer">
+              <div className="w-11 h-11 rounded-xl bg-white border border-slate-100 flex flex-col items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:border-primary transition-all shadow-sm">
+                <span className="text-[9px] font-black text-slate-400 group-hover:text-white/80 leading-none mb-1">{event.date.split(' ')[0]}</span>
+                <span className="text-[15px] font-black text-slate-800 group-hover:text-white leading-none tracking-tighter">{event.date.split(' ')[1]}</span>
+              </div>
+              <div className="min-w-0 flex flex-col justify-center">
+                <p className="text-[13px] font-bold text-slate-800 group-hover:text-primary transition-colors truncate mb-0.5">{event.title}</p>
+                <p className="text-[10px] font-bold text-slate-400 truncate opacity-80">📍 {event.loc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
