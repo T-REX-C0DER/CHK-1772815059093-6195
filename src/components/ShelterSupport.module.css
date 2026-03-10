@@ -1,14 +1,37 @@
 .container {
   padding: 120px 24px;
-/*   background: var(--color-background); */
-  background: white; /* To distinguish from the beige section before it if needed, or keep same */
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(245, 242, 240, 0.5) 100%);
   position: relative;
   overflow: hidden;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(197, 131, 113, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.container::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(197, 131, 113, 0.03) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .content {
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .grid {
@@ -26,18 +49,24 @@
 .sectionTag {
   display: inline-block;
   padding: 8px 20px;
-  background: rgba(197, 131, 113, 0.08);
+  background: linear-gradient(135deg, rgba(197, 131, 113, 0.12) 0%, rgba(197, 131, 113, 0.06) 100%);
   color: var(--color-primary);
   font-size: 0.9rem;
   font-weight: 600;
   border-radius: var(--radius-pill);
   margin-bottom: 20px;
+  border: 1px solid rgba(197, 131, 113, 0.15);
+  letter-spacing: 0.3px;
 }
 
 .title {
   font-size: clamp(2rem, 4vw, 2.8rem);
   margin-bottom: 24px;
   line-height: 1.2;
+  background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {
@@ -56,13 +85,25 @@
   position: relative;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 20px 40px rgba(197, 131, 113, 0.15);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(197, 131, 113, 0.1);
+}
+
+.imageWrapper:hover {
+  box-shadow: 0 30px 60px rgba(197, 131, 113, 0.2);
+  transform: translateY(-8px);
 }
 
 .mainImage {
   width: 100%;
   height: auto;
   display: block;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.imageWrapper:hover .mainImage {
+  transform: scale(1.05);
 }
 
 .floatingCard {
@@ -72,10 +113,13 @@
   background: white;
   padding: 24px;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
   width: 260px;
   border-left: 4px solid var(--color-primary);
   z-index: 2;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+  transition: all 0.3s ease;
 }
 
 .cardHeader {
@@ -118,18 +162,18 @@
   display: flex;
   gap: 20px;
   padding: 24px;
-  background: var(--color-background);
+  background: linear-gradient(135deg, #FAFAF8 0%, #F5F2F0 100%);
   border-radius: var(--radius-lg);
-  transition: all var(--transition-base);
-  border: 1px solid rgba(197, 131, 113, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(197, 131, 113, 0.08);
   position: relative;
 }
 
 .stepCard:hover {
-  background: white;
-  transform: translateX(10px);
-  box-shadow: var(--shadow-md);
-  border-color: rgba(197, 131, 113, 0.15);
+  background: linear-gradient(135deg, #FFFFFF 0%, #FAFAF8 100%);
+  transform: translateX(12px);
+  box-shadow: 0 12px 30px rgba(197, 131, 113, 0.12);
+  border-color: rgba(197, 131, 113, 0.2);
 }
 
 .iconWrapper {
