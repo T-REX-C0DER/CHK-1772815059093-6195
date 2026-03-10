@@ -54,7 +54,6 @@ async function main() {
     }
   });
 
-  // Create users
   const user1 = await prisma.user.create({
     data: {
       name: 'John Doe',
