@@ -1,5 +1,10 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+
+function hashAadhaar(aadhaar: string): string {
+  return crypto.createHash('sha256').update(aadhaar).digest('hex');
+}
 
 const prisma = new PrismaClient();
 
@@ -57,7 +62,9 @@ async function main() {
       passwordHash: await bcrypt.hash('password123', 10),
       phone: '+91-9876543213',
       city: 'Mumbai',
-      role: 'USER'
+      role: 'USER',
+      aadhaarHash: hashAadhaar('123456789012'),
+      aadhaarLast4: '9012',
     }
   });
 
@@ -68,7 +75,9 @@ async function main() {
       passwordHash: await bcrypt.hash('password123', 10),
       phone: '+91-9876543214',
       city: 'Bangalore',
-      role: 'USER'
+      role: 'USER',
+      aadhaarHash: hashAadhaar('987654321098'),
+      aadhaarLast4: '1098',
     }
   });
 
@@ -139,7 +148,8 @@ async function main() {
     data: {
       userId: user1.id,
       organizationId: org1.id,
-      status: 'APPROVED'
+      status: 'APPROVED',
+      hours: 5.5
     }
   });
 
@@ -147,7 +157,8 @@ async function main() {
     data: {
       userId: user2.id,
       organizationId: org2.id,
-      status: 'PENDING'
+      status: 'PENDING',
+      hours: 3
     }
   });
 

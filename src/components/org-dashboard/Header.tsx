@@ -5,18 +5,15 @@ import {
   Search,
   Bell,
   MessageSquare,
-  ChevronDown,
+  MapPin,
   Menu,
 } from 'lucide-react';
-import { useDashboard } from '@/app/organization/dashboard/DashboardContext';
 
 interface HeaderProps {
   onToggleSidebar?: () => void;
 }
 
 const Header = ({ onToggleSidebar }: HeaderProps) => {
-  const { activeMenu } = useDashboard();
-
   return (
     <header className="org-header">
       <div className="org-header-left">
@@ -25,31 +22,33 @@ const Header = ({ onToggleSidebar }: HeaderProps) => {
           <Menu size={22} />
         </button>
 
-        {/* Page Title */}
-        <h1 className="org-page-title">{activeMenu}</h1>
-      </div>
-
-      {/* Search */}
-      <div className="org-search-bar">
-        <Search size={18} color="var(--org-text-faint)" />
-        <input
-          type="text"
-          placeholder="Search campaigns, volunteers, donors..."
-          className="org-search-input"
-        />
+        {/* Org Name & Subtitle */}
+        <div className="org-header-title-group">
+          <h1 className="org-header-org-name">Hope Foundation</h1>
+          <div className="org-header-subtitle">
+            <span>Organization Dashboard</span>
+            <span className="org-header-location">
+              <MapPin size={13} />
+              New York, NY
+            </span>
+          </div>
+        </div>
       </div>
 
       {/* Actions */}
       <div className="org-header-actions">
-        <button className="org-icon-btn">
+        <button className="org-icon-btn" title="Search">
+          <Search size={19} />
+        </button>
+        <button className="org-icon-btn" title="Messages">
           <MessageSquare size={19} />
         </button>
-        <button className="org-icon-btn">
+        <button className="org-icon-btn" title="Notifications">
           <Bell size={19} />
           <span className="org-notification-dot"></span>
         </button>
 
-        <div style={{ width: 1, height: 28, background: 'var(--org-border)', margin: '0 4px' }}></div>
+        <div className="org-header-divider"></div>
 
         <div className="org-profile-dropdown">
           <img
@@ -57,11 +56,6 @@ const Header = ({ onToggleSidebar }: HeaderProps) => {
             alt="Organization Avatar"
             className="org-avatar"
           />
-          <div className="org-info-header">
-            <span className="org-name">Hope Foundation</span>
-            <span className="org-role">Administrator</span>
-          </div>
-          <ChevronDown size={14} color="var(--org-text-faint)" />
         </div>
       </div>
     </header>

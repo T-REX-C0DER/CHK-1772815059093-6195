@@ -29,6 +29,8 @@ import { cn } from '@/lib/utils';
 import NotificationPopover from '@/components/dashboard/NotificationPopover';
 import SearchBar from '@/components/dashboard/SearchBar';
 import ProtectedRoute from '@/components/ProtectedRoute';
+import DonationHoverPreview from '@/components/dashboard/DonationHoverPreview';
+import VolunteerHoverPreview from '@/components/dashboard/VolunteerHoverPreview';
 import './dashboard.css';
 
 const userNavItems = [
@@ -64,10 +66,38 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const pathname = usePathname();
 
+  // stats for hover previews
+  const [dashboardStats, setDashboardStats] = useState<{
+    totalDonations: number;
+    donationCount: number;
+    volunteerCount: number;
+    totalVolunteering?: number;
+    shelterRequestsCount: number;
+  } | null>(null);
+
+  const [hoveredNav, setHoveredNav] = useState<string | null>(null);
+
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
+
+  // fetch stats when component mounts
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('/api/dashboard/user');
+        if (res.ok) {
+          const data = await res.json();
+          setDashboardStats(data.stats);
+        }
+      } catch (err) {
+        console.error('Error fetching dashboard stats', err);
+      }
+    };
+    fetchStats();
+  }, []);
+
 
   if (!user) return null;
 
@@ -85,6 +115,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         {items.map((item, idx) => {
           const isActive = pathname === item.href;
+          const showDonationsPreview = item.href === '/dashboard/user/donations';
+          const showVolunteerPreview = item.href === '/dashboard/user/volunteer';
+
           return (
             <motion.div
               key={item.name}
@@ -92,23 +125,53 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: delay + idx * 0.04, duration: 0.3 }}
             >
-              <Link href={item.href}>
-                <div
-                  className={cn(
-                    "nav-item",
-                    isActive && "active"
-                  )}
-                  title={!isSidebarOpen ? item.name : undefined}
-                >
-                  <item.icon
-                    size={19}
-                    strokeWidth={isActive ? 2.2 : 1.8}
+              <div
+                className="relative"
+                onMouseEnter={() => setHoveredNav(item.name)}
+                onMouseLeave={() => setHoveredNav(null)}
+              >
+                <Link href={item.href}>
+                  <div
+                    className={cn(
+                      "nav-item",
+                      isActive && "active"
+                    )}
+                    title={!isSidebarOpen ? item.name : undefined}
+                  >
+                    <item.icon
+                      size={19}
+                      strokeWidth={isActive ? 2.2 : 1.8}
+                    />
+                    {isSidebarOpen && (
+                      <span className="truncate">{item.name}</span>
+                    )}
+                  </div>
+                </Link>
+
+                {/* donation hover preview */}
+                {showDonationsPreview && dashboardStats && (
+                  <DonationHoverPreview
+                    isVisible={hoveredNav === item.name}
+                    data={{
+                      totalDonations: dashboardStats.totalDonations,
+                      campaignsSupported: 0,
+                      itemsDonated: 0,
+                    }}
                   />
-                  {isSidebarOpen && (
-                    <span className="truncate">{item.name}</span>
-                  )}
-                </div>
-              </Link>
+                )}
+
+                {/* volunteer hover preview */}
+                {showVolunteerPreview && dashboardStats && (
+                  <VolunteerHoverPreview
+                    isVisible={hoveredNav === item.name}
+                    data={{
+                      totalVolunteering:
+                        dashboardStats.totalVolunteering ||
+                        dashboardStats.volunteerCount,
+                    }}
+                  />
+                )}
+              </div>
             </motion.div>
           );
         })}

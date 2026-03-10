@@ -20,6 +20,7 @@ import {
   CheckCircle,
   ArrowRight,
   IndianRupee,
+  Fingerprint,
 } from "lucide-react";
 import styles from "./signup.module.css";
 import { useAuth } from "@/context/AuthContext";
@@ -40,6 +41,7 @@ export default function SignupPage() {
   const router = useRouter();
   const { login } = useAuth();
   const [error, setError] = useState("");
+  const [aadhaarError, setAadhaarError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -49,10 +51,28 @@ export default function SignupPage() {
     location: "",
     website: "",
     registrationId: "",
+    aadhaarNumber: "",
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleAadhaarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Only allow digits, strip everything else
+    const value = e.target.value.replace(/\D/g, "").slice(0, 12);
+    setFormData({ ...formData, aadhaarNumber: value });
+    if (aadhaarError && /^\d{12}$/.test(value)) {
+      setAadhaarError("");
+    }
+  };
+
+  const handleAadhaarBlur = () => {
+    if (formData.aadhaarNumber && !/^\d{12}$/.test(formData.aadhaarNumber)) {
+      setAadhaarError("Please enter a valid 12-digit Aadhaar number");
+    } else {
+      setAadhaarError("");
+    }
   };
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -65,9 +85,17 @@ export default function SignupPage() {
       setError("You must agree to the terms");
       return;
     }
+    // Validate Aadhaar for warrior accounts
+    if (accountType === "warrior") {
+      if (!/^\d{12}$/.test(formData.aadhaarNumber)) {
+        setAadhaarError("Please enter a valid 12-digit Aadhaar number");
+        return;
+      }
+    }
 
     setIsLoading(true);
     setError("");
+    setAadhaarError("");
 
     try {
       const res = await fetch("/api/auth/signup", {
@@ -314,6 +342,40 @@ export default function SignupPage() {
                             onChange={handleInputChange}
                             required
                           />
+                        </div>
+                      </div>
+
+                      {/* Aadhaar Number */}
+                      <div className={styles.aadhaarSection}>
+                        <div className={styles.inputGroup}>
+                          <label className={styles.label}>
+                            <Fingerprint size={14} className={styles.labelIcon} />
+                            Aadhaar Number
+                          </label>
+                          <div className={`${styles.inputWrapper} ${aadhaarError ? styles.inputWrapperError : ""}`}>
+                            <Shield className={styles.inputIcon} size={18} />
+                            <input
+                              type="text"
+                              name="aadhaarNumber"
+                              inputMode="numeric"
+                              maxLength={12}
+                              placeholder="Enter your 12-digit Aadhaar number"
+                              className={`${styles.input} ${aadhaarError ? styles.inputError : ""}`}
+                              value={formData.aadhaarNumber}
+                              onChange={handleAadhaarChange}
+                              onBlur={handleAadhaarBlur}
+                              required
+                              data-testid="aadhaar-input"
+                            />
+                          </div>
+                          {aadhaarError && (
+                            <span className={styles.validationError} data-testid="aadhaar-error">
+                              {aadhaarError}
+                            </span>
+                          )}
+                          <span className={styles.aadhaarHint}>
+                            Your Aadhaar is encrypted and stored securely. It will never be shared.
+                          </span>
                         </div>
                       </div>
                     </>

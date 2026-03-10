@@ -2,18 +2,16 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Landmark, Package } from 'lucide-react';
+import { Users } from 'lucide-react';
 
-interface DonationHoverPreviewProps {
+interface VolunteerHoverPreviewProps {
     isVisible: boolean;
     data: {
-        totalDonations: number;
-        campaignsSupported: number;
-        itemsDonated: number;
+        totalVolunteering: number;
     };
 }
 
-export default function DonationHoverPreview({ isVisible, data }: DonationHoverPreviewProps) {
+export default function VolunteerHoverPreview({ isVisible, data }: VolunteerHoverPreviewProps) {
     return (
         <AnimatePresence>
             {isVisible && (
@@ -27,7 +25,7 @@ export default function DonationHoverPreview({ isVisible, data }: DonationHoverP
                         left: 'calc(100% + 12px)',
                         top: '50%',
                         transform: 'translateY(-50%)',
-                        width: '260px',
+                        width: '240px',
                         backgroundColor: '#FFFFFF',
                         borderRadius: '16px',
                         boxShadow: '0 10px 40px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(197, 131, 113, 0.08)',
@@ -38,29 +36,16 @@ export default function DonationHoverPreview({ isVisible, data }: DonationHoverP
                 >
                     <div className="space-y-4">
                         <h5 className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">
-                            Donation Summary
+                            Volunteering Summary
                         </h5>
 
                         <div className="flex items-center gap-4">
                             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-                                <Heart size={20} fill="currentColor" />
+                                <Users size={20} />
                             </div>
                             <div>
-                                <p className="text-xl font-extrabold text-slate-800 tracking-tight">₹{data.totalDonations.toLocaleString()}</p>
-                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Total donated till now</p>
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-3 pt-2">
-                            <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                                <Landmark size={14} className="text-primary mb-1.5" />
-                                <p className="text-sm font-bold text-slate-800">{data.campaignsSupported}</p>
-                                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">Campaigns</p>
-                            </div>
-                            <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                                <Package size={14} className="text-primary mb-1.5" />
-                                <p className="text-sm font-bold text-slate-800">{data.itemsDonated}</p>
-                                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-tight">Food Kits</p>
+                                <p className="text-xl font-extrabold text-slate-800 tracking-tight">{data.totalVolunteering.toLocaleString()} hrs</p>
+                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Total volunteering hours</p>
                             </div>
                         </div>
                     </div>

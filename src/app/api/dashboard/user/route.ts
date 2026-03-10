@@ -49,6 +49,13 @@ export async function GET(request: Request) {
       _count: true
     });
 
+    // Get volunteer statistics (sum of hours + count)
+    const volunteerStats = await prisma.volunteer.aggregate({
+      where: { userId: decoded.id },
+      _sum: { hours: true },
+      _count: true
+    });
+
     // Get recent donations
     const recentDonations = await prisma.donation.findMany({
       where: { userId: decoded.id },
@@ -115,6 +122,7 @@ export async function GET(request: Request) {
         totalDonations: donationStats._sum.amount || 0,
         donationCount: donationStats._count,
         volunteerCount: user._count.volunteerActs,
+        totalVolunteering: volunteerStats._sum.hours || 0,
         shelterRequestsCount: user._count.shelterRequests
       },
       recentDonations,

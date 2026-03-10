@@ -260,6 +260,62 @@
   color: var(--color-primary);
 }
 
+/* ─── AADHAAR FIELD SECTION ─── */
+.aadhaarSection {
+  padding: 16px;
+  background: rgba(197, 131, 113, 0.03);
+  border: 1.5px dashed rgba(197, 131, 113, 0.18);
+  border-radius: var(--radius-lg);
+  margin-top: 2px;
+}
+
+.labelIcon {
+  display: inline;
+  vertical-align: -2px;
+  margin-right: 4px;
+  color: var(--color-primary);
+}
+
+.validationError {
+  font-size: 0.82rem;
+  color: #ef4444;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+  animation: shakeError 0.3s ease-in-out;
+}
+
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.inputError {
+  border-color: #ef4444 !important;
+}
+
+.inputWrapperError .inputIcon {
+  color: #ef4444;
+}
+
+.inputError:focus {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1), var(--shadow-xs) !important;
+}
+
+.aadhaarHint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  font-style: italic;
+}
+
 .eyeBtn {
   position: absolute;
   right: 14px;

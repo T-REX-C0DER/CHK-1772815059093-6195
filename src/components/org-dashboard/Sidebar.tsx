@@ -13,8 +13,9 @@ import {
   Settings,
   LogOut,
   X,
+  Building2,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useDashboard } from '@/app/organization/dashboard/DashboardContext';
@@ -32,9 +33,12 @@ const mainMenuItems = [
   { name: 'Shelter Requests', icon: Home },
 ];
 
-const secondaryMenuItems = [
+const accountMenuItems = [
   { name: 'Reports', icon: BarChart3 },
   { name: 'Messages', icon: MessageSquare },
+];
+
+const orgMenuItems = [
   { name: 'Profile', icon: UserCircle },
   { name: 'Settings', icon: Settings },
 ];
@@ -60,12 +64,12 @@ const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
 
       {/* Logo */}
       <div className="org-logo-container">
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/" className="org-logo-link">
           <Image
             src="/logo.png"
             alt="HelpSphere Logo"
-            width={32}
-            height={32}
+            width={34}
+            height={34}
           />
           <span className="org-logo-text">HelpSphere</span>
         </Link>
@@ -73,7 +77,7 @@ const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
 
       {/* Main Navigation */}
       <nav className="org-nav-menu">
-        <div className="org-nav-group-label">Main</div>
+        <div className="org-nav-group-label">Menu</div>
         {mainMenuItems.map((item, idx) => (
           <motion.div
             key={item.name}
@@ -91,13 +95,34 @@ const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
           </motion.div>
         ))}
 
-        <div className="org-nav-group-label" style={{ marginTop: 8 }}>Account</div>
-        {secondaryMenuItems.map((item, idx) => (
+        <div className="org-nav-group-label">Account</div>
+        {accountMenuItems.map((item, idx) => (
           <motion.div
             key={item.name}
             initial={{ opacity: 0, x: -8 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 + idx * 0.04, duration: 0.3 }}
+          >
+            <div
+              className={`org-nav-item ${activeMenu === item.name ? 'active' : ''}`}
+              onClick={() => handleClick(item.name)}
+            >
+              <item.icon size={20} strokeWidth={activeMenu === item.name ? 2.2 : 1.8} />
+              <span>{item.name}</span>
+            </div>
+          </motion.div>
+        ))}
+
+        <div className="org-nav-group-label">
+          <Building2 size={12} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} />
+          Organization
+        </div>
+        {orgMenuItems.map((item, idx) => (
+          <motion.div
+            key={item.name}
+            initial={{ opacity: 0, x: -8 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.35 + idx * 0.04, duration: 0.3 }}
           >
             <div
               className={`org-nav-item ${activeMenu === item.name ? 'active' : ''}`}
@@ -123,14 +148,14 @@ const Sidebar = ({ isOpen = false, onClose }: SidebarProps) => {
       </div>
 
       {/* Bottom Actions */}
-      <div style={{ marginTop: 12 }}>
+      <div className="org-sidebar-bottom">
         <Link href="/">
-          <div className="org-nav-item" style={{ color: 'var(--org-primary)' }}>
+          <div className="org-nav-item org-nav-item-home">
             <Home size={18} />
             <span>Back to Home</span>
           </div>
         </Link>
-        <div className="org-nav-item" style={{ color: '#E57373' }}>
+        <div className="org-nav-item org-nav-item-logout">
           <LogOut size={18} />
           <span>Logout</span>
         </div>
