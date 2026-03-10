@@ -8,24 +8,43 @@ interface DashboardGridProps {
 
 export default function DashboardGrid({ sidebar, feed, rightPanel }: DashboardGridProps) {
   return (
-    <div className="w-full">
-      {/* Desktop & Tablet: 2-column grid (feed + right panel) */}
+    <div style={{ width: '100%' }}>
       <div
-        className="grid gap-8 items-start"
         style={{
-          gridTemplateColumns: 'minmax(0, 1fr) minmax(310px, 360px)',
+          display: 'grid',
+          gridTemplateColumns: 'minmax(0, 1fr) minmax(300px, 360px)',
+          gap: 32,
+          alignItems: 'start',
         }}
+        className="dashboard-responsive-grid"
       >
         {/* Main Feed */}
-        <main className="min-w-0">
+        <main style={{ minWidth: 0 }}>
           {feed}
         </main>
 
         {/* Right Panel — hidden below xl */}
-        <aside className="hidden xl:block sticky top-24 h-fit">
+        <aside
+          className="hidden xl:block"
+          style={{ position: 'sticky', top: 96, height: 'fit-content' }}
+        >
           {rightPanel}
         </aside>
       </div>
+
+      <style jsx>{`
+        @media (max-width: 1280px) {
+          .dashboard-responsive-grid {
+            grid-template-columns: minmax(0, 1fr) 300px !important;
+            gap: 24px !important;
+          }
+        }
+        @media (max-width: 1024px) {
+          .dashboard-responsive-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

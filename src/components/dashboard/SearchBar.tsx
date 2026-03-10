@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-// lightweight debounce utility
 function debounce<T extends (...args: any[]) => void>(fn: T, delay = 300) {
   let timer: NodeJS.Timeout;
   return (...args: Parameters<T>) => {
@@ -54,51 +53,133 @@ export default function SearchBar() {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative w-full" style={{ maxWidth: '520px' }}>
+    <div ref={containerRef} className="relative w-full" style={{ maxWidth: 520 }}>
+      {/* Search Input — 48px pill with shadow */}
       <div
         className={cn(
-          "flex items-center bg-white border transition-all duration-300 px-5 py-3.5",
-          show ? "border-primary/50 ring-4 ring-primary/10 shadow-md" : "border-slate-100 hover:border-slate-200 shadow-sm"
+          "search-bar",
+          show && "focused"
         )}
-        style={{ borderRadius: '9999px' }}
+        style={{
+          width: '100%',
+          ...(show ? {
+            borderColor: 'var(--primary)',
+            boxShadow: 'var(--shadow-search-focus)',
+          } : {})
+        }}
       >
-        <Search size={20} className={cn("transition-colors duration-300", show ? "text-primary" : "text-slate-400")} />
+        <Search
+          size={18}
+          className="flex-shrink-0"
+          style={{ color: show ? 'var(--primary)' : 'var(--text-faint)', transition: 'color 0.2s' }}
+        />
         <input
           type="text"
           value={query}
           onChange={e => setQuery(e.target.value)}
           onFocus={() => setShow(true)}
-          placeholder="Search organizations, campaigns, shelters, volunteers..."
-          className="ml-3 w-full outline-none text-[15px] font-medium bg-transparent text-slate-700 placeholder:text-slate-400"
+          placeholder="Search organizations, campaigns..."
+          className="search-input"
         />
+        {query && (
+          <button
+            onClick={() => { setQuery(''); setSuggestions([]); }}
+            className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center"
+            style={{
+              background: 'var(--primary-light)',
+              color: 'var(--text-faint)',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: 12,
+              fontWeight: 700,
+              transition: 'all 0.15s',
+            }}
+          >
+            ✕
+          </button>
+        )}
       </div>
+
+      {/* Dropdown */}
       {show && suggestions.length > 0 && (
-        <div className="absolute z-50 mt-2 w-full bg-white border border-slate-200 rounded-2xl shadow-xl max-h-[400px] overflow-hidden flex flex-col">
-          <div className="p-2 border-b border-slate-50 bg-slate-50/50">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">Quick results</span>
+        <div
+          className="absolute z-50 mt-2 w-full overflow-hidden flex flex-col"
+          style={{
+            background: 'var(--card-bg)',
+            border: '1px solid var(--border)',
+            borderRadius: 'var(--radius-card)',
+            boxShadow: 'var(--shadow-elevated)',
+            maxHeight: 400,
+          }}
+        >
+          <div
+            className="px-4 py-2.5"
+            style={{ borderBottom: '1px solid var(--border)', background: 'var(--gradient-warm-subtle)' }}
+          >
+            <span
+              style={{
+                fontSize: 'var(--fs-tag)',
+                fontWeight: 700,
+                color: 'var(--text-faint)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+              }}
+            >
+              Quick results
+            </span>
           </div>
-          <ul className="overflow-auto py-2 custom-scrollbar">
+          <ul className="overflow-auto py-1 custom-scrollbar" style={{ margin: 0, padding: '4px 0', listStyle: 'none' }}>
             {['organization', 'campaign', 'volunteer', 'shelter'].map((type) => {
               const typedSuggestions = suggestions.filter(s => s.type === type);
               if (typedSuggestions.length === 0) return null;
-
               return (
                 <div key={type}>
                   <div className="px-4 py-1.5">
-                    <span className="text-[10px] font-bold text-primary uppercase tracking-wider capitalize">{type}s</span>
+                    <span
+                      style={{
+                        fontSize: 'var(--fs-tag)',
+                        fontWeight: 700,
+                        color: 'var(--primary)',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.08em',
+                      }}
+                    >
+                      {type}s
+                    </span>
                   </div>
                   {typedSuggestions.map(s => (
                     <li
                       key={`${s.type}-${s.id}`}
-                      className="px-4 py-2.5 hover:bg-slate-50 cursor-pointer transition-colors flex items-center gap-3 group"
+                      className="group"
+                      style={{
+                        padding: '10px 16px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 12,
+                        transition: 'background 0.15s',
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.background = 'var(--primary-light)')}
+                      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                       onClick={() => {
                         window.location.href = `/${s.type === 'organization' ? 'dashboard/org' : 'dashboard/user'}/${s.id}`;
                       }}
                     >
-                      <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
+                      <div
+                        className="flex items-center justify-center flex-shrink-0"
+                        style={{
+                          width: 32,
+                          height: 32,
+                          borderRadius: 'var(--radius-btn)',
+                          background: 'var(--primary-light)',
+                          color: 'var(--primary)',
+                        }}
+                      >
                         <Search size={14} />
                       </div>
-                      <span className="text-sm font-semibold text-slate-700 group-hover:text-slate-900">{s.name}</span>
+                      <span style={{ fontSize: 'var(--fs-small)', fontWeight: 600, color: 'var(--text-main)' }}>
+                        {s.name}
+                      </span>
                     </li>
                   ))}
                 </div>

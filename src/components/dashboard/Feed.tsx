@@ -28,8 +28,8 @@ export default function Feed() {
   }, []);
 
   return (
-    <div className="space-y-6 pb-20">
-      {/* Welcome Banner */}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24, paddingBottom: 80 }}>
+      {/* ── Welcome Banner ── */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -63,36 +63,37 @@ export default function Feed() {
         </div>
       </motion.div>
 
-      {/* Posts */}
+      {/* ── Posts / Skeletons / Empty ── */}
       {loading ? (
-        // Premium skeleton loaders
         [...Array(3)].map((_, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="bg-white overflow-hidden border p-7"
             style={{
+              background: 'var(--card-bg)',
               borderRadius: 'var(--radius-card)',
-              borderColor: 'var(--border-soft)',
-              boxShadow: 'var(--shadow-card)'
+              border: '1px solid var(--border)',
+              boxShadow: 'var(--shadow-card)',
+              overflow: 'hidden',
+              padding: 24,
             }}
           >
             <div className="animate-pulse">
-              <div className="flex items-center gap-4 mb-7">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
                 <div className="skeleton-avatar" />
-                <div className="space-y-2 flex-1">
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
                   <div className="skeleton-line" style={{ width: '45%' }} />
                   <div className="skeleton-line" style={{ width: '30%', height: 10 }} />
                 </div>
               </div>
-              <div className="space-y-3 mb-7">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
                 <div className="skeleton-line" style={{ width: '100%' }} />
                 <div className="skeleton-line" style={{ width: '80%' }} />
               </div>
               <div className="skeleton-image" />
-              <div className="skeleton-line mt-6" style={{ width: '100%', height: 48, borderRadius: 14 }} />
+              <div className="skeleton-line" style={{ width: '100%', height: 48, borderRadius: 'var(--radius-btn)', marginTop: 24 }} />
             </div>
           </motion.div>
         ))
@@ -100,21 +101,23 @@ export default function Feed() {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="empty-state bg-white border"
+          className="empty-state"
           style={{
+            background: 'var(--card-bg)',
             borderRadius: 'var(--radius-card)',
-            borderColor: 'var(--border-soft)',
-            boxShadow: 'var(--shadow-card)'
+            border: '1px solid var(--border)',
+            boxShadow: 'var(--shadow-card)',
           }}
         >
           <div className="icon">
-            <Sparkles size={48} style={{ color: 'var(--primary-brand)', margin: '0 auto' }} />
+            <Sparkles size={48} style={{ color: 'var(--primary)', margin: '0 auto' }} />
           </div>
           <h3>Your feed is looking quiet</h3>
           <p>Follow organizations and explore campaigns to discover causes you care about.</p>
           <button
-            className="btn btn-primary mt-6"
-            onClick={() => window.location.href = '/dashboard/user/campaigns'}
+            onClick={() => (window.location.href = '/dashboard/user/campaigns')}
+            className="donate-btn"
+            style={{ maxWidth: 240, margin: '24px auto 0' }}
           >
             Explore Campaigns
           </button>

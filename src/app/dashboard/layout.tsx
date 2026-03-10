@@ -78,11 +78,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     items: typeof userNavItems,
     delay = 0
   ) => (
-    <div className="pb-2">
+    <div style={{ paddingBottom: 8 }}>
       {isSidebarOpen && (
         <div className="nav-group-label">{label}</div>
       )}
-      <div className="space-y-1">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         {items.map((item, idx) => {
           const isActive = pathname === item.href;
           return (
@@ -101,8 +101,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   title={!isSidebarOpen ? item.name : undefined}
                 >
                   <item.icon
-                    size={20}
-                    strokeWidth={isActive ? 2.5 : 1.8}
+                    size={19}
+                    strokeWidth={isActive ? 2.2 : 1.8}
                   />
                   {isSidebarOpen && (
                     <span className="truncate">{item.name}</span>
@@ -177,8 +177,22 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Toggle Button */}
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="hidden lg:flex items-center justify-center w-7 h-7 rounded-full bg-white border border-slate-100 shadow-sm absolute -right-3.5 top-20 z-50 hover:bg-primary-light hover:border-primary/20 transition-all text-slate-400 hover:text-primary"
-          style={{ borderColor: 'var(--border-soft)' }}
+          className="hidden lg:flex items-center justify-center w-7 h-7 rounded-full absolute -right-3.5 top-20 z-50 transition-all"
+          style={{
+            background: 'var(--card-bg)',
+            border: '1px solid var(--border)',
+            boxShadow: 'var(--shadow-xs)',
+            color: 'var(--text-faint)',
+            cursor: 'pointer',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.borderColor = 'var(--primary)';
+            e.currentTarget.style.color = 'var(--primary)';
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.borderColor = 'var(--border)';
+            e.currentTarget.style.color = 'var(--text-faint)';
+          }}
         >
           {isSidebarOpen ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
         </button>
@@ -284,8 +298,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 </div>
                 <motion.div
                   whileHover={{ scale: 1.05 }}
-                  className="w-10 h-10 rounded-xl overflow-hidden group-hover:ring-2 ring-offset-1 transition-all"
-                  style={{ borderColor: 'var(--border-soft)', border: '2px solid var(--border-soft)' }}
+                  className="overflow-hidden transition-all"
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 'var(--radius-btn)',
+                    border: '2px solid var(--border)',
+                  }}
                 >
                   <img
                     src={user.profilePhoto || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`}

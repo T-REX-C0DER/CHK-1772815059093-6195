@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, MessageCircle, Share2, MoreHorizontal, ShieldCheck, Users, HandHeart } from 'lucide-react';
+import { Heart, MessageCircle, Share2, MoreHorizontal, ShieldCheck, Users, HandHeart, Bookmark } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -9,6 +9,7 @@ interface Props {
 
 export default function PostCard({ post }: Props) {
   const [liked, setLiked] = useState(false);
+  const [saved, setSaved] = useState(false);
   const [showComments, setShowComments] = useState(false);
 
   const percent = Math.min((post.collectedAmount / post.targetAmount) * 100, 100);
@@ -16,94 +17,210 @@ export default function PostCard({ post }: Props) {
 
   return (
     <div
-      className="bg-white overflow-hidden group border"
-      style={{
-        borderRadius: 'var(--radius-card)',
-        boxShadow: 'var(--shadow-card)',
-        borderColor: 'var(--border-soft)',
-        transition: 'var(--transition-smooth)',
-      }}
-      onMouseEnter={e => {
-        e.currentTarget.style.boxShadow = 'var(--shadow-card-hover)';
-        e.currentTarget.style.transform = 'translateY(-3px)';
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.boxShadow = 'var(--shadow-card)';
-        e.currentTarget.style.transform = 'translateY(0)';
-      }}
+      className="post-card"
     >
-      {/* NGO Header */}
-      <div className="px-6 pt-6 pb-3 flex items-center justify-between md:px-7">
-        <div className="flex items-center gap-3.5">
+      {/* ── NGO Header ── */}
+      <div
+        style={{
+          padding: '24px 24px 14px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          {/* Avatar with verified badge */}
           <div className="relative flex-shrink-0">
             <img
               src={post.organization?.logo || '/placeholder-logo.png'}
               alt={post.organization?.organizationName}
-              className="w-12 h-12 object-cover"
-              style={{ borderRadius: 14, border: '2px solid var(--border-soft)' }}
+              style={{
+                width: 46,
+                height: 46,
+                borderRadius: 'var(--radius-btn)',
+                objectFit: 'cover',
+                border: '2px solid var(--border)',
+              }}
             />
-            <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
+            <div
+              style={{
+                position: 'absolute',
+                bottom: -2,
+                right: -2,
+                background: 'white',
+                borderRadius: '50%',
+                padding: 1,
+                boxShadow: 'var(--shadow-xs)',
+              }}
+            >
               <ShieldCheck size={13} className="text-green-500 fill-green-500/10" />
             </div>
           </div>
-          <div className="min-w-0">
-            <h3 className="font-bold text-[15px] tracking-tight truncate leading-tight" style={{ color: 'var(--text-main)' }}>
+
+          {/* Author info */}
+          <div style={{ minWidth: 0 }}>
+            <h3
+              style={{
+                fontSize: 15,
+                fontWeight: 700,
+                letterSpacing: '-0.01em',
+                color: 'var(--text-main)',
+                margin: 0,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+              }}
+            >
               {post.organization?.organizationName}
             </h3>
-            <div className="flex items-center gap-2 mt-1 text-[11px] font-semibold" style={{ color: 'var(--text-faint)' }}>
-              <span className="whitespace-nowrap">5h ago</span>
-              <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: 'var(--text-faint)' }} />
-              <span className="uppercase tracking-widest truncate" style={{ color: 'var(--primary-brand)' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                marginTop: 4,
+              }}
+            >
+              <span style={{ fontSize: 'var(--fs-micro)', fontWeight: 500, color: 'var(--text-faint)' }}>
+                5h ago
+              </span>
+              <span
+                style={{
+                  width: 3,
+                  height: 3,
+                  borderRadius: '50%',
+                  background: 'var(--text-faint)',
+                  flexShrink: 0,
+                }}
+              />
+              {/* Category tag pill */}
+              <span className="category-tag">
                 {post.category || 'Environmental'}
               </span>
             </div>
           </div>
         </div>
+
         <button
-          className="p-2.5 rounded-xl transition-all"
-          style={{ color: 'var(--text-faint)' }}
+          style={{
+            padding: 8,
+            borderRadius: 'var(--radius-btn)',
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+            color: 'var(--text-faint)',
+            transition: 'all 0.15s',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = 'var(--primary-light)';
+            e.currentTarget.style.color = 'var(--primary)';
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = 'transparent';
+            e.currentTarget.style.color = 'var(--text-faint)';
+          }}
         >
           <MoreHorizontal size={18} />
         </button>
       </div>
 
-      {/* Post Content */}
-      <div className="px-6 md:px-7 mb-4">
+      {/* ── Post Content ── */}
+      <div style={{ padding: '0 24px 20px' }}>
         <p className="post-text">{post.description}</p>
         {post.image && (
-          <div className="relative overflow-hidden aspect-[16/9]" style={{ borderRadius: 16, background: 'var(--gradient-warm-subtle)', border: '1px solid var(--border-soft)' }}>
+          <div
+            style={{
+              position: 'relative',
+              overflow: 'hidden',
+              borderRadius: 'var(--radius-img)',
+              aspectRatio: '16/9',
+              border: '1px solid var(--border)',
+            }}
+          >
             <img
               src={post.image}
-              alt="Cause"
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              alt="Campaign"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                transition: 'transform 0.6s ease',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.03)')}
+              onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
             />
           </div>
         )}
       </div>
 
-      {/* Donation Progress Section */}
-      <div className="px-6 md:px-7 mb-5">
+      {/* ── Donation Progress Section ── */}
+      <div style={{ padding: '0 24px 24px' }}>
         <div
-          className="p-6"
           style={{
             background: 'var(--gradient-warm-subtle)',
-            borderRadius: 18,
-            border: '1px solid var(--border-soft)',
+            borderRadius: 'var(--radius-card)',
+            padding: 24,
+            border: '1px solid var(--border)',
           }}
         >
-          <div className="flex justify-between items-end mb-4">
+          {/* Amounts row */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 16 }}>
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest mb-1.5" style={{ color: 'var(--text-faint)' }}>Funds Raised</p>
-              <p className="text-2xl font-extrabold tracking-tighter" style={{ color: 'var(--primary-brand)' }}>₹{post.collectedAmount?.toLocaleString()}</p>
+              <p
+                style={{
+                  fontSize: 'var(--fs-tag)',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  color: 'var(--text-faint)',
+                  marginBottom: 6,
+                }}
+              >
+                Funds Raised
+              </p>
+              <p
+                style={{
+                  fontSize: 'var(--fs-num)',
+                  fontWeight: 800,
+                  letterSpacing: '-0.03em',
+                  color: 'var(--primary)',
+                  fontFamily: 'var(--font-heading)',
+                  lineHeight: 1,
+                  margin: 0,
+                }}
+              >
+                ₹{post.collectedAmount?.toLocaleString()}
+              </p>
             </div>
-            <div className="text-right">
-              <p className="text-[10px] font-bold uppercase tracking-widest mb-1.5" style={{ color: 'var(--text-faint)' }}>Target Goal</p>
-              <p className="text-lg font-bold tracking-tight" style={{ color: 'var(--text-main)', opacity: 0.8 }}>of ₹{post.targetAmount?.toLocaleString()}</p>
+            <div style={{ textAlign: 'right' }}>
+              <p
+                style={{
+                  fontSize: 'var(--fs-tag)',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  color: 'var(--text-faint)',
+                  marginBottom: 6,
+                }}
+              >
+                Target
+              </p>
+              <p
+                style={{
+                  fontSize: 'var(--fs-card-title)',
+                  fontWeight: 700,
+                  color: 'var(--text-main)',
+                  opacity: 0.7,
+                  margin: 0,
+                }}
+              >
+                of ₹{post.targetAmount?.toLocaleString()}
+              </p>
             </div>
           </div>
 
-          {/* Progress Bar */}
-          <div className="progress-bar" style={{ height: 10 }}>
+          {/* Progress Bar — 12px thick */}
+          <div className="progress-bar" style={{ height: 12 }}>
             <motion.div
               initial={{ width: 0 }}
               animate={{ width: `${percent}%` }}
@@ -113,53 +230,51 @@ export default function PostCard({ post }: Props) {
           </div>
 
           {/* Stats Row */}
-          <div className="flex justify-between items-center mt-4 text-[11px] font-bold uppercase tracking-wider">
-            <div className="flex items-center gap-2">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 14 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <span
-                className="px-2.5 py-1 rounded-lg"
-                style={{ background: 'rgba(197, 131, 113, 0.1)', color: 'var(--primary-brand)' }}
-              >{percent.toFixed(0)}%</span>
-              <span style={{ color: 'var(--text-faint)' }}>Funded</span>
+                style={{
+                  padding: '4px 10px',
+                  borderRadius: 'var(--radius-btn)',
+                  background: 'var(--primary-light)',
+                  color: 'var(--primary)',
+                  fontSize: 'var(--fs-micro)',
+                  fontWeight: 700,
+                }}
+              >
+                {percent.toFixed(0)}%
+              </span>
+              <span style={{ color: 'var(--text-faint)', fontSize: 'var(--fs-micro)', fontWeight: 600 }}>
+                Funded
+              </span>
             </div>
-            <div className="flex gap-5" style={{ color: 'var(--text-muted)' }}>
-              <div className="flex flex-col items-end">
-                <span style={{ color: 'var(--text-main)', fontWeight: 800 }}>1,245</span>
-                <span className="text-[9px] mt-0.5" style={{ color: 'var(--text-faint)' }}>Supporters</span>
+            <div style={{ display: 'flex', gap: 20, color: 'var(--text-muted)' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                <span style={{ color: 'var(--text-main)', fontWeight: 800, fontSize: 'var(--fs-body)' }}>1,245</span>
+                <span style={{ fontSize: 'var(--fs-tag)', color: 'var(--text-faint)', marginTop: 1 }}>Supporters</span>
               </div>
-              <div className="w-px h-7" style={{ background: 'var(--border-soft)' }} />
-              <div className="flex flex-col items-end">
-                <span style={{ color: 'var(--text-main)', fontWeight: 800 }}>{daysLeft}</span>
-                <span className="text-[9px] mt-0.5" style={{ color: 'var(--text-faint)' }}>Days Left</span>
+              <div style={{ width: 1, height: 28, background: 'var(--border)' }} />
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                <span style={{ color: 'var(--text-main)', fontWeight: 800, fontSize: 'var(--fs-body)' }}>{daysLeft}</span>
+                <span style={{ fontSize: 'var(--fs-tag)', color: 'var(--text-faint)', marginTop: 1 }}>Days Left</span>
               </div>
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-3 mt-6">
+          {/* CTA Buttons */}
+          <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
             <motion.button
               whileHover={{ scale: 1.02, y: -1 }}
               whileTap={{ scale: 0.98 }}
-              className="flex-1 py-3.5 font-bold text-sm rounded-xl flex items-center justify-center gap-2 transition-all duration-300"
-              style={{
-                background: 'var(--gradient-primary)',
-                color: 'white',
-                boxShadow: '0 4px 16px rgba(197, 131, 113, 0.25)',
-                border: 'none',
-                cursor: 'pointer',
-              }}
+              className="donate-btn"
+              style={{ flex: 1 }}
             >
               <HandHeart size={17} /> Donate Now
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.02, y: -1 }}
               whileTap={{ scale: 0.98 }}
-              className="py-3.5 px-5 font-bold text-sm rounded-xl flex items-center justify-center gap-2 transition-all duration-300"
-              style={{
-                background: 'transparent',
-                color: 'var(--primary-brand)',
-                border: '2px solid rgba(197, 131, 113, 0.25)',
-                cursor: 'pointer',
-              }}
+              className="volunteer-btn"
             >
               <Users size={17} /> Volunteer
             </motion.button>
@@ -167,7 +282,7 @@ export default function PostCard({ post }: Props) {
         </div>
       </div>
 
-      {/* Social Interactions */}
+      {/* ── Social Interaction Bar ── */}
       <div className="social-bar">
         <div className="social-actions">
           <button
@@ -191,30 +306,84 @@ export default function PostCard({ post }: Props) {
             <span>Share</span>
           </button>
         </div>
+
+        <button
+          onClick={() => setSaved(!saved)}
+          className={cn("social-btn", saved && "active")}
+        >
+          <Bookmark size={16} className={saved ? "fill-current" : ""} />
+        </button>
       </div>
 
-      {/* Comment Section */}
+      {/* ── Comment Section ── */}
       <AnimatePresence>
         {showComments && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="px-7 pb-6 overflow-hidden"
+            style={{ overflow: 'hidden' }}
           >
-            <div className="pt-4 flex gap-3" style={{ borderTop: '1px solid var(--border-soft)' }}>
-              <div className="w-8 h-8 rounded-lg flex-shrink-0" style={{ background: 'var(--gradient-warm-subtle)' }} />
-              <div className="flex-1">
-                <div className="p-4" style={{ background: 'var(--gradient-warm-subtle)', borderRadius: 14 }}>
-                  <p className="text-xs font-bold mb-1" style={{ color: 'var(--text-main)' }}>Marcus J.</p>
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-                    Just donated! So happy to support this vital work. Keep it up team! 👏
-                  </p>
-                </div>
-                <div className="flex items-center gap-4 mt-2 ml-2 text-[10px] font-bold" style={{ color: 'var(--text-faint)' }}>
-                  <button className="hover:text-primary transition-colors" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit' }}>Like</button>
-                  <button className="hover:text-primary transition-colors" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit' }}>Reply</button>
-                  <span>38m</span>
+            <div style={{ padding: '0 24px 24px' }}>
+              <div
+                style={{
+                  paddingTop: 16,
+                  display: 'flex',
+                  gap: 12,
+                  borderTop: '1px solid var(--border)',
+                }}
+              >
+                <div
+                  style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: 'var(--radius-btn)',
+                    background: 'var(--gradient-warm-subtle)',
+                    flexShrink: 0,
+                  }}
+                />
+                <div style={{ flex: 1 }}>
+                  <div
+                    style={{
+                      padding: 16,
+                      background: 'var(--gradient-warm-subtle)',
+                      borderRadius: 'var(--radius-card)',
+                    }}
+                  >
+                    <p style={{ fontSize: 'var(--fs-meta)', fontWeight: 700, color: 'var(--text-main)', marginBottom: 4 }}>
+                      Marcus J.
+                    </p>
+                    <p style={{ fontSize: 'var(--fs-meta)', color: 'var(--text-muted)', lineHeight: 1.5, margin: 0 }}>
+                      Just donated! So happy to support this vital work. Keep it up team! 👏
+                    </p>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 8, marginLeft: 8 }}>
+                    <button
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        fontSize: 'var(--fs-tag)',
+                        fontWeight: 700,
+                        color: 'var(--text-faint)',
+                      }}
+                    >
+                      Like
+                    </button>
+                    <button
+                      style={{
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        fontSize: 'var(--fs-tag)',
+                        fontWeight: 700,
+                        color: 'var(--text-faint)',
+                      }}
+                    >
+                      Reply
+                    </button>
+                    <span style={{ fontSize: 'var(--fs-tag)', fontWeight: 600, color: 'var(--text-faint)' }}>38m</span>
+                  </div>
                 </div>
               </div>
             </div>
