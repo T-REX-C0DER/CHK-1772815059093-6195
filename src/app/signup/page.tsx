@@ -77,6 +77,7 @@ export default function SignupPage() {
           ...formData,
           role: accountType?.toUpperCase() === 'WARRIOR' ? 'USER' : 'ORGANIZATION'
         }),
+        credentials: 'include',
       });
 
       const data = await res.json();

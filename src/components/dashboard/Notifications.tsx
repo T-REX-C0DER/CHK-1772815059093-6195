@@ -12,8 +12,34 @@ export default function Notifications() {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const data = await api.getNotifications();
-        setNotifications(data);
+        // Mock notifications data since API is not implemented yet
+        const mockData = [
+          {
+            id: 1,
+            type: 'donation',
+            title: 'Donation Received',
+            message: 'Thank you for your generous donation to Unity Shelter',
+            time: '2 hours ago',
+            read: false
+          },
+          {
+            id: 2,
+            type: 'volunteer',
+            title: 'Volunteer Opportunity',
+            message: 'New volunteer position available at City Hope Center',
+            time: '1 day ago',
+            read: false
+          },
+          {
+            id: 3,
+            type: 'shelter',
+            title: 'Shelter Update',
+            message: 'Winter shelter program has been extended',
+            time: '3 days ago',
+            read: true
+          }
+        ];
+        setNotifications(mockData);
       } catch (err) {
         console.error(err);
       } finally {

@@ -18,24 +18,40 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   useEffect(() => {
-    // Check for user session in cookie or localStorage
-    const storedUser = localStorage.getItem('helpsphere_user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth/me', {
+          credentials: 'include'
+        });
+
+        if (response.ok) {
+          const user = await response.json();
+          setUser(user);
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
   }, []);
 
   const login = (userData: any) => {
     setUser(userData);
-    localStorage.setItem('helpsphere_user', JSON.stringify(userData));
   };
 
-  const logout = () => {
+  const logout = async () => {
     setUser(null);
-    localStorage.removeItem('helpsphere_user');
-    // Also clear cookie via API if needed
-    fetch('/api/auth/logout', { method: 'POST' });
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
     router.push('/login');
   };
 

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-default-secret-change-it';
+const JWT_SECRET = process.env.JWT_SECRET || 'helpsphere-secure-secret-key-2024';
 
 export const hashPassword = async (password: string) => {
   return await bcrypt.hash(password, 10);

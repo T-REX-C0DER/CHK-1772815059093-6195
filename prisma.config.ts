@@ -1,2 +1,2 @@
-// Dummy Prisma config to resolve environment issue
+// Prisma config
 export default {};

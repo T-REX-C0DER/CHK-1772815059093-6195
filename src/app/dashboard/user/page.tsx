@@ -1,142 +1,262 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { 
-  HandHeart, 
-  Users, 
-  Trophy, 
-  ArrowUpRight, 
-  MapPin, 
-  Clock,
-  TrendingUp
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
 
-const stats = [
-  { name: 'Total Donations', value: '$1,240', icon: HandHeart, color: 'text-blue-600', bg: 'bg-blue-50' },
-  { name: 'Volunteer Hours', value: '48h', icon: Clock, color: 'text-green-600', bg: 'bg-green-50' },
-  { name: 'Impact Score', value: '850', icon: Trophy, color: 'text-amber-600', bg: 'bg-amber-50' },
-];
+// dashboard components
+import Feed from '@/components/dashboard/Feed';
+import RightSidebar from '@/components/dashboard/RightSidebar';
+import DashboardGrid from '@/components/dashboard/DashboardGrid';
 
-const activeCampaigns = [
-  { id: 1, title: 'Medical Aid for Gaza', org: 'Hope Intl', progress: 75, target: '$50,000', image: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80' },
-  { id: 2, title: 'Winter Blanket Drive', org: 'Red Cross', progress: 40, target: '$10,000', image: 'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=400&q=80' },
-];
+interface DashboardData {
+  profile: {
+    name: string;
+    email: string;
+    phone?: string;
+    city?: string;
+    createdAt: string;
+  };
+  stats: {
+    totalDonations: number;
+    donationCount: number;
+    volunteerCount: number;
+    shelterRequestsCount: number;
+  };
+  recentDonations: Array<{
+    id: string;
+    amount: number;
+    createdAt: string;
+    organization: { organizationName: string };
+  }>;
+  volunteerActivities: Array<{
+    id: string;
+    status: string;
+    appliedDate: string;
+    organization: { organizationName: string };
+  }>;
+  activeCampaigns: Array<{
+    id: string;
+    title: string;
+    description: string;
+    targetAmount: number;
+    collectedAmount: number;
+    image?: string;
+    organization: { organizationName: string; logo?: string };
+  }>;
+  trending: Array<{ id: string; name: string; percentage: number }>;
+  suggestions: Array<{ id: string; organizationName: string; logo?: string; organizationType?: string }>;
+  events: Array<{ id: string; title: string; date: string; location: string; time?: string }>;
+}
 
 export default function UserDashboard() {
   const { user } = useAuth();
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const response = await fetch('/api/dashboard/user');
+        if (response.ok) {
+          const data = await response.json();
+          setDashboardData(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch dashboard data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (user) {
+      fetchDashboardData();
+    }
+  }, [user]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-slate-600 font-medium">Loading your dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!dashboardData) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <p className="text-slate-600">Failed to load dashboard data</p>
+      </div>
+    );
+  }
+
+  const stats = [
+    {
+      name: 'Total Donations',
+      value: `₹${dashboardData.stats.totalDonations.toLocaleString()}`,
+      icon: 'HandHeart',
+      color: 'text-blue-600',
+      bg: 'bg-blue-50'
+    },
+    {
+      name: 'Volunteer Activities',
+      value: dashboardData.stats.volunteerCount.toString(),
+      icon: 'Users',
+      color: 'text-green-600',
+      bg: 'bg-green-50'
+    },
+    {
+      name: 'Impact Score',
+      value: (dashboardData.stats.donationCount * 10 + dashboardData.stats.volunteerCount * 5).toString(),
+      icon: 'Trophy',
+      color: 'text-amber-600',
+      bg: 'bg-amber-50'
+    },
+  ];
 
   return (
-    <div className="space-y-8 pb-12">
-      <header>
-        <h1 className="text-3xl font-bold text-slate-900">Welcome back, {user?.name}!</h1>
-        <p className="text-slate-500">Here's your impact overview for this month.</p>
-      </header>
+    <div style={{ backgroundColor: 'var(--color-background)', minHeight: '100vh' }}>
+      {/* Premium Welcome Section */}
+      <motion.div
+        style={{
+          background: 'linear-gradient(135deg, #C58371 0%, #D4A373 50%, #A66E58 100%)',
+          padding: '56px 40px',
+          marginBottom: '40px',
+          boxShadow: '0 20px 50px rgba(197, 131, 113, 0.15)',
+          position: 'relative',
+          overflow: 'hidden',
+          borderRadius: '24px',
+          margin: '24px 32px 40px 32px'
+        }}
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        {/* Decorative background elements */}
+        <div style={{
+          position: 'absolute',
+          top: '-20%',
+          right: '-10%',
+          width: '400px',
+          height: '400px',
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%)',
+          borderRadius: '50%',
+        }}></div>
+        <div style={{
+          position: 'absolute',
+          bottom: '-30%',
+          left: '10%',
+          width: '300px',
+          height: '300px',
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%)',
+          borderRadius: '50%',
+        }}></div>
+        <div style={{
+          position: 'absolute',
+          top: '20%',
+          left: '40%',
+          width: '150px',
+          height: '150px',
+          background: 'rgba(255, 255, 255, 0.05)',
+          borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
+          filter: 'blur(20px)',
+          rotate: '45deg'
+        }}></div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {stats.map((stat, index) => (
-          <motion.div
-            key={stat.name}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+        <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative', zIndex: 1 }}>
+          <div style={{ maxWidth: '600px' }}>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <h1 style={{ fontSize: '42px', fontWeight: 900, color: '#FFFFFF', marginBottom: '12px', letterSpacing: '-0.04em', lineHeight: 1.1 }}>
+                Welcome back, {dashboardData.profile.name.split(' ')[0]}! ✨
+              </h1>
+              <p style={{ fontSize: '18px', color: 'rgba(255, 255, 255, 0.9)', fontWeight: 500, lineHeight: 1.6 }}>
+                Your contributions are creating ripples of hope. Together, we've impacted <span style={{ fontWeight: 800, color: '#FFFFFF' }}>{dashboardData.stats.donationCount + dashboardData.stats.volunteerCount}</span> lives this month.
+              </p>
+            </motion.div>
+          </div>
+          <motion.button
+            whileHover={{ scale: 1.05, y: -2, boxShadow: '0 15px 35px rgba(0,0,0,0.15)' }}
+            whileTap={{ scale: 0.95 }}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              backgroundColor: '#FFFFFF',
+              color: 'var(--color-primary)',
+              padding: '18px 36px',
+              borderRadius: '100px',
+              fontSize: '16px',
+              fontWeight: 800,
+              cursor: 'pointer',
+              border: 'none',
+              boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+              transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
           >
-            <Card className="hover:shadow-md transition-shadow cursor-pointer group">
-              <CardContent className="pt-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-slate-500">{stat.name}</p>
-                    <h3 className="text-2xl font-bold text-slate-900 mt-1">{stat.value}</h3>
-                  </div>
-                  <div className={cn("p-3 rounded-xl transition-colors group-hover:scale-110", stat.bg, stat.color)}>
-                    <stat.icon size={24} />
-                  </div>
-                </div>
-                <div className="mt-4 flex items-center text-xs font-medium text-green-600">
-                  <TrendingUp size={14} className="mr-1" />
-                  <span>+12.5% from last month</span>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
+            💖 Start New Campaign
+            <ArrowRight size={20} strokeWidth={3} />
+          </motion.button>
+        </div>
+      </motion.div>
+
+      {/* Main Dashboard Grid */}
+      <div style={{ padding: '0 32px' }}>
+        <DashboardGrid
+          sidebar={<div />}
+          feed={<Feed />}
+          rightPanel={
+            <RightSidebar
+              impact={{
+                livesImpacted: dashboardData.stats.donationCount + dashboardData.stats.volunteerCount,
+                activeVolunteers: dashboardData.stats.volunteerCount,
+                ongoingCampaigns: dashboardData.activeCampaigns.length,
+                totalDonations: dashboardData.stats.totalDonations,
+              }}
+              trending={dashboardData.trending}
+              suggestions={dashboardData.suggestions.map(o => ({
+                id: o.id,
+                organizationName: o.organizationName,
+                logo: o.logo,
+                organizationType: o.organizationType
+              }))}
+              events={dashboardData.events}
+            />
+          }
+        />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Active Campaigns */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold h-fit">Active Campaigns</h2>
-            <Button variant="link" className="text-primary p-0">View All</Button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {activeCampaigns.map((camp) => (
-              <Card key={camp.id} className="overflow-hidden group cursor-pointer border-none shadow-premium bg-white/50 backdrop-blur-sm">
-                <div className="h-48 overflow-hidden relative">
-                  <img src={camp.image} alt={camp.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-primary shadow-sm">
-                    {camp.org}
-                  </div>
-                </div>
-                <CardContent className="p-6">
-                  <h4 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">{camp.title}</h4>
-                  <div className="space-y-4">
-                    <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                      <motion.div 
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${camp.progress}%` }}
-                        className="h-full bg-primary"
-                      />
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-slate-500">Collected: <span className="font-bold text-slate-900">{camp.progress}%</span></span>
-                      <span className="text-slate-500">Target: <span className="font-bold text-slate-900">{camp.target}</span></span>
-                    </div>
-                    <Button variant="premium" className="w-full">Support Now</Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Nearby NGOs / Activities */}
-        <div className="space-y-6">
-          <h2 className="text-xl font-bold">Recommended for You</h2>
-          <div className="space-y-4">
-             {[1, 2, 3].map((i) => (
-               <Card key={i} className="group hover:bg-slate-50 transition-colors cursor-pointer border-slate-100">
-                 <CardContent className="p-4 flex items-center gap-4">
-                   <div className="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500">
-                     <MapPin size={24} />
-                   </div>
-                   <div className="flex-1">
-                     <h5 className="font-bold text-sm">Unity Shelter {i}</h5>
-                     <p className="text-xs text-slate-500">2.5 miles away • 12 active needs</p>
-                   </div>
-                   <ArrowUpRight size={16} className="text-slate-400 group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
-                 </CardContent>
-               </Card>
-             ))}
-          </div>
-          
-          <Card className="bg-gradient-to-br from-primary to-indigo-600 border-none text-white shadow-xl overflow-hidden relative">
-            <div className="absolute -right-8 -bottom-8 opacity-20 transform -rotate-12 translate-y-4">
-               <Trophy size={160} />
-            </div>
-            <CardContent className="p-6 relative z-10">
-              <h4 className="text-lg font-bold">New Badge Unlocked!</h4>
-              <p className="text-blue-100 text-sm mt-1">You've reached the Silver Tier by helping 10 people this month.</p>
-              <Button variant="outline" className="mt-4 border-white/30 text-white hover:bg-white/10">View Rewards</Button>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+      {/* Floating Donate Button */}
+      <motion.button
+        whileHover={{ scale: 1.08, translateY: -5 }}
+        whileTap={{ scale: 0.95 }}
+        style={{
+          position: 'fixed',
+          bottom: '80px',
+          right: '32px',
+          background: 'var(--gradient-primary)',
+          color: '#FFFFFF',
+          padding: '18px 32px',
+          borderRadius: '9999px',
+          boxShadow: 'var(--shadow-lg)',
+          border: 'none',
+          fontWeight: 700,
+          fontSize: '16px',
+          cursor: 'pointer',
+          display: 'none',
+          zIndex: 50,
+        }}
+        className="md:block"
+      >
+        💝 Donate Now
+      </motion.button>
     </div>
   );
 }
