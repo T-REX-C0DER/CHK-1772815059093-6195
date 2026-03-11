@@ -35,12 +35,15 @@ model Organization {
   phone              String?
   address            String?
   city               String?
+  country            String      @default("India")
+  verified           Boolean     @default(false)
   logo               String?
   createdAt          DateTime    @default(now())
   updatedAt          DateTime    @updatedAt
   campaigns          Campaign[]
   donations          Donation[]
   volunteers         Volunteer[]
+  orgPosts           OrgPost[]
 }
 
 model Donation {
@@ -76,6 +79,26 @@ model Campaign {
   updatedAt       DateTime @updatedAt
   organizationId  String
   organization    Organization @relation(fields: [organizationId], references: [id])
+}
+
+model OrgPost {
+  id              String   @id @default(cuid())
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  postType        String   @default("campaign")  // campaign | event | awareness
+  title           String
+  description     String
+  images          String?  // JSON array of image URLs stored as string
+  targetAmount    Float?
+  raisedAmount    Float?   @default(0)
+  supportersCount Int?     @default(0)
+  eventDate       String?
+  location        String?
+  category        String?  @default("General")
+  likesCount      Int      @default(0)
+  status          String   @default("active")    // active | ended | draft
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model ShelterRequest {
