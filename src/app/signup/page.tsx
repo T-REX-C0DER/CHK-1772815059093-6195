@@ -646,8 +646,8 @@ export default function SignupPage() {
       >
         <div className={styles.imageContainer}>
           <img
-            src="/auth-hero.png"
-            alt="Making impact through volunteering"
+            src="/signup-hero.png"
+            alt="People joining hands together symbolizing unity"
             className={styles.heroImage}
           />
           <div className={styles.imageOverlay} />
@@ -658,7 +658,7 @@ export default function SignupPage() {
               Start your journey to create meaningful change
             </h2>
             <p className={styles.imageSubtitle}>
-              Every small action adds up to something extraordinary
+              Join thousands of changemakers building a better tomorrow
             </p>
           </div>
         </div>

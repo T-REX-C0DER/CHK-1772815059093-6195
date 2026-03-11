@@ -300,8 +300,8 @@ export default function LoginPage() {
       >
         <div className={styles.imageContainer}>
           <img
-            src="/auth-hero.png"
-            alt="Volunteers making impact"
+            src="/login-hero.png"
+            alt="Volunteers and donors in a community center"
             className={styles.heroImage}
           />
           <div className={styles.imageOverlay} />
@@ -309,10 +309,10 @@ export default function LoginPage() {
           {/* Bottom overlay text */}
           <div className={styles.imageBottomContent}>
             <h2 className={styles.imageTitle}>
-              Every action creates a ripple of change
+              Welcome back, changemaker
             </h2>
             <p className={styles.imageSubtitle}>
-              Join thousands making real impact through verified organizations
+              Your community is waiting — continue making real impact today
             </p>
           </div>
         </div>
