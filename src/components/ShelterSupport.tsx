@@ -37,7 +37,7 @@ export default function ShelterSupport() {
           >
             <div className={styles.imageWrapper}>
               <img 
-                src="https://images.unsplash.com/photo-1559027615-cd2628902d4a?q=80&w=1200&auto=format&fit=crop" 
+                src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop" 
                 alt="Volunteer helping someone in need" 
                 className={styles.mainImage}
               />

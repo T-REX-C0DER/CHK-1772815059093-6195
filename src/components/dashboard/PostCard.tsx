@@ -4,6 +4,7 @@ import {
   Users, HandHeart, Bookmark, Calendar, MapPin, Megaphone, Globe
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 interface Organization {
@@ -96,7 +97,9 @@ export default function PostCard({ post }: Props) {
 
       {/* ── NGO Header ── */}
       <div style={{ padding: '20px 24px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+        <Link href={`/ngo/${post.organization?.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+
 
           {/* Avatar with verified badge */}
           <div className="relative flex-shrink-0">
@@ -170,6 +173,7 @@ export default function PostCard({ post }: Props) {
             </div>
           </div>
         </div>
+        </Link>
 
         <button
           style={{
