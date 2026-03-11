@@ -5,49 +5,58 @@ export async function GET(request: Request) {
   try {
     const url = new URL(request.url);
     const cursor = url.searchParams.get('cursor');
-    const sort = url.searchParams.get('sort') || 'latest'; // latest | trending
-    const type = url.searchParams.get('type') || 'all';    // all | campaign | event | awareness
+    const sort = url.searchParams.get('sort') || 'latest';
+    const type = url.searchParams.get('type') || 'all';
 
     const take = 6;
 
-    // Build where clause — only verified Indian NGOs with active posts
-    const whereClause: Record<string, unknown> = {
-      status: 'active',
-      organization: {
-        verified: true,
-        country: 'India',
-      },
-    };
-
+    // Build filter clauses for raw SQL
+    let typeClause = '';
     if (type !== 'all') {
-      whereClause.postType = type;
+      typeClause = `AND p.postType = '${type.replace(/'/g, "''")}'`;
     }
 
-    // Order by
-    const orderBy =
-      sort === 'trending'
-        ? [{ likesCount: 'desc' as const }, { createdAt: 'desc' as const }]
-        : [{ createdAt: 'desc' as const }];
+    // Sort order
+    const orderSQL = sort === 'trending'
+      ? 'ORDER BY p.likesCount DESC, p.createdAt DESC'
+      : 'ORDER BY p.createdAt DESC';
 
-    const rawPosts = await (prisma as any).orgPost.findMany({
-      where: whereClause,
-      include: {
-        organization: {
-          select: {
-            id: true,
-            organizationName: true,
-            logo: true,
-            city: true,
-            verified: true,
-            organizationType: true,
-          },
-        },
-      },
-      orderBy,
-      take: take + 1,
-      cursor: cursor ? { id: cursor } : undefined,
-      skip: cursor ? 1 : 0,
-    });
+    // Cursor-based pagination
+    let cursorClause = '';
+    if (cursor) {
+      // Find the createdAt/likesCount for the cursor row then paginate after it
+      const cursorRows: any[] = await prisma.$queryRawUnsafe(
+        `SELECT createdAt, likesCount FROM OrgPost WHERE id = ?`,
+        cursor
+      );
+      if (cursorRows.length > 0) {
+        const cursorRow = cursorRows[0];
+        if (sort === 'trending') {
+          cursorClause = `AND (p.likesCount < ${cursorRow.likesCount} OR (p.likesCount = ${cursorRow.likesCount} AND p.id > '${cursor}'))`;
+        } else {
+          cursorClause = `AND p.createdAt < '${cursorRow.createdAt}'`;
+        }
+      }
+    }
+
+    const rawPosts: any[] = await prisma.$queryRawUnsafe(`
+      SELECT
+        p.id, p.postType, p.title, p.description, p.images,
+        p.targetAmount, p.raisedAmount, p.supportersCount,
+        p.eventDate, p.location, p.category, p.likesCount,
+        p.status, p.createdAt,
+        o.id as orgId, o.organizationName, o.logo, o.city,
+        o.verified, o.organizationType
+      FROM OrgPost p
+      JOIN Organization o ON p.organizationId = o.id
+      WHERE p.status = 'active'
+        AND o.verified = 1
+        AND o.country = 'India'
+        ${typeClause}
+        ${cursorClause}
+      ${orderSQL}
+      LIMIT ${take + 1}
+    `);
 
     let hasMore = false;
     let result = rawPosts;
@@ -77,14 +86,14 @@ export async function GET(request: Request) {
         location: p.location,
         category: p.category,
         likesCount: p.likesCount,
-        createdAt: p.createdAt.toISOString(),
+        createdAt: p.createdAt,
         organization: {
-          id: p.organization?.id,
-          organizationName: p.organization?.organizationName || '',
-          logo: p.organization?.logo || null,
-          city: p.organization?.city || '',
-          verified: p.organization?.verified || false,
-          organizationType: p.organization?.organizationType || 'ngo',
+          id: p.orgId,
+          organizationName: p.organizationName || '',
+          logo: p.logo || null,
+          city: p.city || '',
+          verified: p.verified === 1 || p.verified === true,
+          organizationType: p.organizationType || 'ngo',
         },
       };
     });
